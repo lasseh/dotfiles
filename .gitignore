@@ -1,0 +1,22 @@
+.DS_Store
+*.swp
+*.swo
+*~
+.netrwhist
+.CFUserTextEncoding
+**/.DS_Store
+.Trash/
+node_modules/
+__pycache__/
+.vscode/
+.idea/
+
+# Sensitive information - be sure to add anything that might contain API keys, etc.
+.env
+.env.local
+.env.*.local
+secrets.yml
+secrets.json
+
+# Avoid including Brewfile.lock.json in the repo
+Brewfile.lock.json

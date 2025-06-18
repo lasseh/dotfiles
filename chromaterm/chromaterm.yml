@@ -1,0 +1,189 @@
+# Tokyo Night theme for ChromaTerm
+# Configuration for highlighting terminal output with regex patterns
+
+# Define Tokyo Night color palette
+palette:
+  # Main colors
+  bg: '#1a1b26'
+  fg: '#c0caf5'
+  selection: '#283457'
+  comment: '#565f89'
+  
+  # Colors
+  red: '#f7768e'
+  orange: '#ff9e64'
+  yellow: '#e0af68'
+  green: '#9ece6a'
+  cyan: '#7dcfff'
+  blue: '#7aa2f7'
+  purple: '#bb9af7'
+  magenta: '#bb9af7'
+
+# Highlight rules using Tokyo Night palette
+rules:
+  #------------------------------------
+  # General Terminal Patterns
+  #------------------------------------
+  
+  # IP addresses
+  - description: IPv4 addresses
+    regex: \b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(/\d{1,2})?\b
+    color: f.cyan
+    
+  - description: IPv6 addresses
+    regex: \b(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b
+    color: f.cyan
+  
+  # Status and state indicators
+  - description: Success indicators
+    regex: \b(success(ful)?|enabled|up|connected|online|yes|true|active|running)\b
+    color: f.green
+    
+  - description: Failure indicators
+    regex: \b(fail(ed|ure)?|disabled|down|disconnect(ed)?|offline|no|false|inactive|missing)\b
+    color: f.red
+    
+  - description: Warning indicators
+    regex: \b(warning|caution|attention|notice)\b
+    color: f.yellow
+  
+  #------------------------------------
+  # Juniper JunOS Specific Patterns
+  #------------------------------------
+  
+  # Juniper CLI prompts
+  - description: JunOS operational mode prompt
+    regex: \w+@[\w\-\.]+>\s
+    color: f.blue bold
+    
+  - description: JunOS configuration mode prompt
+    regex: \w+@[\w\-\.]+#\s
+    color: f.purple bold
+    
+  - description: Edit hierarchy display
+    regex: \[edit.*\]
+    color: f.yellow
+  
+  # Juniper CLI commands - Operational Mode
+  - description: Show commands
+    regex: \b(show|run show|monitor)\s
+    color: f.blue bold
+    
+  - description: Request commands
+    regex: \b(request|restart|clear|start|reset)\s
+    color: f.purple
+    
+  - description: Configuration commands
+    regex: \b(configure|edit|set|delete|commit|rollback)\s
+    color: f.orange bold
+    
+  # Juniper CLI commands - Configuration Mode
+  - description: Configuration edit and navigation
+    regex: \b(edit|up|top|exit|quit)\s
+    color: f.purple
+    
+  - description: Configuration modification
+    regex: \b(set|delete|rename|copy|insert|replace|annotate)\s
+    color: f.orange bold
+    
+  - description: Configuration operations
+    regex: \b(commit|rollback|load|save|run|show|status)\s
+    color: f.blue
+    
+  # Juniper configuration sections and hierarchy
+  - description: Main configuration hierarchies
+    regex: \b(system|interfaces|protocols|routing-options|policy-options|firewall|security|services)\s
+    color: f.green bold
+  
+  # Interface names in Juniper format
+  - description: Physical interfaces
+    regex: \b(ge|xe|et|fe|ae|lo|irb|me|fxp)-\d+(/\d+){0,2}(:\d+)?\b
+    color: f.cyan bold
+    
+  - description: Logical interfaces
+    regex: \bunit\s+\d+\b
+    color: f.cyan
+  
+  # Juniper routing protocols
+  - description: Routing protocols
+    regex: \b(ospf|bgp|isis|rip|ripng|ldp|mpls|pim|igmp|msdp|vrrp|static)\b
+    color: f.yellow bold
+    
+  # Juniper policy and firewall elements
+  - description: Policy statements and terms
+    regex: \b(policy-statement|prefix-list|route-filter|community|as-path|term|from|to|then)\b
+    color: f.purple
+    
+  - description: Firewall filters
+    regex: \b(filter|term|family inet|police|counter|three-color-policer|action|accept|reject|discard)\b
+    color: f.red
+  
+  # Juniper VLAN and switching
+  - description: VLAN configuration
+    regex: \b(vlan|bridge-domains|vlans|ethernet-switching|vlan-id|vlan-tags)\b
+    color: f.blue
+  
+  # Juniper security
+  - description: Security zones and policies
+    regex: \b(security-zone|zone-security|policies|policy|match|permit|deny|action)\b
+    color: f.orange
+  
+  # Juniper commits and changes
+  - description: Commit messages and status
+    regex: \b(commit complete|commit confirmed|configuration check succeeds)\b
+    color: f.green bold
+    
+  - description: Loading configurations
+    regex: \b(load\s+(merge|replace|override|update))\b
+    color: f.yellow bold
+    
+  # Error messages
+  - description: Error messages
+    regex: \b(error|syntax error|unknown command|invalid|missing|bad option)\b
+    color: f.red bold
+    
+  # Numbers and important values
+  - description: Numbers in Juniper configs
+    regex: \b\d+\b
+    color: f.orange
+    
+  # Key Juniper configuration keywords
+    # Address family
+  - description: Address family keywords
+    regex: \b(family\s+(inet|inet6|mpls|iso|ethernet-switching))\b
+    color: f.blue
+    
+    # Routing instances
+  - description: Routing instance keywords
+    regex: \b(routing-instances|instance-type|vrf|virtual-router|forwarding)\b
+    color: f.purple
+    
+    # System services
+  - description: System services
+    regex: \b(ssh|telnet|netconf|web-management|dhcp|dns)\b
+    color: f.cyan
+    
+  # Authentication and users
+  - description: Authentication keywords
+    regex: \b(authentication-order|radius|tacacs|ldap|password|encrypted-password|ssh-rsa|ssh-dss)\b
+    color: f.magenta
+    
+  # Juniper forwarding and CoS
+  - description: Forwarding and Class of Service
+    regex: \b(forwarding-class|forwarding-options|class-of-service|scheduler|drop-profile|rewrite-rules)\b
+    color: f.blue
+    
+  # Protocol specific keywords - BGP
+  - description: BGP Keywords
+    regex: \b(autonomous-system|local-as|peer-as|group|neighbor|cluster|confederation|route-reflector)\b
+    color: f.yellow
+    
+  # Protocol specific keywords - OSPF
+  - description: OSPF Keywords
+    regex: \b(area|interface|router-id|reference-bandwidth|metric|external|stub|nssa|spf|lsa)\b
+    color: f.green
+    
+  # Common Juniper configuration values
+  - description: Important Juniper config values
+    regex: \b(primary|secondary|preferred|backup|master|slave|point-to-point|passive|targeted|trace|traceoptions)\b
+    color: f.purple

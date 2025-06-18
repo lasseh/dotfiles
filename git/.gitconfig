@@ -1,0 +1,39 @@
+[user]
+	name = YOUR_NAME
+	email = YOUR_EMAIL
+
+[core]
+	excludesfile = ~/.gitignore_global
+	editor = vim
+	autocrlf = input
+	safecrlf = true
+
+[init]
+	defaultBranch = main
+
+[color]
+	ui = auto
+
+[pull]
+	rebase = false
+
+[push]
+	default = simple
+	followTags = true
+
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	ci = commit
+	df = diff
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	unstage = reset HEAD --
+	last = log -1 HEAD
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+
+[help]
+	autocorrect = 1

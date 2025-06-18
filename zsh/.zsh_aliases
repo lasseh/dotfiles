@@ -1,0 +1,54 @@
+# Navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ~="cd ~"
+alias -- -="cd -"
+
+# Shortcuts
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias p="cd ~/Projects"
+alias g="git"
+alias h="history"
+alias j="jobs"
+
+# List directory contents
+alias ls="exa --group-directories-first --git"
+alias ll="ls -l"
+alias la="ls -la"
+alias lt="ls --tree"
+
+# Better defaults
+alias cp="cp -i"                          # Confirm before overwriting
+alias mv="mv -i"                          # Confirm before overwriting
+alias rm="rm -i"                          # Confirm before removing
+alias mkdir="mkdir -p"                    # Create parent directories as needed
+alias grep="grep --color=auto"
+alias df="df -h"                          # Human-readable sizes
+alias du="du -h"                          # Human-readable sizes
+
+# Git shortcuts
+alias gs="git status"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+alias gd="git diff"
+alias ga="git add"
+alias gco="git checkout"
+alias gb="git branch"
+
+# Docker shortcuts
+alias d="docker"
+alias dc="docker-compose"
+alias dps="docker ps"
+
+# Homebrew
+alias bu="brew update && brew upgrade"
+alias bi="brew install"
+alias bs="brew search"
+
+# Dotfiles management
+alias dotfiles="cd $DOTFILES"
+alias make-dotfiles="make -C $DOTFILES"
+alias reload="source ~/.zshrc"
