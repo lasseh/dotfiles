@@ -95,9 +95,7 @@ mas:
 		brew install mas; \
 	fi
 	@echo "Installing Mac App Store applications..."
-	@mas install 497799835 # Xcode
-	@mas install 409203825 # Numbers
-	@mas install 409201541 # Pages
-	@mas install 409183694 # Keynote
-	# Add more apps as needed
+	@mas install 937984704 # Amphetamine
+	@mas install 1475387142 # Tailscale
+	@mas install 1451685025  # Wireguard
 	@echo "Mac App Store applications installed!"
