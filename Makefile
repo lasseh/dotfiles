@@ -1,14 +1,25 @@
-.PHONY: all install clean brew brew-bundle brew-dump stow-all dotfiles stow-git stow-vim stow-zsh stow-tmux stow-dircolors stow-btop stow-htop stow-lazygit stow-chromaterm stow-iterm2 osx-defaults mas-install check
+.PHONY: mac-install clean brew brew-bundle brew-dump dotfiles fzf iterm2 osx-defaults help
+
+# Stow related targets
+dotfiles:
+	@stow -R -t ~/ bash
+	@stow -R -t ~/ bat
+	@stow -R -t ~/ btop
+	@stow -R -t ~/ chromaterm
+	@stow -R -t ~/ dircolors
+	@stow -R -t ~/ gh-dash
+	@stow -R -t ~/ git
+	@stow -R -t ~/ htop
+	@stow -R -t ~/ lazygit
+	@stow -R -t ~/ ssh
+	@stow -R -t ~/ tmux
+	@stow -R -t ~/ vim
+	@stow -R -t ~/ zsh
+	@echo "All configurations stowed!"
 
 # Install everything
-mac-install: brew brew-bundle dotfiles osx-defaults mas-install iterm2 fzf
+mac-install: brew brew-bundle dotfiles osx-defaults iterm2
 	@echo "All installations completed successfully!"
-
-# Clean up
-clean:
-	@echo "Removing symlinks..."
-	@stow -D git vim zsh tmux dircolors btop htop lazygit chromaterm iterm2 2>/dev/null || true
-	@echo "Done!"
 
 # Brew related targets
 brew:
@@ -26,32 +37,20 @@ brew-bundle:
 	@brew bundle --file=./Brewfile
 
 brew-dump:
-	@echo "Exporting installed packages to Brewfile..."
-	@brew bundle dump --force
-
-# Stow related targets
-dotfiles:
-	@stow -R -t ~/ bash
-	@stow -R -t ~/ git
-	@stow -R -t ~/ vim
-	@stow -R -t ~/ zsh
-	@stow -R -t ~/ tmux
-	@stow -R -t ~/ dircolors
-	@stow -R -t ~/ btop
-	@stow -R -t ~/ htop
-	@stow -R -t ~/ ssh
-	@stow -R -t ~/ lazygit
-	@stow -R -t ~/ chromaterm
-	@stow -R -t ~/ gh-dash
-	@echo "All configurations stowed!"
-
-fzf:
-	@echo "Installing fzf..."
-	@if ! command -v fzf >/dev/null 2>&1; then \
-		git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+	@echo "Comparing current installations with Brewfile..."
+	@brew bundle dump --file=./Brewfile.current --force
+	@if diff -u ./Brewfile ./Brewfile.current > /dev/null 2>&1; then \
+		echo "✅ Brewfile is up to date with current installations"; \
+		rm ./Brewfile.current; \
 	else \
-		echo "fzf is already installed, skipping..."
+		echo "❌ Differences found between Brewfile and current installations:"; \
+		echo ""; \
+		diff -u ./Brewfile ./Brewfile.current || true; \
+		echo ""; \
+		echo "Current installations saved to Brewfile.current for reference"; \
+		echo "Review the differences and manually update Brewfile as needed"; \
 	fi
+
 
 iterm2:
 	@if defaults read com.googlecode.iterm2 PrefsCustomFolder 2>/dev/null | grep -q "$(PWD)/iterm2"; then \
@@ -85,17 +84,13 @@ osx-defaults:
 	@echo "Restarting affected applications..."
 	@killall Finder Dock SystemUIServer 2>/dev/null || true
 
-# Mac App Store apps
-mas-install:
-	@if ! command -v mas >/dev/null 2>&1; then \
-		echo "Installing mas-cli..."; \
-		brew install mas; \
+fzf:
+	@echo "Installing fzf..."
+	@if ! command -v fzf >/dev/null 2>&1; then \
+		git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+	else \
+		echo "fzf is already installed, skipping..."
 	fi
-	@echo "Installing Mac App Store applications..."
-	@mas install 937984704 # Amphetamine
-	@mas install 1475387142 # Tailscale
-	@mas install 1451685025  # Wireguard
-	@echo "Mac App Store applications installed!"
 
 ## Help display.
 ## Pulls comments from beside commands and prints a nicely formatted

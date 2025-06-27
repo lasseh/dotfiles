@@ -2,7 +2,7 @@
 export DOTFILES="$HOME/dotfiles-new"
 
 # Path to your zsh configuration.
-ZSH=$HOME/.zsh
+export ZSH=$HOME/.zsh
 
 # Path to your oh-my-zsh installation (if used)
 # export ZSH="$HOME/.oh-my-zsh"
@@ -87,43 +87,6 @@ compdef _ssh_hosts_completion sftp
 
 # Force reload of completion system
 autoload -U compinit && compinit -d
-
-# Prompt setup - now handled by tokyo-night-theme.zsh
-# setopt prompt_subst
-# autoload -Uz vcs_info
-
-# vcs_info configuration
-# zstyle ':vcs_info:*' enable git
-# zstyle ':vcs_info:*:*' unstagedstr '!'
-# zstyle ':vcs_info:*:*' stagedstr '+'
-# zstyle ':vcs_info:*:*' formats "%F{red}%r%f/%F{magenta}%b%f" "%u%c"
-# zstyle ':vcs_info:*:*' actionformats "%F{red}%r%f/%F{magenta}%b%f" "%u%c (%a)"
-# zstyle ':vcs_info:*:*' nvcsformats "%~" ""
-
-# Check if repo is dirty
-# git_dirty() {
-#     command git rev-parse --is-inside-work-tree &>/dev/null || return
-#     command git diff --quiet --ignore-submodules HEAD &>/dev/null
-#     [ $? -eq 1 ] && echo "*"
-# }
-
-# Repository information display
-# repo_information() {
-#     echo "%F{red}${vcs_info_msg_0_%%/.}%f %F{magenta}${vcs_info_msg_1_}$(git_dirty)%f"
-# }
-
-# Command execution time
-# cmd_exec_time() {
-#     local stop=$(date +%s)
-#     local start=${cmd_timestamp:-$stop}
-#     let local elapsed=$stop-$start
-#     [ $elapsed -gt 5 ] && echo "${elapsed}s"
-# }
-
-# Get timestamp for exec time
-# preexec() {
-#     cmd_timestamp=$(date +%s)
-# }
 
 # Precmd function for info line
 precmd() {

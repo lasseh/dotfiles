@@ -82,7 +82,7 @@ alias gupdatesubm='git pull --recurse-submodules && git submodule update --recur
 # ==> Listing aliases
 if which eza &>/dev/null; then
     alias ls="eza --group-directories-first --git -mghas Name --long"
-    alias lst="eza --group-directories-first --git --tree -mghs Name --long"
+    alias lst="eza --group-directories-first --git --tree -mghs Name --long --ignore-glob .git -a --depth=5"
     alias xa="eza"
     alias le="eza -lrhgHBimUa --git --group-directories-first"
 else
@@ -93,11 +93,17 @@ fi
 
 # replace `cat` with `bat` if installed
 if which bat &>/dev/null; then
-    alias cat="bat --style=plain --color=always --paging=never"
-    alias bat="bat --style=plain --color=always --paging=never"
-    alias batdiff="bat --style=plain --color=always --paging=never --diff"
-    alias batgrep="bat --style=plain --color=always --paging=never --grep"
-    alias batless="bat --style=plain --color=always --paging=never --less='-R'"
+    alias cat="bat"
+    alias batdiff="bat --diff"
+    alias batgrep="bat --grep"
+    alias batless="bat --less='-R'"
+fi
+# replace `cat` with `batcat` if installed
+if which batcat &>/dev/null; then
+    alias cat="batcat"
+    alias batdiff="batcat --diff"
+    alias batgrep="batcat --grep"
+    alias batless="batcat --less='-R'"
 fi
 
 # # ==> Utilities

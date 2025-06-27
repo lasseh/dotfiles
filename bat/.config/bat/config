@@ -1,0 +1,31 @@
+# bat configuration file
+# Tokyo Night theme to match vim colorscheme
+
+# Set the theme to match Tokyo Night (closest available)
+--theme="Catppuccin Mocha"
+
+# Show line numbers
+--style="numbers,changes,header"
+
+# Use italic text on the terminal (if supported)
+--italic-text=always
+
+# Show file header
+--decorations=always
+
+# Wrap long lines
+--wrap=auto
+
+# Never use paging
+--paging=never
+
+# Map file extensions for better syntax highlighting
+--map-syntax "*.conf:INI"
+--map-syntax "*.config:INI"
+--map-syntax "Brewfile:Ruby"
+--map-syntax "Makefile*:Makefile"
+--map-syntax "*.junos:Cisco"
+--map-syntax "*.service:systemd"
+--map-syntax "*.timer:systemd"
+--map-syntax "*.mount:systemd"
+--map-syntax "*.socket:systemd"

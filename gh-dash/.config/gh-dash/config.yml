@@ -47,6 +47,50 @@ prSections:
       ci:
         width: 8
 
+  - title: whynoipv6 PRs
+    filters: is:open repo:lasseh/whynoipv6
+    layout:
+      author:
+        width: 15
+      updatedAt:
+        width: 12
+      repo:
+        hidden: true
+      title:
+        width: 80
+      reviewStatus:
+        width: 12
+      ci:
+        width: 8
+
+  - title: whynoipv6-web PRs
+    filters: is:open repo:lasseh/whynoipv6-web
+    layout:
+      author:
+        width: 15
+      updatedAt:
+        width: 12
+      title:
+        width: 80
+      reviewStatus:
+        width: 12
+      ci:
+        width: 8
+  
+  - title: junos_exporter
+    filters: is:open repo:czerwonk/junos_exporter
+    layout:
+      author:
+        width: 15
+      updatedAt:
+        width: 12
+      title:
+        width: 80
+      reviewStatus:
+        width: 12
+      ci:
+        width: 8
+
 issuesSections:
   - title: My Issues
     filters: is:open author:lasseh
@@ -56,7 +100,7 @@ issuesSections:
       repo:
         width: 20
       title:
-        width: 60
+        width: 80
       assignees:
         width: 15
       creator:
@@ -70,7 +114,7 @@ issuesSections:
       repo:
         width: 20
       title:
-        width: 60
+        width: 80
       assignees:
         hidden: true
       creator:
@@ -84,7 +128,49 @@ issuesSections:
       repo:
         width: 20
       title:
-        width: 60
+        width: 80
+      assignees:
+        width: 15
+      creator:
+        width: 15
+
+  - title: whynoipv6 Issues
+    filters: is:open repo:lasseh/whynoipv6
+    layout:
+      updatedAt:
+        width: 12
+      repo:
+        hidden: true
+      title:
+        width: 90
+      assignees:
+        width: 15
+      creator:
+        width: 15
+
+  - title: whynoipv6-web Issues
+    filters: is:open repo:lasseh/whynoipv6-web
+    layout:
+      updatedAt:
+        width: 12
+      repo:
+        hidden: true
+      title:
+        width: 90
+      assignees:
+        width: 15
+      creator:
+        width: 15
+  
+  - title:  junos_exporter Issues
+    filters: is:open repo:czerwonk/junos_exporter
+    layout:
+      updatedAt:
+        width: 12
+      repo:
+        hidden: true
+      title:
+        width: 90
       assignees:
         width: 15
       creator:
@@ -111,7 +197,7 @@ defaults:
       repo:
         width: 20
       title:
-        width: 60
+        width: 80
       creator:
         width: 15
       assignees:
@@ -121,7 +207,7 @@ defaults:
 
   preview:
     open: true
-    width: 60
+    width: 120
 
   refetchIntervalMinutes: 30
 
@@ -163,3 +249,4 @@ keybindings:
 
 pager:
   diff: delta
+
