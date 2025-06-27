@@ -1,15 +1,13 @@
-.PHONY: all install clean brew brew-bundle brew-dump stow-all stow-git stow-vim stow-zsh stow-tmux stow-dircolors stow-btop stow-htop stow-lazygit stow-colorterm stow-iterm2 osx-defaults
-
-# Default target
-all: install
+.PHONY: all install clean brew brew-bundle brew-dump stow-all dotfiles stow-git stow-vim stow-zsh stow-tmux stow-dircolors stow-btop stow-htop stow-lazygit stow-chromaterm stow-iterm2 osx-defaults mas-install check
 
 # Install everything
-install: brew stow-all osx-defaults
+mac-install: brew brew-bundle dotfiles osx-defaults mas-install iterm2 fzf
+	@echo "All installations completed successfully!"
 
 # Clean up
 clean:
 	@echo "Removing symlinks..."
-	@stow -D git vim zsh # Add more packages as needed
+	@stow -D git vim zsh tmux dircolors btop htop lazygit chromaterm iterm2 2>/dev/null || true
 	@echo "Done!"
 
 # Brew related targets
@@ -32,64 +30,63 @@ brew-dump:
 	@brew bundle dump --force
 
 # Stow related targets
-stow-all: stow-git stow-vim stow-zsh stow-tmux stow-dircolors stow-btop stow-htop stow-lazygit stow-colorterm stow-iterm2
+dotfiles:
+	@stow -R -t ~/ bash
+	@stow -R -t ~/ git
+	@stow -R -t ~/ vim
+	@stow -R -t ~/ zsh
+	@stow -R -t ~/ tmux
+	@stow -R -t ~/ dircolors
+	@stow -R -t ~/ btop
+	@stow -R -t ~/ htop
+	@stow -R -t ~/ ssh
+	@stow -R -t ~/ lazygit
+	@stow -R -t ~/ chromaterm
+	@stow -R -t ~/ gh-dash
 	@echo "All configurations stowed!"
 
-stow-git:
-	@echo "Stowing git configuration..."
-	@stow -R git
+fzf:
+	@echo "Installing fzf..."
+	@if ! command -v fzf >/dev/null 2>&1; then \
+		git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+	else \
+		echo "fzf is already installed, skipping..."
+	fi
 
-stow-vim:
-	@echo "Stowing vim configuration..."
-	@stow -R vim
-
-stow-zsh:
-	@echo "Stowing zsh configuration..."
-	@stow -R zsh
-
-stow-tmux:
-	@echo "Stowing tmux configuration..."
-	@stow -R tmux
-
-stow-dircolors:
-	@echo "Stowing dircolors configuration..."
-	@stow -R dircolors
-
-stow-btop:
-	@echo "Stowing btop configuration..."
-	@stow -R btop
-
-stow-htop:
-	@echo "Stowing htop configuration..."
-	@stow -R htop
-
-stow-lazygit:
-	@echo "Stowing lazygit configuration..."
-	@stow -R lazygit
-
-stow-colorterm:
-	@echo "Stowing terminal color configuration..."
-	@stow -R colorterm
-
-stow-iterm2:
-	@echo "Stowing iTerm2 configuration..."
-	@mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles
-	@cp iterm2/TokyoNight.itermcolors ~/Library/Application\ Support/iTerm2/
+iterm2:
+	@if defaults read com.googlecode.iterm2 PrefsCustomFolder 2>/dev/null | grep -q "$(PWD)/iterm2"; then \
+		echo "iTerm2 already configured to use dotfiles folder, skipping..."; \
+	else \
+		echo "Configuring iTerm2 to use dotfiles folder..."; \
+		defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$(PWD)/iterm2"; \
+		defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true; \
+		echo "Importing Tokyo Night color scheme..."; \
+		open "$(PWD)/iterm2/TokyoNight.itermcolors"; \
+		echo "iTerm2 will need to be restarted to load settings from custom folder"; \
+	fi
 
 # macOS Defaults
 osx-defaults:
-	@echo "Applying macOS defaults..."
-	@defaults write com.apple.finder AppleShowAllFiles -bool true # Show hidden files
-	@defaults write NSGlobalDomain NSAutomaticSpellCheckingEnabled -bool false # Disable auto-correct
-	@defaults write com.apple.dock autohide -bool true # Auto-hide dock
-	@defaults write com.apple.dock tilesize -int 36 # Set dock icon size
-	@defaults write NSGlobalDomain KeyRepeat -int 2 # Set key repeat rate
-	@defaults write NSGlobalDomain InitialKeyRepeat -int 15 # Set initial key repeat delay
-	@killall Finder Dock # Restart affected apps
-	@echo "macOS defaults applied successfully!"
+	@echo "Applying system defaults..."
+	@./osx/system.sh
+	@echo "Applying Finder defaults..."
+	@./osx/finder.sh
+	@echo "Applying Dock defaults..."
+	@./osx/dock.sh
+	@echo "Applying keyboard defaults..."
+	@./osx/keyboard.sh
+	@echo "Applying trackpad defaults..."
+	@./osx/trackpad.sh
+	@echo "Applying Safari defaults..."
+	@./osx/safari.sh
+	@echo "Applying Terminal defaults..."
+	@./osx/terminal.sh
+	@echo "All macOS defaults applied successfully!"
+	@echo "Restarting affected applications..."
+	@killall Finder Dock SystemUIServer 2>/dev/null || true
 
 # Mac App Store apps
-mas:
+mas-install:
 	@if ! command -v mas >/dev/null 2>&1; then \
 		echo "Installing mas-cli..."; \
 		brew install mas; \
@@ -99,3 +96,11 @@ mas:
 	@mas install 1475387142 # Tailscale
 	@mas install 1451685025  # Wireguard
 	@echo "Mac App Store applications installed!"
+
+## Help display.
+## Pulls comments from beside commands and prints a nicely formatted
+## display with the commands and their usage information.
+.DEFAULT_GOAL := help
+
+help: ## Prints this help
+	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

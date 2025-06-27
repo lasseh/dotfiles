@@ -1,5 +1,8 @@
 # Path to your dotfiles directory
-export DOTFILES="$HOME/dotfiles"
+export DOTFILES="$HOME/dotfiles-new"
+
+# Path to your zsh configuration.
+ZSH=$HOME/.zsh
 
 # Path to your oh-my-zsh installation (if used)
 # export ZSH="$HOME/.oh-my-zsh"
@@ -9,13 +12,14 @@ export EDITOR="vim"
 export VISUAL="vim"
 
 # History configuration
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=10000
-SAVEHIST=10000
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_REDUCE_BLANKS
-setopt HIST_VERIFY
-setopt INC_APPEND_HISTORY
+HISTFILE="$HOME/.zsh_history" # Path to history file
+HISTSIZE=10000                #  Number of history entries to keep in memory
+SAVEHIST=10000                # Number of history entries to save
+setopt HIST_IGNORE_ALL_DUPS   # Ignore duplicate commands
+setopt HIST_REDUCE_BLANKS     # Remove extra blanks
+setopt HIST_VERIFY            # Verify history expansion
+setopt INC_APPEND_HISTORY     # Append to history file immediately
+setopt SHARE_HISTORY          # Share history across all sessions
 
 # Basic auto/tab completion
 autoload -Uz compinit
@@ -23,39 +27,109 @@ compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-# Load aliases
-[[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
+# Disable all default SSH completion sources
+zstyle ':completion:*:(ssh|scp|sftp):*' tag-order '! hosts'
+zstyle ':completion:*:(ssh|scp|sftp):*:hosts' ignored-patterns '*'
+
+# Load zsh plugins
+# Pretty warnings
+function _zwarn() { echo -ne "\e[38;5;196mWARNING \e[38;5;208m~>\e[0m $1\n"; }
+
+#  Load custom zsh configuration files
+source "${HOME}/.zsh/alias.zsh" || _zwarn "Could not source ~/.zsh/alias.zsh"
+source "${HOME}/.zsh/functions.zsh" || _zwarn "Could not source ~/.zsh/functions.zsh"
+source "${HOME}/.zsh/fzf.zsh" || _zwarn "Could not source ~/.zsh/fzf.zsh"
+source "${HOME}/.zsh/tokyo-night-colors.zsh" || _zwarn "Could not source ~/.zsh/tokyo-night-colors.zsh"
+source "${HOME}/.zsh/tokyo-night-theme.zsh" || _zwarn "Could not source ~/.zsh/tokyo-night-theme.zsh"
 
 # Add bin to path
 [[ -d "$DOTFILES/bin" ]] && export PATH="$DOTFILES/bin:$PATH"
 
-# Load dircolors (Tokyo Night theme)
+# Load dircolors
 if [ -x "$(command -v dircolors)" ]; then
-  [[ -f ~/.dircolors ]] && eval "$(dircolors ~/.dircolors)"
-fi
-
-# Terminal color settings
-if [[ -f ~/.config/colorterm.conf ]]; then
-  source ~/.config/colorterm.conf
+    [[ -f ~/.dircolors ]] && eval "$(dircolors ~/.dircolors)"
 fi
 
 # Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [ -f /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
-# Node Version Manager (if installed)
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# SSH tab completion optimization - only show configured hosts
+_ssh_hosts_completion() {
+    local -a ssh_hosts
+    # Extract Host entries from SSH config files, excluding wildcards and comments
+    ssh_hosts=($(awk '
+        /^Host / { 
+            for(i=2; i<=NF; i++) {
+                if($i !~ /[*?]/ && $i !~ /^#/) {
+                    print $i
+                }
+            }
+        }
+    ' ~/.ssh/config ~/.ssh/work.d/*.conf ~/.ssh/private.d/*.conf 2>/dev/null | sort -u))
 
-# Load fzf (if installed via Homebrew)
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    _describe 'ssh hosts' ssh_hosts
+}
 
-# Prompt setup (basic)
-autoload -Uz vcs_info
-precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats '{%b}'
-setopt PROMPT_SUBST
-PROMPT='%F{cyan}%n@%m%f:%F{green}%~%f %F{yellow}${vcs_info_msg_0_}%f $ '
+# Disable default SSH host completion sources
+zstyle ':completion:*:ssh:*' hosts off
+zstyle ':completion:*:scp:*' hosts off
+zstyle ':completion:*:sftp:*' hosts off
+zstyle ':completion:*:ssh:*' users-hosts off
+zstyle ':completion:*:scp:*' users-hosts off
+zstyle ':completion:*:sftp:*' users-hosts off
 
-# Add any other custom settings below
+# Override default SSH completion to use only configured hosts
+compdef _ssh_hosts_completion ssh
+compdef _ssh_hosts_completion scp
+compdef _ssh_hosts_completion sftp
 
+# Force reload of completion system
+autoload -U compinit && compinit -d
+
+# Prompt setup - now handled by tokyo-night-theme.zsh
+# setopt prompt_subst
+# autoload -Uz vcs_info
+
+# vcs_info configuration
+# zstyle ':vcs_info:*' enable git
+# zstyle ':vcs_info:*:*' unstagedstr '!'
+# zstyle ':vcs_info:*:*' stagedstr '+'
+# zstyle ':vcs_info:*:*' formats "%F{red}%r%f/%F{magenta}%b%f" "%u%c"
+# zstyle ':vcs_info:*:*' actionformats "%F{red}%r%f/%F{magenta}%b%f" "%u%c (%a)"
+# zstyle ':vcs_info:*:*' nvcsformats "%~" ""
+
+# Check if repo is dirty
+# git_dirty() {
+#     command git rev-parse --is-inside-work-tree &>/dev/null || return
+#     command git diff --quiet --ignore-submodules HEAD &>/dev/null
+#     [ $? -eq 1 ] && echo "*"
+# }
+
+# Repository information display
+# repo_information() {
+#     echo "%F{red}${vcs_info_msg_0_%%/.}%f %F{magenta}${vcs_info_msg_1_}$(git_dirty)%f"
+# }
+
+# Command execution time
+# cmd_exec_time() {
+#     local stop=$(date +%s)
+#     local start=${cmd_timestamp:-$stop}
+#     let local elapsed=$stop-$start
+#     [ $elapsed -gt 5 ] && echo "${elapsed}s"
+# }
+
+# Get timestamp for exec time
+# preexec() {
+#     cmd_timestamp=$(date +%s)
+# }
+
+# Precmd function for info line
+precmd() {
+    vcs_info
+    print -P "\n%F{blue}%n%F{red}@%F{green}%m%F{red}:%f $(repo_information) %F{yellow}$(cmd_exec_time)%f"
+}
+
+# Final prompt definition - refined theme style
+PROMPT="%(?.%F{magenta}.%F{red})❯%f "

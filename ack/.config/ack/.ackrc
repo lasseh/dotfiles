@@ -1,0 +1,27 @@
+# Modern ack configuration
+# Colors (more readable)
+--color-filename=bold blue
+--color-match=bold yellow
+--color-lineno=green
+
+# Output formatting
+--group
+--context=1
+
+# Performance
+--flush
+
+# File types (only add custom ones)
+--type-set=vue=.vue
+--type-set=tsx=.tsx
+--type-set=mdx=.mdx
+
+# Ignore common directories
+--ignore-dir=node_modules
+--ignore-dir=.git
+--ignore-dir=dist
+--ignore-dir=build
+--ignore-dir=coverage
+
+# Smart case (case-insensitive unless uppercase used)
+--smart-case

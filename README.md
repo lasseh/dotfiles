@@ -92,14 +92,13 @@ dotfiles/
 ├── dircolors/
 │   └── .dircolors
 ├── btop/
-│   ├── .config/btop/btop.conf
-│   └── .config/btop/themes/tokyonight.theme
+│   └── .config/btop/btop.conf
 ├── htop/
 │   └── .config/htop/htoprc
 ├── lazygit/
 │   └── .config/lazygit/config.yml
-├── colorterm/
-│   └── .config/colorterm.conf
+├── chromaterm/
+│   └── chromaterm.yml
 ├── iterm2/
 │   └── TokyoNight.itermcolors
 └── ... (other application configs)
@@ -118,6 +117,9 @@ Each directory contains configuration files for a specific application. GNU Stow
 | `make brew-bundle` | Install packages from Brewfile                  |
 | `make brew-dump`  | Export installed packages to Brewfile            |
 | `make stow-all`  | Stow all configurations                          |
+| `make dotfiles`  | Stow all configurations (alias for stow-all)    |
+| `make dotfiles`  | Stow all configurations (alias for stow-all)    |
+| `make dotfiles`  | Stow all configurations (alias for stow-all)    |
 | `make stow-git`  | Stow git configuration                           |
 | `make stow-vim`  | Stow vim configuration                           |
 | `make stow-zsh`  | Stow zsh configuration                           |
@@ -126,10 +128,11 @@ Each directory contains configuration files for a specific application. GNU Stow
 | `make stow-btop`  | Stow btop configuration                          |
 | `make stow-htop`  | Stow htop configuration                          |
 | `make stow-lazygit`  | Stow lazygit configuration                       |
-| `make stow-colorterm`  | Stow terminal color configuration                |
+| `make stow-chromaterm`  | Stow chromaterm configuration                   |
 | `make stow-iterm2`  | Stow iTerm2 color scheme                         |
 | `make osx-defaults` | Apply macOS default settings                     |
 | `make mas-install` | Install Mac App Store applications               |
+| `make check`       | Validate configuration files                     |
 
 ## Customization
 

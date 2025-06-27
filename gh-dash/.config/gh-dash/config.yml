@@ -1,0 +1,165 @@
+prSections:
+  - title: My Pull Requests
+    filters: is:open author:lasseh
+    layout:
+      author:
+        hidden: true
+      updatedAt:
+        width: 12
+      repo:
+        width: 20
+      title:
+        width: 50
+      reviewStatus:
+        width: 12
+      ci:
+        width: 8
+
+  - title: Needs My Review
+    filters: is:open review-requested:lasseh
+    layout:
+      author:
+        width: 15
+      updatedAt:
+        width: 12
+      repo:
+        width: 20
+      title:
+        width: 50
+      reviewStatus:
+        width: 12
+      ci:
+        width: 8
+
+  - title: Involved
+    filters: is:open involves:lasseh -author:lasseh
+    layout:
+      author:
+        width: 15
+      updatedAt:
+        width: 12
+      repo:
+        width: 20
+      title:
+        width: 50
+      reviewStatus:
+        width: 12
+      ci:
+        width: 8
+
+issuesSections:
+  - title: My Issues
+    filters: is:open author:lasseh
+    layout:
+      updatedAt:
+        width: 12
+      repo:
+        width: 20
+      title:
+        width: 60
+      assignees:
+        width: 15
+      creator:
+        hidden: true
+
+  - title: Assigned
+    filters: is:open assignee:lasseh
+    layout:
+      updatedAt:
+        width: 12
+      repo:
+        width: 20
+      title:
+        width: 60
+      assignees:
+        hidden: true
+      creator:
+        width: 15
+
+  - title: Mentioned
+    filters: is:open mentions:lasseh
+    layout:
+      updatedAt:
+        width: 12
+      repo:
+        width: 20
+      title:
+        width: 60
+      assignees:
+        width: 15
+      creator:
+        width: 15
+
+defaults:
+  layout:
+    prs:
+      repo:
+        width: 20
+      title:
+        width: 50
+      author:
+        width: 15
+      assignees:
+        width: 15
+      reviewStatus:
+        width: 12
+      ci:
+        width: 8
+      updatedAt:
+        width: 12
+    issues:
+      repo:
+        width: 20
+      title:
+        width: 60
+      creator:
+        width: 15
+      assignees:
+        width: 15
+      updatedAt:
+        width: 12
+
+  preview:
+    open: true
+    width: 60
+
+  refetchIntervalMinutes: 30
+
+theme:
+  colors:
+    text:
+      primary: "#c0caf5"
+      secondary: "#a9b1d6"
+      inverted: "#1a1b26"
+      faint: "#565f89"
+      warning: "#e0af68"
+      success: "#9ece6a"
+    background:
+      selected: "#283457"
+    border:
+      primary: "#27a1b9"
+      secondary: "#565f89"
+      faint: "#414868"
+
+keybindings:
+  issues:
+    - key: c
+      command: >
+        tmux new-window -c {{.RepoPath}} '
+        gh issue create --web --repo {{.RepoName}}
+        '
+  prs:
+    - key: c
+      command: >
+        tmux new-window -c {{.RepoPath}} '
+        gh pr create --web --repo {{.RepoName}}
+        '
+    - key: O
+      command: >
+        tmux new-window -c {{.RepoPath}} '
+        gh pr checkout {{.PrNumber}} --repo {{.RepoName}} &&
+        gh pr diff {{.PrNumber}} --repo {{.RepoName}}
+        '
+
+pager:
+  diff: delta

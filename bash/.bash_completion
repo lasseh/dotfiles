@@ -1,0 +1,29 @@
+# SSH tab completion optimization - only show configured hosts
+# This file should be sourced from .bashrc or .bash_profile
+
+_ssh_completion() {
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    
+    # Extract Host entries from SSH config files, excluding wildcards
+    local hosts=$(awk '
+        /^Host / { 
+            for(i=2; i<=NF; i++) {
+                if($i !~ /[*?]/ && $i !~ /^#/) {
+                    print $i
+                }
+            }
+        }
+    ' ~/.ssh/config ~/.ssh/work.d/*.conf ~/.ssh/private.d/*.conf 2>/dev/null | sort -u)
+    
+    COMPREPLY=( $(compgen -W "${hosts}" -- ${cur}) )
+    return 0
+}
+
+# Remove any existing SSH completion and register our custom one
+complete -r ssh scp sftp 2>/dev/null || true
+complete -F _ssh_completion ssh
+complete -F _ssh_completion scp  
+complete -F _ssh_completion sftp

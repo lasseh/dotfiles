@@ -1,0 +1,285 @@
+# Tokyo Night dircolors configuration
+# Based on Tokyo Night color palette for terminal file listings
+
+# Configuration file for dircolors, a utility to help you set the
+# LS_COLORS environment variable used by GNU ls with the --color option.
+
+# Copyright (C) 1996-2020 Free Software Foundation, Inc.
+# Copying and distribution of this file, with or without modification,
+# are permitted provided the copyright notice and this notice are preserved.
+
+# The keywords COLOR, OPTIONS, and EIGHTBIT (honored by the
+# slackware version of dircolors) are recognized but ignored.
+
+# Below are TERM entries, which can be a glob patterns, to match
+# against the TERM environment variable to determine if it is colorizable.
+TERM Eterm
+TERM ansi
+TERM *color*
+TERM con[0-9]*x[0-9]*
+TERM cons25
+TERM console
+TERM cygwin
+TERM dtterm
+TERM gnome
+TERM hurd
+TERM jfbterm
+TERM konsole
+TERM kterm
+TERM linux
+TERM linux-c
+TERM mlterm
+TERM putty
+TERM rxvt*
+TERM screen*
+TERM st
+TERM terminator
+TERM tmux*
+TERM vt100
+TERM xterm*
+
+# Below are the color init strings for the basic file types.
+# One can use codes for 256 or more colors supported by modern terminals.
+# The default color codes use the capabilities of an 8 color terminal
+# with some additional attributes as per the following codes:
+#
+# Attribute codes:
+# 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
+# Text color codes:
+# 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
+# Background color codes:
+# 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+
+# Tokyo Night Color Palette (256-color codes):
+# Background: #1a1b26 (235)
+# Foreground: #c0caf5 (189)
+# Selection: #283457 (237)
+# Comment: #565f89 (102)
+# Red: #f7768e (210)
+# Orange: #ff9e64 (215)
+# Yellow: #e0af68 (179)
+# Green: #9ece6a (149)
+# Cyan: #7dcfff (117)
+# Blue: #7aa2f7 (111)
+# Purple: #bb9af7 (141)
+# Magenta: #bb9af7 (141)
+
+NORMAL 00;38;5;189 # no color code at all
+FILE 00;38;5;189 # regular file: use no color at all
+RESET 0 # reset to "normal" color
+DIR 01;38;5;111 # directory - Tokyo Night blue, bold
+LINK 01;38;5;117 # symbolic link - Tokyo Night cyan, bold
+MULTIHARDLINK 00 # regular file with more than one link
+FIFO 40;38;5;179;01 # pipe - Tokyo Night yellow on background
+SOCK 01;38;5;141 # socket - Tokyo Night purple, bold
+DOOR 01;38;5;141 # door - Tokyo Night purple, bold
+BLK 40;38;5;179;01 # block device driver - Tokyo Night yellow on background
+CHR 40;38;5;179;01 # character device driver - Tokyo Night yellow on background
+ORPHAN 40;38;5;210;01 # symlink to nonexistent file - Tokyo Night red on background
+SETUID 37;41 # file that is setuid (u+s)
+SETGID 30;43 # file that is setgid (g+s)
+CAPABILITY 30;41 # file with capability
+STICKY_OTHER_WRITABLE 30;42 # dir that is sticky and other-writable (+t,o+w)
+OTHER_WRITABLE 34;42 # dir that is other-writable (o+w) and not sticky
+STICKY 37;44 # dir with the sticky bit set (+t) and not other-writable
+
+# This is for files with execute permission:
+EXEC 01;38;5;149 # Tokyo Night green, bold
+
+# List any file extensions like '.gz' or '.tar' that you would like ls
+# to colorize below. Put the extension, a space, and the color init string.
+# (and any comments you want to add after a '#')
+
+# If you use DOS-style suffixes, you may want to uncomment the following:
+#.cmd 01;32 # executables (bright green)
+#.exe 01;32
+#.com 01;32
+#.btm 01;32
+#.bat 01;32
+# Or if you want to colorize scripts even if they do not have the
+# executable bit actually set.
+#.sh  01;32
+#.csh 01;32
+
+# Archives or compressed (Tokyo Night orange)
+.tar 01;38;5;215
+.tgz 01;38;5;215
+.arc 01;38;5;215
+.arj 01;38;5;215
+.taz 01;38;5;215
+.lha 01;38;5;215
+.lz4 01;38;5;215
+.lzh 01;38;5;215
+.lzma 01;38;5;215
+.tlz 01;38;5;215
+.txz 01;38;5;215
+.tzo 01;38;5;215
+.t7z 01;38;5;215
+.zip 01;38;5;215
+.z 01;38;5;215
+.dz 01;38;5;215
+.gz 01;38;5;215
+.lrz 01;38;5;215
+.lz 01;38;5;215
+.lzo 01;38;5;215
+.xz 01;38;5;215
+.zst 01;38;5;215
+.tzst 01;38;5;215
+.bz2 01;38;5;215
+.bz 01;38;5;215
+.tbz 01;38;5;215
+.tbz2 01;38;5;215
+.tz 01;38;5;215
+.deb 01;38;5;215
+.rpm 01;38;5;215
+.jar 01;38;5;215
+.war 01;38;5;215
+.ear 01;38;5;215
+.sar 01;38;5;215
+.rar 01;38;5;215
+.alz 01;38;5;215
+.ace 01;38;5;215
+.zoo 01;38;5;215
+.cpio 01;38;5;215
+.7z 01;38;5;215
+.rz 01;38;5;215
+.cab 01;38;5;215
+.wim 01;38;5;215
+.swm 01;38;5;215
+.dwm 01;38;5;215
+.esd 01;38;5;215
+
+# Image formats (Tokyo Night purple)
+.jpg 01;38;5;141
+.jpeg 01;38;5;141
+.mjpg 01;38;5;141
+.mjpeg 01;38;5;141
+.gif 01;38;5;141
+.bmp 01;38;5;141
+.pbm 01;38;5;141
+.pgm 01;38;5;141
+.ppm 01;38;5;141
+.tga 01;38;5;141
+.xbm 01;38;5;141
+.xpm 01;38;5;141
+.tif 01;38;5;141
+.tiff 01;38;5;141
+.png 01;38;5;141
+.svg 01;38;5;141
+.svgz 01;38;5;141
+.mng 01;38;5;141
+.pcx 01;38;5;141
+.mov 01;38;5;141
+.mpg 01;38;5;141
+.mpeg 01;38;5;141
+.m2v 01;38;5;141
+.mkv 01;38;5;141
+.webm 01;38;5;141
+.ogm 01;38;5;141
+.mp4 01;38;5;141
+.m4v 01;38;5;141
+.mp4v 01;38;5;141
+.vob 01;38;5;141
+.qt 01;38;5;141
+.nuv 01;38;5;141
+.wmv 01;38;5;141
+.asf 01;38;5;141
+.rm 01;38;5;141
+.rmvb 01;38;5;141
+.flc 01;38;5;141
+.avi 01;38;5;141
+.fli 01;38;5;141
+.flv 01;38;5;141
+.gl 01;38;5;141
+.dl 01;38;5;141
+.xcf 01;38;5;141
+.xwd 01;38;5;141
+.yuv 01;38;5;141
+.cgm 01;38;5;141
+.emf 01;38;5;141
+
+# Audio formats (Tokyo Night cyan)
+.aac 01;38;5;117
+.au 01;38;5;117
+.flac 01;38;5;117
+.m4a 01;38;5;117
+.mid 01;38;5;117
+.midi 01;38;5;117
+.mka 01;38;5;117
+.mp3 01;38;5;117
+.mpc 01;38;5;117
+.ogg 01;38;5;117
+.ra 01;38;5;117
+.wav 01;38;5;117
+.oga 01;38;5;117
+.opus 01;38;5;117
+.spx 01;38;5;117
+.xspf 01;38;5;117
+
+# Document formats (Tokyo Night yellow)
+.pdf 01;38;5;179
+.ps 01;38;5;179
+.txt 00;38;5;189
+.patch 00;38;5;189
+.diff 00;38;5;189
+.log 00;38;5;102
+.tex 01;38;5;179
+.doc 01;38;5;179
+.docx 01;38;5;179
+.odt 01;38;5;179
+.ods 01;38;5;179
+.odp 01;38;5;179
+.rtf 01;38;5;179
+
+# Source code (Tokyo Night green)
+.c 01;38;5;149
+.cpp 01;38;5;149
+.cc 01;38;5;149
+.cxx 01;38;5;149
+.h 01;38;5;149
+.hpp 01;38;5;149
+.py 01;38;5;149
+.rb 01;38;5;149
+.js 01;38;5;149
+.ts 01;38;5;149
+.java 01;38;5;149
+.go 01;38;5;149
+.rs 01;38;5;149
+.php 01;38;5;149
+.pl 01;38;5;149
+.sh 01;38;5;149
+.bash 01;38;5;149
+.zsh 01;38;5;149
+.fish 01;38;5;149
+.vim 01;38;5;149
+.lua 01;38;5;149
+.r 01;38;5;149
+.R 01;38;5;149
+.m 01;38;5;149
+.swift 01;38;5;149
+.kt 01;38;5;149
+.scala 01;38;5;149
+.clj 01;38;5;149
+.hs 01;38;5;149
+.ml 01;38;5;149
+.fs 01;38;5;149
+
+# Configuration files (Tokyo Night comment color)
+.conf 00;38;5;102
+.config 00;38;5;102
+.cfg 00;38;5;102
+.ini 00;38;5;102
+.yml 00;38;5;102
+.yaml 00;38;5;102
+.toml 00;38;5;102
+.json 00;38;5;102
+.xml 00;38;5;102
+
+# Special files (Tokyo Night red)
+.bak 00;38;5;210
+.tmp 00;38;5;210
+.temp 00;38;5;210
+.old 00;38;5;210
+.orig 00;38;5;210
+.swp 00;38;5;210
+.swo 00;38;5;210
