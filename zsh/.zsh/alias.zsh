@@ -121,3 +121,6 @@ alias yolotail="ssh nms.as207788.net 'tail -n 0 -qf /var/log/network/c*.log | cc
 
 # Network config diff
 alias nvimdiff="nvim -c ':DiffviewOpen @{1}..'"
+
+# Sudo aliases to preserve user environment
+alias svim='sudo -E vim'

@@ -182,25 +182,22 @@ set undolevels=256 		" Undo levels.
 set history=256			" How much history to save.
 set scrolloff=8			" Number of line to keep above cursor when scrolling
 set autoread 			" Auto read when file is changed
-set magic  			" Regular expression magic
-set nocp 			" no-compatible mode
+set magic  			    " Regular expression magic
+set nocp 			    " no-compatible mode
 set backspace=eol,start,indent	" Smarter backspace
 set encoding=utf8 		" UTF-8 Encoding
-set ttyfast			" faster redrawing
-set nowb			" Prevents automatic write backup before overwriting file
-set diffopt+=vertical		" Always use vertical diffs
+set ttyfast			    " faster redrawing
+set nowb			    " Prevents automatic write backup before overwriting file
+set diffopt+=vertical	" Always use vertical diffs
 set updatetime=250		" Faster update of internals
-" set cindent               	" Disabled - too aggressive for mixed files
-" set cinkeys-=0#           	" Disabled with cindent
-"set notitle                 	" Don't set the title of the Vim window
-set lazyredraw				\" Don't redraw during macros
-set synmaxcol=200			\" Don't syntax highlight long lines
-set regexpengine=1			\" Use old regex engine (faster)
+set lazyredraw			" Don't redraw during macros
+set synmaxcol=200		" Don't syntax highlight long lines
+set regexpengine=1		" Use old regex engine (faster)
 
 
 " Brackets
 set showmatch			" Show matching brackets
-set mat=2 			" Bracket matching blinking interval (1/10 sec)
+set mat=2 			    " Bracket matching blinking interval (1/10 sec)
 
 " Searching
 set incsearch			" Show partial matches.
@@ -269,17 +266,17 @@ let NERDTreeMinimalUI=1         " Minimal UI
 let NERDTreeDirArrows=1         " Use arrows for directories
 
 
-\" ====================================================================
-\" Open file at last edited position
-\" ====================================================================
+" ====================================================================
+" Open file at last edited position
+" ====================================================================
 au BufReadPost *
 			\ if line("'\"") > 0 && line("'\"") <= line("$") |
 			\   exe "normal g`\"" |
 			\ endif
 
-\" ====================================================================
-\" Auto-detect indentation style (tabs vs spaces)
-\" ====================================================================
+" ====================================================================
+" Auto-detect indentation style (tabs vs spaces)
+" ====================================================================
 autocmd BufReadPost * call DetectIndent()
 function! DetectIndent()
     let l:has_leading_tabs = search('^\t', 'nw') != 0
@@ -310,7 +307,7 @@ let g:gitgutter_sign_modified_removed = '∙'
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 let g:gitgutter_map_keys = 0
-let g:gitgutter_max_signs = 500		\" Limit signs for performance
+let g:gitgutter_max_signs = 500		" Limit signs for performance
 " Always display gitgutter column. (Prevents movement of the linenumber column)
 if exists('&signcolumn')  " Vim 7.4.2201
 	set signcolumn=yes
