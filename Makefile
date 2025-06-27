@@ -55,7 +55,6 @@ brew-dump:
 		echo "Review the differences and manually update Brewfile as needed"; \
 	fi
 
-
 iterm2:
 	@if defaults read com.googlecode.iterm2 PrefsCustomFolder 2>/dev/null | grep -q "$(PWD)/iterm2"; then \
 		echo "iTerm2 already configured to use dotfiles folder, skipping..."; \

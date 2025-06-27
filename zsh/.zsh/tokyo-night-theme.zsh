@@ -11,8 +11,8 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*:*' unstagedstr '!'
 zstyle ':vcs_info:*:*' stagedstr '+'
-zstyle ':vcs_info:*:*' formats "%F{#f7768e}%r%f/%F{#bb9af7}%b%f" "%u%c"
-zstyle ':vcs_info:*:*' actionformats "%F{#f7768e}%r%f/%F{#bb9af7}%b%f" "%u%c (%a)"
+zstyle ':vcs_info:*:*' formats "%F{162}%r%f/%F{128}%b%f" "%u%c"
+zstyle ':vcs_info:*:*' actionformats "%F{162}%r%f/%F{128}%b%f" "%u%c (%a)"
 zstyle ':vcs_info:*:*' nvcsformats "%~" ""
 
 # Check if repo is dirty
@@ -24,7 +24,7 @@ git_dirty() {
 
 # Repository information display with Tokyo Night colors
 repo_information() {
-    echo "%F{#f7768e}${vcs_info_msg_0_%%/.}%f %F{#bb9af7}${vcs_info_msg_1_}$(git_dirty)%f"
+    echo "%F{162}${vcs_info_msg_0_%%/.}%f %F{128}${vcs_info_msg_1_}$(git_dirty)%f"
 }
 
 # Command execution time
@@ -43,8 +43,8 @@ preexec() {
 # Precmd function for info line with Tokyo Night colors
 precmd() {
     vcs_info
-    print -P "\n%F{#414868}%n%F{#c53b53}@%F{#73a373}%m%F{#f7768e}:%f $(repo_information) %F{#e0af68}$(cmd_exec_time)%f"
+    print -P "\\n%F{32}%n%F{163}@%F{35}%m%F{163}:%f $(repo_information) %F{162}$(cmd_exec_time)%f"
 }
 
 # Final prompt definition with Tokyo Night colors
-PROMPT="%(?.%F{#bb9af7}.%F{#f7768e})❯%f "
+PROMPT="%(?.%F{32}.%F{196})❯%f "

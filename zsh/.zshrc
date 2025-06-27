@@ -88,11 +88,4 @@ compdef _ssh_hosts_completion sftp
 # Force reload of completion system
 autoload -U compinit && compinit -d
 
-# Precmd function for info line
-precmd() {
-    vcs_info
-    print -P "\n%F{blue}%n%F{red}@%F{green}%m%F{red}:%f $(repo_information) %F{yellow}$(cmd_exec_time)%f"
-}
-
-# Final prompt definition - refined theme style
-PROMPT="%(?.%F{magenta}.%F{red})❯%f "
+# Prompt is defined in tokyo-night-theme.zsh
