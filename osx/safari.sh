@@ -2,6 +2,13 @@
 
 echo "Configuring Safari..."
 
+# Check if Safari is running and close it
+if pgrep -x "Safari" > /dev/null; then
+    echo "Closing Safari to modify preferences..."
+    killall Safari
+    sleep 2
+fi
+
 # Privacy: don't send search queries to Apple
 defaults write com.apple.Safari UniversalSearchEnabled -bool false
 defaults write com.apple.Safari SuppressSearchSuggestions -bool true
@@ -88,3 +95,4 @@ defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
 defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
 
 echo "Safari configuration complete"
+echo "Note: Safari preferences are sandboxed and require Safari to be closed during configuration"

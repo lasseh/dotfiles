@@ -1,0 +1,93 @@
+# GitHub CLI configuration
+# Popular settings for development workflow
+
+# What protocol to use when performing git operations
+git_protocol: ssh
+
+# What editor gh should run when creating issues, pull requests, etc
+editor: vim
+
+# When to interactively prompt. This is a global config that cannot be overridden by hostname
+prompt: enabled
+
+# Aliases allow you to create nicknames for gh commands
+aliases:
+    # Repository shortcuts
+    co: pr checkout
+    pv: pr view
+    pc: pr create
+    pm: pr merge
+    pl: pr list
+    ps: pr status
+    
+    # Issue shortcuts
+    ic: issue create
+    iv: issue view
+    il: issue list
+    
+    # Repository management
+    rc: repo clone
+    rf: repo fork
+    rv: repo view
+    
+    # Release shortcuts
+    rl: release list
+    
+    # Workflow shortcuts
+    wl: workflow list
+    wr: workflow run
+    wv: workflow view
+    
+    # Gist shortcuts
+    gc: gist create
+    gl: gist list
+    gv: gist view
+    
+    # Custom useful aliases
+    prco: '!gh pr list --author "@me" --json number,title,headRefName | jq -r ".[] | \"\\(.number): \\(.title) (\\(.headRefName))\""'
+    myissues: issue list --assignee "@me"
+    myprs: pr list --author "@me"
+    trending: '!gh search repos --sort stars --order desc --limit 10'
+    
+# The path to a unix socket through which send HTTP connections
+http_unix_socket:
+
+# What web browser gh should use when opening URLs
+browser:
+
+# Set to true to disable prompting to authenticate git operations with GitHub
+skip_ssh_key_prompt: false
+
+# Configure default behavior for gh pr create
+pr:
+    # Default base branch for pull requests
+    base: main
+    
+    # Default title template for pull requests
+    # title: ""
+    
+    # Default body template for pull requests  
+    # body: ""
+
+# Configure default behavior for gh issue create
+issue:
+    # Default title template for issues
+    # title: ""
+    
+    # Default body template for issues
+    # body: ""
+
+# Configure default behavior for gh repo create
+repo:
+    # Default visibility for new repositories
+    # visibility: private
+    
+    # Default description template
+    # description: ""
+
+# Configure pager settings
+pager: less -R
+
+# Configure default output format
+# Can be: json, table, csv
+# format: table

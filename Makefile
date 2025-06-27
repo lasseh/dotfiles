@@ -80,7 +80,7 @@ osx-defaults:
 	@./osx/keyboard.sh
 	@echo "Applying trackpad defaults..."
 	@./osx/trackpad.sh
-	@echo "Applying Safari defaults..."
+	@echo "Applying Safari defaults (will close Safari if running)..."
 	@./osx/safari.sh
 	@echo "Applying Terminal defaults..."
 	@./osx/terminal.sh
