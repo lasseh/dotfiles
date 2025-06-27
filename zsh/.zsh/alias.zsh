@@ -1,24 +1,3 @@
-# Navigation
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias ~="cd ~"
-alias -- -="cd -"
-
-# Shortcuts
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias p="cd ~/Projects"
-alias g="git"
-alias h="history"
-alias j="jobs"
-
-# List directory contents
-alias ls="exa --group-directories-first --git"
-alias ll="ls -l"
-alias la="ls -la"
-alias lt="ls --tree"
-
 # Better defaults
 alias cp="cp -i"       # Confirm before overwriting
 alias mv="mv -i"       # Confirm before overwriting
@@ -34,8 +13,6 @@ alias ..='cd ..'
 alias cp='cp -v'
 alias mv='mv -v'
 alias rm='rm -v'
-alias sco='rm -O'
-#alias nc='nc -v -w 3'
 alias sloc="find . -name '*.go' | xargs wc -l"
 
 # ==> Folder shortcuts
@@ -46,9 +23,6 @@ alias svv='cd $HOME/code/go/src/github.com/lasseh/svv'
 # to create dev/tech session: tmux new-session -s dev
 alias tmuxa='tmux attach -t 0'
 alias tmuxad='tmux attach -d -t 0'
-alias tmuxdev='tmux attach -d -t dev'
-alias tmuxnet='tmux attach -d -t net'
-alias tmuxtech='tmux attach -d -t tech'
 
 # ncurses fix
 alias irssi='TERM=screen-256color irssi'
@@ -82,7 +56,7 @@ alias gupdatesubm='git pull --recurse-submodules && git submodule update --recur
 # ==> Listing aliases
 if which eza &>/dev/null; then
     alias ls="eza --group-directories-first --git -mghas Name --long"
-    alias lst="eza --group-directories-first --git --tree -mghs Name --long --ignore-glob .git -a --depth=5"
+    alias lst="eza --group-directories-first --git --tree -mghs Name --long --ignore-glob .git -a"
     alias xa="eza"
     alias le="eza -lrhgHBimUa --git --group-directories-first"
 else
@@ -122,5 +96,9 @@ alias yolotail="ssh nms.as207788.net 'tail -n 0 -qf /var/log/network/c*.log | cc
 # Network config diff
 alias nvimdiff="nvim -c ':DiffviewOpen @{1}..'"
 
-# Sudo aliases to preserve user environment
+# Sudo aliases to preserve user environment and colorscheme
 alias svim='sudo -E vim'
+alias scat='sudo -E batcat'
+alias stail='sudo -E tail'
+alias shtop='sudo -E htop'
+alias sbtop='sudo -E btop'
