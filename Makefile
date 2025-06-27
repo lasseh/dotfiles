@@ -2,15 +2,19 @@
 
 # Stow related targets
 dotfiles:
+	@stow -R -t ~/ ack
 	@stow -R -t ~/ bash
 	@stow -R -t ~/ bat
 	@stow -R -t ~/ btop
 	@stow -R -t ~/ chromaterm
+	@stow -R -t ~/ curl
 	@stow -R -t ~/ dircolors
+	@stow -R -t ~/ eza
+	@stow -R -t ~/ gh
 	@stow -R -t ~/ gh-dash
 	@stow -R -t ~/ git
 	@stow -R -t ~/ htop
-	@stow -R -t ~/ lazygit
+	@stow -R -t ~/ lazygit # Install lazygit on linux: 
 	@stow -R -t ~/ ssh
 	@stow -R -t ~/ tmux
 	@stow -R -t ~/ vim
