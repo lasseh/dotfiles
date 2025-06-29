@@ -69,6 +69,6 @@ if [ -f ~/.bash_completion ]; then
 fi
 
 # Run motd script if it exists
-if [ -x .dotfiles-new/bin/motd.sh ]; then
-    .dotfiles-new/bin/motd.sh
+if [ -x .dotfiles/bin/motd.sh ]; then
+    .dotfiles/bin/motd.sh
 fi

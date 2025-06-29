@@ -1,5 +1,5 @@
 # Path to your dotfiles directory
-export DOTFILES="$HOME/dotfiles-new"
+export DOTFILES="$HOME/dotfiles"
 
 # Path to your zsh configuration.
 export ZSH=$HOME/.zsh
