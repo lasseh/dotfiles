@@ -2,23 +2,24 @@
 
 # Stow related targets
 dotfiles:
-	@stow --override=.* -R -t ~/ ack
-	@stow --override=.* -R -t ~/ bash
-	@stow --override=.* -R -t ~/ bat
-	@stow --override=.* -R -t ~/ btop
-	@stow --override=.* -R -t ~/ chromaterm
-	@stow --override=.* -R -t ~/ curl
-	@stow --override=.* -R -t ~/ dircolors
-	@stow --override=.* -R -t ~/ eza
-	@stow --override=.* -R -t ~/ gh
-	@stow --override=.* -R -t ~/ gh-dash
-	@stow --override=.* -R -t ~/ git
-	@stow --override=.* -R -t ~/ htop
-	@stow --override=.* -R -t ~/ lazygit # Install lazygit on linux: 
-	@stow --override=.* -R -t ~/ ssh
-	@stow --override=.* -R -t ~/ tmux
-	@stow --override=.* -R -t ~/ vim
-	@stow --override=.* -R -t ~/ zsh
+	@mkdir -p ~/.config
+	@stow --no-folding --override=.* -R -t ~/ ack
+	@stow --no-folding --override=.* -R -t ~/ bash
+	@stow --no-folding --override=.* -R -t ~/ bat
+	@stow --no-folding --override=.* -R -t ~/ btop
+	@stow --no-folding --override=.* -R -t ~/ chromaterm
+	@stow --no-folding --override=.* -R -t ~/ curl
+	@stow --no-folding --override=.* -R -t ~/ dircolors
+	@stow --no-folding --override=.* -R -t ~/ eza
+	@stow --no-folding --override=.* -R -t ~/ gh
+	@stow --no-folding --override=.* -R -t ~/ gh-dash
+	@stow --no-folding --override=.* -R -t ~/ git
+	@stow --no-folding --override=.* -R -t ~/ htop
+	@stow --no-folding --override=.* -R -t ~/ lazygit # Install lazygit on linux: 
+	@stow --no-folding --override=.* -R -t ~/ ssh
+	@stow --no-folding --override=.* -R -t ~/ tmux
+	@stow --no-folding --override=.* -R -t ~/ vim
+	@stow --no-folding --override=.* -R -t ~/ zsh
 	@echo "All configurations stowed!"
 
 # Install everything

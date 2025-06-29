@@ -2,7 +2,7 @@
 # Executed when a login shell exits
 
 # Clear the screen for security
-clear
+# clear
 
 # Save history
 history -a
