@@ -2,23 +2,23 @@
 
 # Stow related targets
 dotfiles:
-	@stow -R -t ~/ ack
-	@stow -R -t ~/ bash
-	@stow -R -t ~/ bat
-	@stow -R -t ~/ btop
-	@stow -R -t ~/ chromaterm
-	@stow -R -t ~/ curl
-	@stow -R -t ~/ dircolors
-	@stow -R -t ~/ eza
-	@stow -R -t ~/ gh
-	@stow -R -t ~/ gh-dash
-	@stow -R -t ~/ git
-	@stow -R -t ~/ htop
-	@stow -R -t ~/ lazygit # Install lazygit on linux: 
-	@stow -R -t ~/ ssh
-	@stow -R -t ~/ tmux
-	@stow -R -t ~/ vim
-	@stow -R -t ~/ zsh
+	@stow --override=.* -R -t ~/ ack
+	@stow --override=.* -R -t ~/ bash
+	@stow --override=.* -R -t ~/ bat
+	@stow --override=.* -R -t ~/ btop
+	@stow --override=.* -R -t ~/ chromaterm
+	@stow --override=.* -R -t ~/ curl
+	@stow --override=.* -R -t ~/ dircolors
+	@stow --override=.* -R -t ~/ eza
+	@stow --override=.* -R -t ~/ gh
+	@stow --override=.* -R -t ~/ gh-dash
+	@stow --override=.* -R -t ~/ git
+	@stow --override=.* -R -t ~/ htop
+	@stow --override=.* -R -t ~/ lazygit # Install lazygit on linux: 
+	@stow --override=.* -R -t ~/ ssh
+	@stow --override=.* -R -t ~/ tmux
+	@stow --override=.* -R -t ~/ vim
+	@stow --override=.* -R -t ~/ zsh
 	@echo "All configurations stowed!"
 
 # Install everything
