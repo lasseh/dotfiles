@@ -20,3 +20,5 @@ secrets.json
 
 # Avoid including Brewfile.lock.json in the repo
 Brewfile.lock.json
+
+.ssh/
