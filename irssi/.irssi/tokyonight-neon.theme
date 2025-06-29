@@ -15,7 +15,7 @@
 # Purple: #bb9af7
 # Comment: #565f89 (dark gray)
 
-default_color = "%n";
+default_color = "%W";
 info_eol = "false";
 
 replaces = { "[]=" = "%K$*%n"; };
@@ -44,13 +44,13 @@ abstracts = {
   nick = "%C$*%n";
 
   # nick host is printed
-  nickhost = "%K[%n$*%K]%n";
+  nickhost = "%K[%W$*%K]%W";
 
   # server name is printed
   server = "%B$*%n";
 
   # some kind of comment is printed
-  comment = "%K(%n$*%K)%n";
+  comment = "%K(%W$*%K)%W";
 
   # reason for something is printed (part, quit, kick, ..)
   reason = "{comment $*}";
@@ -81,8 +81,8 @@ abstracts = {
   ##
 
   # message nick formatting
-  msgnickhilight = "%K<%n$0$1-%K>%n %|";
-  msgnick = "%K<%n$0$1-%K>%n %|";
+  msgnickhilight = "%K<%W$0$1-%K>%W %|";
+  msgnick = "%K<%W$0$1-%K>%W %|";
 
   # $0 = nick mode, $1 = nick
   ownmsgnick = "{msgnick $0 $1-}";
