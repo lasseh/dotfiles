@@ -46,7 +46,6 @@ alias gd='git diff --color --no-ext-diff'
 alias gdstat='git diff --color --stat'
 alias gits='git status -sb'
 alias gg='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
-alias gits='git status -sb'
 alias gcm='git commit --message'
 alias gitbranches="git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
 alias gcpush='git commit -a -m && git push origin'
