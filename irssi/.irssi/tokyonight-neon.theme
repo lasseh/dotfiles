@@ -67,7 +67,7 @@ abstracts = {
   chanhost_hilight = "{nickhost %g$*%n}";
 
   # nick/host is printed (parts, quits, etc.)
-  channick = "%C$*%n";
+  channick = "%K$*%n";
   chanhost = "{nickhost %K$*%n}";
 
   # highlighted channel name is printed
@@ -86,7 +86,7 @@ abstracts = {
 
   # $0 = nick mode, $1 = nick
   ownmsgnick = "{msgnick $0 $1-}";
-  ownnick = "%W$*%n";
+  ownnick = "%R$*%n";
 
   # public message in channel, $0 = nick mode, $1 = nick
   pubmsgnick = "{msgnick $0 $1-}";
@@ -211,7 +211,7 @@ abstracts = {
   topicsbstart = "{sbstart $*}";
   topicsbend = "{sbend $*}";
 
-  prompt = "%K[%C$*%K]%n ";
+  prompt = "%K[%C$*%K]%W ";
 
   sb = " %K[%C$*%K]%n";
   sbmode = "%K(%C+%n$*%K)%n";
@@ -233,28 +233,28 @@ formats = {
     line_start_irssi = "{line_start}";
 
     join = "%G▶%n {channick_hilight $0} {chanhost_hilight $1} has joined {channel $2}";
-    part = "%R◀%n {channick $0} {chanhost $1} has left {channel $2} {reason $3}";
-    kick = "%R✗%n {channick $0} was kicked from {channel $1} by {nick $2} {reason $3}";
-    quit = "%R◀%n {channick $0} {chanhost $1} has quit {reason $2}";
-    quit_once = "%R◀%n {channel $3} {channick $0} {chanhost $1} has quit {reason $2}";
+    part = "%K◀%n {channick $0} {chanhost $1} has left {channel $2} {reason $3}";
+    kick = "%K✗%n {channick $0} was kicked from {channel $1} by {nick $2} {reason $3}";
+    quit = "%K◀%n {channick $0} {chanhost $1} has quit {reason $2}";
+    quit_once = "%K◀%n {channel $3} {channick $0} {chanhost $1} has quit {reason $2}";
 
     nick_changed = "%Y⟲%n {channick $0} is now known as {channick_hilight $1}";
     your_nick_changed = "%Y⟲%n You're now known as {nick $1}";
 
-    pubmsg = "{pubmsgnick $2 {pubnick $0}}$1";
+    pubmsg = "{pubmsgnick $2 {pubnick $0}}%W$1%n";
 
-    own_msg = "{ownmsgnick $2 {ownnick $0}}$1";
-    own_msg_channel = "{ownmsgnick $3 {ownnick $0}{msgchannel $1}}$2";
-    own_msg_private_query = "{ownprivmsgnick {ownprivnick $0}}$2";
+    own_msg = "{ownmsgnick $2 {ownnick $0}}%R$1%n";
+    own_msg_channel = "{ownmsgnick $3 {ownnick $0}{msgchannel $1}}%R$2%n";
+    own_msg_private_query = "{ownprivmsgnick {ownprivnick $0}}%R$2%n";
 
-    pubmsg_me = "{pubmsgmenick $2 {menick $0}}$1";
-    pubmsg_me_channel = "{pubmsgmenick $3 {menick $0}{msgchannel $1}}$2";
+    pubmsg_me = "{pubmsgmenick $2 {menick $0}}%Y$1%n";
+    pubmsg_me_channel = "{pubmsgmenick $3 {menick $0}{msgchannel $1}}%Y$2%n";
 
-    pubmsg_hilight = "{pubmsghinick $0 $3 $1}$2";
-    pubmsg_hilight_channel = "{pubmsghinick $0 $4 $1{msgchannel $2}}$3";
+    pubmsg_hilight = "{pubmsghinick $0 $3 $1}%Y$2%n";
+    pubmsg_hilight_channel = "{pubmsghinick $0 $4 $1{msgchannel $2}}%Y$3%n";
 
-    pubmsg_channel = "{pubmsgnick $3 {pubnick $0}{msgchannel $1}}$2";
-    msg_private_query = "{privmsgnick $0}$2";
+    pubmsg_channel = "{pubmsgnick $3 {pubnick $0}{msgchannel $1}}%W$2%n";
+    msg_private_query = "{privmsgnick $0}%W$2%n";
   };
   "fe-common/irc" = {
     chanmode_change = "%Y⚙%n mode/{channelhilight $0} {mode $1} by {nick $2}";
