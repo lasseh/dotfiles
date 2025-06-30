@@ -246,7 +246,7 @@ check_system_errors() {
 }
 
 # Output
-clear
+# clear
 
 # Calculate proper spacing for the header
 header_text="System Information for $hostname"
