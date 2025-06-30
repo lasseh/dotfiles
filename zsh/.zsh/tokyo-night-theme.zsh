@@ -43,7 +43,7 @@ preexec() {
 # Precmd function for info line with Tokyo Night colors
 precmd() {
     vcs_info
-    print -P "\\n%F{32}%n%F{163}@%F{35}%m%F{163}:%f $(repo_information) %F{162}$(cmd_exec_time)%f"
+    print -P "\\n%F{32}%n%F{163}@%F{35}%M%F{163}:%f $(repo_information) %F{162}$(cmd_exec_time)%f"
 }
 
 # Final prompt definition with Tokyo Night colors
