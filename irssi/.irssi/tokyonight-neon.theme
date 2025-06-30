@@ -243,9 +243,9 @@ formats = {
 
     pubmsg = "{pubmsgnick $2 {pubnick $0}}%W$1%n";
 
-    own_msg = "{ownmsgnick $2 {ownnick $0}}%m$1%n";
-    own_msg_channel = "{ownmsgnick $3 {ownnick $0}{msgchannel $1}}%m$2%n";
-    own_msg_private_query = "{ownprivmsgnick {ownprivnick $0}}%m$2%n";
+    own_msg = "{ownmsgnick $2 {ownnick $0}}%W$1%n";
+    own_msg_channel = "{ownmsgnick $3 {ownnick $0}{msgchannel $1}}%W$2%n";
+    own_msg_private_query = "{ownprivmsgnick {ownprivnick $0}}%W$2%n";
 
     pubmsg_me = "{pubmsgmenick $2 {menick $0}}%Y$1%n";
     pubmsg_me_channel = "{pubmsgmenick $3 {menick $0}{msgchannel $1}}%Y$2%n";
