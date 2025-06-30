@@ -72,12 +72,17 @@ GREP_OPTIONS='--color=auto'
 alias grep="grep $GREP_OPTIONS"
 export GREP_COLORS="38;5;230:sl=38;5;240:cs=38;5;100:mt=38;5;161:fn=38;5;197:ln=38;5;212:bn=38;5;44:se=38;5;166"
 
+# Load dircolors
+if [ -x "$(command -v dircolors)" ]; then
+    [[ -f ~/.dircolors ]] && eval "$(dircolors ~/.dircolors)"
+fi
+
 # List directory contents using exa if available, otherwise ls
 if command -v eza >/dev/null 2>&1; then
     alias ls="eza --group-directories-first --git -mghas Name --long"
     alias lst="eza --group-directories-first --git --tree -mghs Name --long --ignore-glob .git -a"
 else
-    alias ls="\ls -hovA --indicator-style=file-type --color=always --group-directories-first --time=ctime"
+    alias ls="\\ls -hovAG"
     alias lst="tree -C --du --si -L 5 --dirsfirst --prune"
 fi
 

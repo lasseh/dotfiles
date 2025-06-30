@@ -82,9 +82,9 @@ if which eza &>/dev/null; then
     alias xa="eza"
     alias le="eza -lrhgHBimUa --git --group-directories-first"
 else
-    alias ls="\ls -hovA --indicator-style=file-type --color=always --group-directories-first --time=ctime"
+    alias ls="\\ls -hovAG"
     alias lst="tree -C --du --si -L 5 --dirsfirst --prune"
-    alias ldot="\ls --indicator-style=file-type --color=always  -ld .*"
+    alias ldot="\\ls -ldG .*"
 fi
 
 # replace `cat` with `bat` if installed
