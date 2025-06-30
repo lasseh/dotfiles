@@ -16,7 +16,7 @@ dotfiles:
 	@stow --no-folding --override=.* -R -t ~/ git
 	@stow --no-folding --override=.* -R -t ~/ htop
 	@stow --no-folding --override=.* -R -t ~/ lazygit # Install lazygit on linux: 
-	@stow --no-folding --override=.* -R -t ~/ ssh
+	@stow --no-folding -R -t ~/ ssh
 	@stow --no-folding --override=.* -R -t ~/ tmux
 	@stow --no-folding --override=.* -R -t ~/ vim
 	@stow --no-folding --override=.* -R -t ~/ zsh
