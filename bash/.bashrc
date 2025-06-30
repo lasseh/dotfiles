@@ -1,5 +1,4 @@
 # .bashrc
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
@@ -24,13 +23,44 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
-alias df='df -h'
-alias du='du -h --max-depth=1'
+alias grep="grep --color=auto"
+alias df="df -h"               # Human-readable sizes
+alias du="du -h --max-depth=1" # Human-readable sizes
 
 # ==> Default overrides
 alias .='pwd'
 alias ..='cd ..'
 alias tmuxad='tmux attach -d -t 0'
+
+# Git shortcuts
+alias gs="git status"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+alias gd="git diff"
+alias ga="git add"
+alias gco="git checkout"
+alias gb="git branch"
+# ==> Git
+alias ga='git add'
+alias gpush='git push origin master'
+alias gpull='git pull'
+alias gd='git diff --color --no-ext-diff'
+alias gdstat='git diff --color --stat'
+alias gits='git status -sb'
+alias gg='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+alias gcm='git commit --message'
+alias gitbranches="git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+alias gcpush='git commit -a -m && git push origin'
+alias gundo='git reset --soft HEAD~1'
+alias gupdatesubm='git pull --recurse-submodules && git submodule update --recursive --remote'
+
+# Sudo aliases to preserve user environment and colorscheme
+alias svim='sudo -E vim'
+alias scat='sudo -E batcat'
+alias stail='sudo -E tail'
+alias shtop='sudo -E htop'
+alias sbtop='sudo -E btop'
 
 # Set default editor
 export EDITOR="vim"
@@ -45,10 +75,25 @@ export GREP_COLORS="38;5;230:sl=38;5;240:cs=38;5;100:mt=38;5;161:fn=38;5;197:ln=
 # List directory contents using exa if available, otherwise ls
 if command -v eza >/dev/null 2>&1; then
     alias ls="eza --group-directories-first --git -mghas Name --long"
-    alias lst="eza --group-directories-first --git --tree -mghs Name --long"
+    alias lst="eza --group-directories-first --git --tree -mghs Name --long --ignore-glob .git -a"
 else
     alias ls="\ls -hovA --indicator-style=file-type --color=always --group-directories-first --time=ctime"
     alias lst="tree -C --du --si -L 5 --dirsfirst --prune"
+fi
+
+# replace `cat` with `bat` if installed
+if which bat &>/dev/null; then
+    alias cat="bat"
+    alias batdiff="bat --diff"
+    alias batgrep="bat --grep"
+    alias batless="bat --less='-R'"
+fi
+# replace `cat` with `batcat` if installed
+if which batcat &>/dev/null; then
+    alias cat="batcat"
+    alias batdiff="batcat --diff"
+    alias batgrep="batcat --grep"
+    alias batless="batcat --less='-R'"
 fi
 
 # Run  ls after changing directory

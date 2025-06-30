@@ -50,6 +50,9 @@ if [ -x "$(command -v dircolors)" ]; then
     [[ -f ~/.dircolors ]] && eval "$(dircolors ~/.dircolors)"
 fi
 
+# Set eza config folder
+export EZA_CONFIG_DIR="$HOME/.config/eza"
+
 # Homebrew
 if [ -f /opt/homebrew/bin/brew ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"

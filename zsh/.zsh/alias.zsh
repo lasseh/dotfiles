@@ -52,6 +52,29 @@ alias gcpush='git commit -a -m && git push origin'
 alias gundo='git reset --soft HEAD~1'
 alias gupdatesubm='git pull --recurse-submodules && git submodule update --recursive --remote'
 
+# # ==> Utilities
+alias randpasswd="LANG=c < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-64};echo;"
+
+# VSCode
+alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+alias icode="/Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code"
+
+# rs232
+#alias rs232='function _myssh(){ ssh lassehau+port${1}@2001:x:x:x:b | ct };_myssh'
+
+# Yolo
+alias yolotail="ssh nms.as207788.net 'tail -n 0 -qf /var/log/network/c*.log | ccze -A'"
+
+# Network config diff
+alias nvimdiff="nvim -c ':DiffviewOpen @{1}..'"
+
+# Sudo aliases to preserve user environment and colorscheme
+alias svim='sudo -E vim'
+alias scat='sudo -E batcat'
+alias stail='sudo -E tail'
+alias shtop='sudo -E htop'
+alias sbtop='sudo -E btop'
+
 # ==> Listing aliases
 if which eza &>/dev/null; then
     alias ls="eza --group-directories-first --git -mghas Name --long"
@@ -78,26 +101,3 @@ if which batcat &>/dev/null; then
     alias batgrep="batcat --grep"
     alias batless="batcat --less='-R'"
 fi
-
-# # ==> Utilities
-alias randpasswd="LANG=c < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-64};echo;"
-
-# VSCode
-alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
-alias icode="/Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code"
-
-# rs232
-#alias rs232='function _myssh(){ ssh lassehau+port${1}@2001:x:x:x:b | ct };_myssh'
-
-# Yolo
-alias yolotail="ssh nms.as207788.net 'tail -n 0 -qf /var/log/network/c*.log | ccze -A'"
-
-# Network config diff
-alias nvimdiff="nvim -c ':DiffviewOpen @{1}..'"
-
-# Sudo aliases to preserve user environment and colorscheme
-alias svim='sudo -E vim'
-alias scat='sudo -E batcat'
-alias stail='sudo -E tail'
-alias shtop='sudo -E htop'
-alias sbtop='sudo -E btop'
