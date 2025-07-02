@@ -16,7 +16,7 @@ dotfiles:
 	@stow --no-folding --override=.* -R -t ~/ git
 	@stow --no-folding --override=.* -R -t ~/ htop
 	@stow --no-folding --override=.* -R -t ~/ lazygit
-	@stow --no-folding --override=.* -R -t ~/ neovim 
+	@stow --no-folding --override=.* -R -t ~/ nvim
 	@stow --no-folding --override=.* -R -t ~/ ssh 
 	@stow --no-folding --override=.* -R -t ~/ tmux
 	@stow --no-folding --override=.* -R -t ~/ vim
