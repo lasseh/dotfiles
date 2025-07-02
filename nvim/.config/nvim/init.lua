@@ -3,7 +3,7 @@
 
 -- Bootstrap lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -64,8 +64,11 @@ require("lazy").setup({
       -- Close NERDTree if it's the only window left
       vim.api.nvim_create_autocmd("BufEnter", {
         callback = function()
-          if vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 and vim.fn.eval('b:NERDTree.isTabTree()') == 1 then
-            vim.cmd("quit")
+          if vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 then
+            local ok, result = pcall(vim.fn.eval, 'b:NERDTree.isTabTree()')
+            if ok and result == 1 then
+              vim.cmd("quit")
+            end
           end
         end
       })
@@ -73,8 +76,11 @@ require("lazy").setup({
       -- Close Vim if NERDTree is the only window left after closing all other windows
       vim.api.nvim_create_autocmd("BufEnter", {
         callback = function()
-          if vim.fn.tabpagenr('$') == 1 and vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 and vim.fn.eval('b:NERDTree.isTabTree()') == 1 then
-            vim.cmd("quit")
+          if vim.fn.tabpagenr('$') == 1 and vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 then
+            local ok, result = pcall(vim.fn.eval, 'b:NERDTree.isTabTree()')
+            if ok and result == 1 then
+              vim.cmd("quit")
+            end
           end
         end
       })
@@ -260,5 +266,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end
 })
 
--- Set paste toggle
-opt.pastetoggle = "<F5>"
+-- Set paste toggle (deprecated in nvim, but keeping for compatibility)
+if vim.fn.has('nvim-0.8') == 0 then
+  opt.pastetoggle = "<F5>"
+end
