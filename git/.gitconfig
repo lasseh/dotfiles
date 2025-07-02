@@ -55,6 +55,12 @@
 	last = log -1 HEAD
 	history = log -p --
 	changes = diff @{1}..
+	# Show files changed in last commit
+	changed = show --pretty="" --name-only
+	# Show commits not yet pushed
+	unpushed = log @{u}..
+	# Show commits not yet pulled
+	unpulled = log ..@{u}
 
 [merge]
 	tool = vimdiff
