@@ -68,6 +68,23 @@ alias yolotail="ssh nms.as207788.net 'tail -n 0 -qf /var/log/network/c*.log | cc
 # Network config diff
 alias nvimdiff="nvim -c ':DiffviewOpen @{1}..'"
 
+# ==> Network Engineering aliases
+alias localip="ipconfig getifaddr en0"
+alias netinfo="ifconfig | grep -E 'inet'"
+
+# ==> Go development aliases
+alias gobuild="go build -v"
+alias gorun="go run ."
+alias goclean="go clean -cache -modcache -i -r"
+alias gomod="go mod tidy && go mod verify"
+alias golint="golangci-lint run"
+
+# ==> Docker/Container aliases
+alias dps="docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+alias dlog="docker logs -f"
+alias dexec="docker exec -it"
+alias dclean="docker system prune -af"
+
 # Sudo aliases to preserve user environment and colorscheme
 alias svim='sudo -E vim'
 alias scat='sudo -E batcat'
