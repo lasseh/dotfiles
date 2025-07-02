@@ -64,7 +64,7 @@ require("lazy").setup({
       -- Close NERDTree if it's the only window left
       vim.api.nvim_create_autocmd("BufEnter", {
         callback = function()
-          if vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 and vim.b.NERDTree.isTabTree() then
+          if vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 and vim.fn.eval('b:NERDTree.isTabTree()') == 1 then
             vim.cmd("quit")
           end
         end
@@ -73,7 +73,7 @@ require("lazy").setup({
       -- Close Vim if NERDTree is the only window left after closing all other windows
       vim.api.nvim_create_autocmd("BufEnter", {
         callback = function()
-          if vim.fn.tabpagenr('$') == 1 and vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 and vim.b.NERDTree.isTabTree() then
+          if vim.fn.tabpagenr('$') == 1 and vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 and vim.fn.eval('b:NERDTree.isTabTree()') == 1 then
             vim.cmd("quit")
           end
         end
