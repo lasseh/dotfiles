@@ -202,6 +202,21 @@ brew "vectordotdev/brew/vector"
 # Additional tools
 brew "jira-cli"
 
+# Network Engineering Tools
+brew "sipcalc" # IP calculator
+
+# Go Development Tools
+brew "air" # Live reloading for Go applications
+brew "goreleaser" # Go project release tool
+brew "gotestsum" # Go test runner
+brew "mockery" # Mock generation tool
+
+# TypeScript/Vue Tools
+brew "typescript" # TypeScript compiler
+brew "vue-cli" # Vue.js CLI 
+brew "vue-language-server" # Language server for Vue.js
+brew "vite" # Vue.js testing framework
+
 # ============================================================================
 # GUI Applications (Casks)
 # ============================================================================
