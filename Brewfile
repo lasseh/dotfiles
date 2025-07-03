@@ -38,9 +38,9 @@ brew "zsh-completions"
 
 # ============================================================================
 # Text Processing & Search
-# ============================================================================
 brew "ack"
 brew "bat"
+brew "ccze"
 brew "fzf"
 brew "gron"
 brew "jq"

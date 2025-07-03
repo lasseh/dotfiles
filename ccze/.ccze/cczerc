@@ -1,0 +1,68 @@
+# CCZE Configuration File - TokyoNight Night Theme
+# Custom color scheme matching TokyoNight Night theme
+# TokyoNight Night Palette:
+# - Background: #1a1b26 (dark blue-black)
+# - Foreground: #c0caf5 (light blue-white)
+# - Blue: #7aa2f7 (bright blue)
+# - Cyan: #7dcfff (bright cyan) 
+# - Green: #9ece6a (bright green)
+# - Yellow: #e0af68 (warm yellow)
+# - Orange: #ff9e64 (bright orange)
+# - Red: #f7768e (bright red)
+# - Purple: #bb9af7 (bright purple)
+# - Magenta: #c0caf5 (light purple-white)
+
+# Network and system log colors (TokyoNight Night theme)
+color_date          cyan,bold          # #7dcfff - bright cyan for timestamps
+color_host          green,bold         # #9ece6a - bright green for hostnames
+color_proc          yellow,bold        # #e0af68 - warm yellow for processes
+color_pid           magenta            # #c0caf5 - light for PIDs
+color_pidb          magenta,bold       # #c0caf5 - bold light for PID brackets
+color_time          cyan               # #7dcfff - cyan for time elements
+color_message       white              # #c0caf5 - foreground color for messages
+
+# Network specific colors (TokyoNight optimized)
+color_ip            blue,bold          # #7aa2f7 - bright blue for IP addresses
+color_mac           yellow             # #e0af68 - yellow for MAC addresses
+color_port          cyan,bold          # #7dcfff - bright cyan for ports
+color_protocol      blue               # #7aa2f7 - blue for protocols
+
+# Log levels (TokyoNight severity mapping)
+color_debug         white              # #c0caf5 - normal foreground
+color_info          green              # #9ece6a - green for info
+color_notice        cyan               # #7dcfff - cyan for notices
+color_warning       yellow,bold        # #e0af68 - bold yellow for warnings
+color_error         red,bold           # #f7768e - bold red for errors
+color_alert         red,bold,reverse   # #f7768e - reverse red for alerts
+color_emerg         red,bold,blink     # #f7768e - blinking red for emergency
+
+# HTTP/Web logs (TokyoNight web colors)
+color_httpcodes     blue,bold          # #7aa2f7 - blue for HTTP codes
+color_httpstatus    green,bold         # #9ece6a - green for success status
+color_uri           cyan               # #7dcfff - cyan for URIs
+color_method        yellow,bold        # #e0af68 - yellow for HTTP methods
+color_size          magenta            # #c0caf5 - light for file sizes
+color_user          green              # #9ece6a - green for usernames
+
+# System logs (TokyoNight system colors)
+color_service       blue,bold          # #7aa2f7 - blue for services
+color_kernel        red,bold           # #f7768e - red for kernel messages
+color_mail          green              # #9ece6a - green for mail logs
+color_auth          yellow,bold        # #e0af68 - yellow for auth logs
+color_cron          cyan               # #7dcfff - cyan for cron jobs
+
+# Network device logs (TokyoNight network colors)
+color_facility      blue,bold          # #7aa2f7 - blue for syslog facility
+color_severity      red,bold           # #f7768e - red for severity levels
+color_interface     green,bold         # #9ece6a - green for interfaces
+color_vlan          yellow             # #e0af68 - yellow for VLAN info
+color_bgp           cyan,bold          # #7dcfff - cyan for BGP messages
+color_ospf          magenta,bold       # #c0caf5 - light bold for OSPF
+
+# Additional TokyoNight inspired colors
+color_number        blue               # #7aa2f7 - blue for numbers
+color_string        green              # #9ece6a - green for strings
+color_keyword       magenta,bold       # #c0caf5 - bold light for keywords
+color_comment       white              # #c0caf5 - comments in normal foreground
+color_bracket       yellow             # #e0af68 - yellow for brackets
+color_operator      red                # #f7768e - red for operators

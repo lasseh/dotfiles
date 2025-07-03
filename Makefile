@@ -7,6 +7,7 @@ dotfiles:
 	@stow --no-folding --override=.* -R -t ~/ bash
 	@stow --no-folding --override=.* -R -t ~/ bat
 	@stow --no-folding --override=.* -R -t ~/ btop
+	@stow --no-folding --override=.* -R -t ~/ ccze
 	@stow --no-folding --override=.* -R -t ~/ chromaterm
 	@stow --no-folding --override=.* -R -t ~/ curl
 	@stow --no-folding --override=.* -R -t ~/ dircolors

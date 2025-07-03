@@ -65,6 +65,12 @@ alias icode="/Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resour
 # Yolo
 alias yolotail="ssh nms.as207788.net 'tail -n 0 -qf /var/log/network/c*.log | ccze -A'"
 
+# ==> Enhanced log viewing with ccze
+alias syslog="tail -f /var/log/system.log | ccze -A"
+alias authlog="tail -f /var/log/auth.log | ccze -A"
+alias maillog="tail -f /var/log/mail.log | ccze -A"
+alias cczelog="ccze -A"  # Pipe any log through this
+
 # Network config diff
 alias nvimdiff="nvim -c ':DiffviewOpen @{1}..'"
 

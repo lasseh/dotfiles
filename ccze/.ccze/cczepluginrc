@@ -1,0 +1,28 @@
+# CCZE Plugin Configuration
+# Enable/disable specific plugins for different log types
+
+# Core plugins (always useful)
+plugin_syslog       1
+plugin_apache       1
+plugin_postfix      0
+plugin_ssh          1
+plugin_sudo         1
+
+# Network-specific plugins
+plugin_iptables     1
+plugin_squid        0
+plugin_vsftpd       0
+
+# Development plugins
+plugin_php          1
+plugin_httpd        1
+
+# System plugins
+plugin_kernel       1
+plugin_cron         1
+plugin_auth         1
+
+# Disable less useful plugins for network logs
+plugin_exim         0
+plugin_fetchmail    0
+plugin_procmail     0
