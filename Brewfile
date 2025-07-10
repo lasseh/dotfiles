@@ -13,7 +13,6 @@ tap "homebrew/services"
 tap "jesseduffield/lazygit"
 tap "openhue/cli"
 tap "supabase/tap"
-tap "vectordotdev/brew"
 
 # ============================================================================
 # Core System Tools & Utilities
@@ -40,7 +39,6 @@ brew "zsh-completions"
 # Text Processing & Search
 brew "ack"
 brew "bat"
-brew "ccze"
 brew "fzf"
 brew "gron"
 brew "jq"
@@ -197,7 +195,6 @@ brew "clintmod/formulas/macprefs"
 brew "jesseduffield/lazygit/lazygit"
 brew "openhue/cli/openhue-cli"
 brew "supabase/tap/supabase"
-brew "vectordotdev/brew/vector"
 
 # Additional tools
 brew "jira-cli"
