@@ -153,8 +153,11 @@ set cmdheight=1			" Height of the command bar
 " set cursorline			\" Disabled for performance
 "set showmode			" Shows the current mode in the modeline
 set t_Co=256 			" Enable 256-color mode
-set t_ut=			" Dont know
-set term=xterm-256color		" 256-color mode, for windows/cygwin
+set t_ut=			" Disable background color erase
+" Don't override terminal type when in tmux
+if $TMUX == ''
+    set term=xterm-256color	" 256-color mode, for windows/cygwin
+endif
 set visualbell t_vb=		" no visual bell
 set novisualbell                " no visual bell
 set shortmess=aIoO		" no welcome message
