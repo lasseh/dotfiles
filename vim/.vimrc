@@ -83,7 +83,7 @@ Plugin 'scrooloose/nerdtree'
 
 " ====================================================================
 " Themes:
-Plugin 'ghifarit53/tokyonight-vim'
+Plugin 'folke/tokyonight.nvim'
 
 " ====================================================================
 " Vim JSON:
@@ -140,9 +140,11 @@ set background=dark
 
 " TokyoNight theme settings
 let g:tokyonight_style = 'night'
-let g:tokyonight_enable_italic = 1
+let g:tokyonight_transparent = 0
+let g:tokyonight_italic_comments = 1
+let g:tokyonight_italic_keywords = 1
 
-colorscheme tokyonight
+colorscheme tokyonight-night
 
 " ====================================================================
 " Visual
