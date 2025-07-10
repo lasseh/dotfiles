@@ -83,7 +83,7 @@ Plugin 'scrooloose/nerdtree'
 
 " ====================================================================
 " Themes:
-Plugin 'folke/tokyonight.nvim'
+" Using local tokyonight-night.vim color scheme from ~/.vim/colors/
 
 " ====================================================================
 " Vim JSON:
@@ -139,11 +139,6 @@ set termguicolors
 set background=dark
 
 " TokyoNight theme settings
-let g:tokyonight_style = 'night'
-let g:tokyonight_transparent = 0
-let g:tokyonight_italic_comments = 1
-let g:tokyonight_italic_keywords = 1
-
 colorscheme tokyonight-night
 
 " ====================================================================
