@@ -67,7 +67,7 @@ if which fzf &>/dev/null; then
     __fzf_history__() {
         local output
         output=$(fc -rl 1 | awk '{$1=""; print substr($0,2)}' |
-            fzf --query="$LBUFFER" --no-sort --tac --exact) &&
+            fzf --query="$LBUFFER" --no-sort --exact) &&
             LBUFFER=$output
         zle reset-prompt
     }

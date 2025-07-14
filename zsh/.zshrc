@@ -18,8 +18,8 @@ SAVEHIST=10000                # Number of history entries to save
 setopt HIST_IGNORE_ALL_DUPS   # Ignore duplicate commands
 setopt HIST_REDUCE_BLANKS     # Remove extra blanks
 setopt HIST_VERIFY            # Verify history expansion
-setopt INC_APPEND_HISTORY     # Append to history file immediately
-setopt SHARE_HISTORY          # Share history across all sessions
+setopt APPEND_HISTORY         # Append to history file on exit
+unsetopt SHARE_HISTORY        # Don't share history across sessions
 
 # Basic auto/tab completion
 autoload -Uz compinit
