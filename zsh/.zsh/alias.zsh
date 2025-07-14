@@ -30,7 +30,7 @@ alias htop='TERM=screen-256color htop'
 alias weechat='TERM=screen-256color weechat-curses'
 
 # Git shortcuts
-alias gs="git status"
+alias gs="gst"  # Use our pretty status function
 alias gc="git commit"
 alias gp="git push"
 alias gl="git pull"

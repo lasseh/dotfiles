@@ -46,3 +46,86 @@ function gonew() {
     echo "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, $name!\")\n}" >main.go
     echo "Created Go project: $name"
 }
+
+# Pretty git status with Tokyo Night colors
+function gst() {
+    # Check if we're in a git repository
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "Not a git repository"
+        return 1
+    fi
+    
+    # Colors matching your prompt theme
+    local blue="\033[38;2;122;162;247m"
+    local cyan="\033[38;2;125;207;255m" 
+    local green="\033[38;2;158;206;106m"
+    local red="\033[38;2;247;118;142m"
+    local orange="\033[38;2;255;158;100m"
+    local fg="\033[38;2;192;202;245m"
+    local comment="\033[38;2;86;95;137m"
+    local reset="\033[0m"
+    local bold="\033[1m"
+    
+    # Colors matching your prompt (%F{128} = branch, %F{162} = folder)
+    local branch_color="\033[38;5;128m"    # Same as your prompt branch color
+    local folder_color="\033[38;5;162m"    # Same as your prompt folder color
+    
+    echo "${branch_color}${bold}Repository Status${reset}"
+    echo "${comment}────────────────────${reset}"
+    
+    # Branch info
+    local branch=$(git branch --show-current 2>/dev/null)
+    local upstream=$(git rev-parse --abbrev-ref @{upstream} 2>/dev/null)
+    
+    if [[ -n $branch ]]; then
+        echo "${blue}Branch: ${branch_color}${bold}$branch${reset}"
+        if [[ -n $upstream ]]; then
+            local ahead=$(git rev-list --count @{upstream}..HEAD 2>/dev/null || echo "0")
+            local behind=$(git rev-list --count HEAD..@{upstream} 2>/dev/null || echo "0")
+            echo "${blue}Upstream: ${green}$upstream${reset}"
+            if [[ $ahead -gt 0 ]]; then
+                echo "${folder_color}  ↑ $ahead commit(s) ahead${reset}"
+            fi
+            if [[ $behind -gt 0 ]]; then
+                echo "${orange}  ↓ $behind commit(s) behind${reset}"
+            fi
+        fi
+    fi
+    
+    echo ""
+    
+    # File status with custom formatting
+    git status --porcelain | while IFS= read -r line; do
+        local file_status="${line:0:2}"
+        local file="${line:3}"
+        
+        case "$file_status" in
+            "M ") echo "${folder_color}  Modified:   ${fg}$file${reset}" ;;
+            " M") echo "${folder_color}  Modified:   ${fg}$file${reset}" ;;
+            "MM") echo "${folder_color}  Modified:   ${fg}$file ${comment}(staged + unstaged)${reset}" ;;
+            "A ") echo "${green}  Added:      ${fg}$file${reset}" ;;
+            "D ") echo "${red}  Deleted:    ${fg}$file${reset}" ;;
+            " D") echo "${red}  Deleted:    ${fg}$file${reset}" ;;
+            "R ") echo "${branch_color}  Renamed:    ${fg}$file${reset}" ;;
+            "C ") echo "${cyan}  Copied:     ${fg}$file${reset}" ;;
+            "??") echo "${cyan}  Untracked:  ${fg}$file${reset}" ;;
+            "!!") echo "${comment}  Ignored:    ${fg}$file${reset}" ;;
+            "U ") echo "${red}  Conflict:   ${fg}$file${reset}" ;;
+            " U") echo "${red}  Conflict:   ${fg}$file${reset}" ;;
+            "UU") echo "${red}  Conflict:   ${fg}$file${reset}" ;;
+        esac
+    done
+    
+    # Summary
+    local staged=$(git diff --cached --name-only | wc -l | tr -d ' ')
+    local unstaged=$(git diff --name-only | wc -l | tr -d ' ')
+    local untracked=$(git ls-files --others --exclude-standard | wc -l | tr -d ' ')
+    
+    if [[ $staged -gt 0 ]] || [[ $unstaged -gt 0 ]] || [[ $untracked -gt 0 ]]; then
+        echo ""
+        echo "${comment}Summary: ${green}$staged staged${reset}, ${folder_color}$unstaged unstaged${reset}, ${cyan}$untracked untracked${reset}"
+    else
+        echo ""
+        echo "${green}Working tree clean${reset}"
+    fi
+}
