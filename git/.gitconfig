@@ -8,7 +8,7 @@
 [core]
 	excludesfile = ~/.config/git/.gitignore_global
 	editor = vim
-	pager = less -R
+	pager = delta
 	autocrlf = input
 	safecrlf = true
 
@@ -27,9 +27,14 @@
 	old = red bold
 	new = green bold
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
+	added = "#9ece6a"
+	changed = "#7aa2f7" 
+	untracked = "#7dcfff"
+	branch = "#bb9af7 bold"
+	header = "#c0caf5"
+	localBranch = "#bb9af7"
+	remoteBranch = "#9ece6a"
+	nobranch = "#f7768e bold"
 
 [pull]
 	rebase = false
@@ -61,6 +66,8 @@
 	unpushed = log @{u}..
 	# Show commits not yet pulled
 	unpulled = log ..@{u}
+	# Pretty status with branch info and stats
+	s = status --short --branch
 
 [merge]
 	tool = vimdiff
@@ -68,3 +75,22 @@
 
 [help]
 	autocorrect = 1
+
+[delta]
+	navigate = true
+	light = false
+	side-by-side = false
+	line-numbers = true
+	syntax-theme = base16
+	plus-style = syntax "#20253a"
+	minus-style = syntax "#362c3d"
+	plus-emph-style = syntax "#394b70"
+	minus-emph-style = syntax "#614c67"
+	line-numbers-plus-style = "#7aa2f7"
+	line-numbers-minus-style = "#f7768e"
+	line-numbers-zero-style = "#565f89"
+	file-style = "#c0caf5"
+	hunk-header-style = "#bb9af7"
+
+[interactive]
+	diffFilter = delta --color-only
