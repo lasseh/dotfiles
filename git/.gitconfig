@@ -11,6 +11,7 @@
 	pager = delta
 	autocrlf = input
 	safecrlf = true
+	eol = lf
 
 [init]
 	defaultBranch = main
