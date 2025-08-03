@@ -75,6 +75,8 @@ brew "tig"
 
 # Programming Languages & Runtimes
 brew "go"
+brew "python@3.12"
+brew "python-tabulate"
 brew "node"
 brew "python"
 
@@ -84,12 +86,10 @@ brew "pnpm"
 
 # Code Quality & Linting
 brew "eslint"
-brew "golangci-lint"
 brew "jsonlint"
 brew "yamllint"
 
 # Database Tools
-brew "golang-migrate"
 brew "libpq"
 brew "pgcli"
 brew "sqlc"
@@ -98,6 +98,11 @@ brew "sqlc"
 brew "delve"
 brew "golang-migrate"
 brew "golangci-lint"
+brew "gofumpt"
+brew "goimports"
+brew "gobject-introspection"
+brew "govulncheck"
+brew "golines"
 
 # ============================================================================
 # DevOps & Infrastructure
@@ -108,6 +113,7 @@ brew "docker-compose"
 brew "docker-credential-helper"
 brew "lazydocker"
 brew "podman"
+brew "nginx"
 
 # Configuration Management
 brew "ansible"
@@ -178,13 +184,11 @@ brew "vim"
 # System Dependencies & Libraries
 # ============================================================================
 brew "glib"
-brew "gobject-introspection"
 brew "guile"
 brew "icu4c@76"
 brew "libass"
 brew "libpng"
 brew "pkgconf"
-brew "python-tabulate"
 
 # ============================================================================
 # Third-party Formula Packages
@@ -195,6 +199,7 @@ brew "clintmod/formulas/macprefs"
 brew "jesseduffield/lazygit/lazygit"
 brew "openhue/cli/openhue-cli"
 brew "supabase/tap/supabase"
+brew "charmbracelet/tap/crush"
 
 # Additional tools
 brew "jira-cli"
