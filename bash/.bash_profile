@@ -35,6 +35,10 @@ fi
 # Add bin to path
 [ -d "$DOTFILES/bin" ] && export PATH="$DOTFILES/bin:$PATH"
 
+# Go configuration
+export GOPATH="$HOME/code/go"
+export PATH="$GOPATH/bin:$PATH"
+
 # ==> FZF (Fuzzy Finder)
 # Uncomment the following line if you want to use `fzf` for command line completion:
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude node_modules'

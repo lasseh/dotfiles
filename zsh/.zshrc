@@ -58,6 +58,13 @@ if [ -f /opt/homebrew/bin/brew ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# Add libpq to PATH
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+# Go configuration
+export GOPATH="$HOME/code/go"
+export PATH="$GOPATH/bin:$PATH"
+
 # SSH tab completion optimization - only show configured hosts
 _ssh_hosts_completion() {
     local -a ssh_hosts
