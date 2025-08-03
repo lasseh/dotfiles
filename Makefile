@@ -46,16 +46,30 @@ brew-bundle:
 brew-dump:
 	@echo "Comparing current installations with Brewfile..."
 	@brew bundle dump --file=./Brewfile.current --force
-	@if diff -u ./Brewfile ./Brewfile.current > /dev/null 2>&1; then \
-		echo "✅ Brewfile is up to date with current installations"; \
-		rm ./Brewfile.current; \
+	@echo "Checking for duplicates in Brewfile..."
+	@if grep -E '^(brew|cask|tap|mas)' ./Brewfile | sort | uniq -d | grep -q .; then \
+		echo "❌ Duplicates found in Brewfile:"; \
+		grep -E '^(brew|cask|tap|mas)' ./Brewfile | sort | uniq -d; \
+		echo ""; \
 	else \
-		echo "❌ Differences found between Brewfile and current installations:"; \
+		echo "✅ No duplicates found in Brewfile"; \
+	fi
+	@echo "Comparing package lists (position-independent)..."
+	@grep -E '^(brew|cask|tap|mas)' ./Brewfile | sort > ./Brewfile.sorted
+	@grep -E '^(brew|cask|tap|mas)' ./Brewfile.current | sort > ./Brewfile.current.sorted
+	@if diff -u ./Brewfile.sorted ./Brewfile.current.sorted > /dev/null 2>&1; then \
+		echo "✅ Brewfile packages match current installations"; \
+		rm ./Brewfile.current ./Brewfile.sorted ./Brewfile.current.sorted; \
+	else \
+		echo "❌ Package differences found:"; \
 		echo ""; \
-		diff -u ./Brewfile ./Brewfile.current || true; \
+		diff -u ./Brewfile.sorted ./Brewfile.current.sorted || true; \
 		echo ""; \
-		echo "Current installations saved to Brewfile.current for reference"; \
-		echo "Review the differences and manually update Brewfile as needed"; \
+		echo "Files saved for reference:"; \
+		echo "  - Brewfile.current: Current brew dump"; \
+		echo "  - Brewfile.sorted: Sorted Brewfile packages"; \
+		echo "  - Brewfile.current.sorted: Sorted current packages"; \
+		rm ./Brewfile.sorted ./Brewfile.current.sorted; \
 	fi
 
 iterm2:
