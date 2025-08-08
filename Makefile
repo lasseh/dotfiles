@@ -98,8 +98,6 @@ osx-defaults:
 	@./osx/trackpad.sh
 	@echo "Applying Safari defaults (will close Safari if running)..."
 	@./osx/safari.sh
-	@echo "Applying Terminal defaults..."
-	@./osx/terminal.sh
 	@echo "All macOS defaults applied successfully!"
 	@echo "Restarting affected applications..."
 	@killall Finder Dock SystemUIServer 2>/dev/null || true
