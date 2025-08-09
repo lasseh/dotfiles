@@ -42,9 +42,9 @@ defaults write com.apple.AppleMultitouchTrackpad TrackpadTwoFingerDoubleTapGestu
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadTwoFingerFromRightEdgeSwipeGesture -int 0
 defaults write com.apple.AppleMultitouchTrackpad TrackpadTwoFingerFromRightEdgeSwipeGesture -int 0
 
-# Keep "natural" (Lion-style) scrolling enabled (current preference)
+# Disable "natural" (Lion-style) scrolling (use traditional scrolling)
 # Current: com.apple.swipescrolldirection=1 - NEEDS UPDATE (script disables it)
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 # Increase sound quality for Bluetooth headphones/headsets
 # Current: Apple Bitpool Min=40 - MATCHES
