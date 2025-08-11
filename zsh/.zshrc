@@ -99,6 +99,9 @@ compdef _ssh_hosts_completion sftp
 autoload -U compinit && compinit -d
 
 # Prompt is defined in tokyo-night-theme.zsh
+<<<<<<< HEAD
 
 # opencode
 export PATH=/Users/lasse/.opencode/bin:$PATH
+# Docker Desktop
+export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
