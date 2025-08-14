@@ -1,0 +1,265 @@
+# Tokyo Night Theme for Irssi
+# Designed for Tokyo Night Dark theme in iTerm2
+
+# Tokyo Night Color Palette:
+# Background: #1a1b26 (dark navy)
+# Foreground: #c0caf5 (light blue-white)
+# Blue: #7aa2f7, Cyan: #7dcfff, Green: #9ece6a
+# Magenta: #bb9af7, Red: #f7768e, Yellow: #e0af68
+# Orange: #ff9e64, Purple: #9d7cd8
+
+# Set default to bright white - this is crucial for visibility
+default_color = "%N%W";
+info_eol = "false";
+
+replaces = { "[]=" = "%N%W$*%n"; };
+
+abstracts = {
+  ##
+  ## generic
+  ##
+
+  # text to insert at the beginning of each non-message line
+  line_start = "%c▸%N ";
+
+  # timestamp styling - bright white, always visible
+  timestamp = "%N%W$*%n";
+
+  # any kind of text that needs hilighting - bright yellow
+  hilight = "%N%Y$*%n";
+
+  # any kind of error message - bright red
+  error = "%N%R$*%n";
+
+  # channel name is printed - bright blue
+  channel = "%N%B$*%n";
+
+  # nick is printed - bright magenta
+  nick = "%N%M$*%n";
+
+  # nick host is printed - bright white with cyan accents
+  nickhost = "%N%W[%c$*%W]%n";
+
+  # server name is printed - bright blue
+  server = "%N%B$*%n";
+
+  # some kind of comment is printed - bright white with cyan
+  comment = "%N%W(%c$*%W)%n";
+
+  # reason for something is printed (part, quit, kick, ..)
+  reason = "{comment $*}";
+
+  # mode change is printed ([+o nick])
+  mode = "{comment $*}";
+
+  ##
+  ## channel specific messages
+  ##
+
+  # highlighted nick/host is printed (joins) - bright green
+  channick_hilight = "%N%G$*%n";
+  chanhost_hilight = "{nickhost %N%G$*%n}";
+
+  # nick/host is printed (parts, quits, etc.) - bright white
+  channick = "%N%W$*%n";
+  chanhost = "{nickhost %N%W$*%n}";
+
+  # highlighted channel name is printed - bright blue
+  channelhilight = "%N%B$*%n";
+
+  # ban/ban exception/invite list mask is printed - bright red
+  ban = "%N%R$*%n";
+
+  ##
+  ## messages
+  ##
+
+  # message nick formatting - bright white brackets
+  msgnickhilight = "%N%W<%n$0$1-%N%W>%n %|";
+  msgnick = "%N%W<%n$0$1-%N%W>%n %|";
+
+  # $0 = nick mode, $1 = nick
+  ownmsgnick = "{msgnick $0 $1-}";
+  ownnick = "%N%M$*%n";
+
+  # public message in channel, $0 = nick mode, $1 = nick
+  pubmsgnick = "{msgnick $0 $1-}";
+  pubnick = "%N%C$*%n";
+
+  # public message in channel meant for me, $0 = nick mode, $1 = nick
+  pubmsgmenick = "{msgnick $0 $1-}";
+  menick = "%N%Y$*%n";
+
+  # public highlighted message in channel
+  # $0 = highlight color, $1 = nick mode, $2 = nick
+  pubmsghinick = "{msgnick $1 $0$2-%n}";
+
+  # channel name is printed with message
+  msgchannel = "%N%W:%B$*%n";
+
+  # private message, $0 = nick, $1 = host
+  privmsg = "%N%W[%M$0%W(%C$1-%W)%n%W]%n ";
+
+  # private message from you, $0 = "msg", $1 = target nick
+  ownprivmsg = "%N%W[%W$0%W(%C$1-%W)%n%W]%n ";
+
+  # own private message in query
+  ownprivmsgnick = "{msgnick  $*}";
+  ownprivnick = "%N%M$*%n";
+
+  # private message in query
+  privmsgnick = "{msgnick  %N%C$*%n}";
+
+  ##
+  ## Actions (/ME stuff)
+  ##
+
+  # used internally by this theme - bright magenta bullet
+  action_core = "%N%M•%n $*";
+
+  # generic one that's used by most actions
+  action = "{action_core $*} ";
+
+  # own action, both private/public - bright white text
+  ownaction = "%N%M•%n %N%W$*%n ";
+
+  # own action with target, both private/public
+  ownaction_target = "{action_core $0}%N%W:%C$1%n ";
+
+  # private action sent by others
+  pvtaction = "%N%M•%n %N%W$*%n ";
+  pvtaction_query = "{action $*}";
+
+  # public action sent by others
+  pubaction = "{action $*}";
+
+  ##
+  ## other IRC events
+  ##
+
+  # whois - bright white with cyan accents
+  whois = "%N%W│%n %C$[8]0%n %N%W│%n %N%W$1-%n";
+
+  # notices - bright and visible
+  ownnotice = "%N%W[%W$0%W(%C$1-%W)]%n ";
+  notice = "%N%W─%M$*%W─%n ";
+  pubnotice_channel = "%N%W:%M$*%n";
+  pvtnotice_host = "%N%W(%M$*%W)%n";
+  servernotice = "%N%G▸%n %N%W$*%n ";
+
+  # CTCPs - bright green
+  ownctcp = "%N%W[%W$0%W(%C$1-%W)]%n ";
+  ctcp = "%N%G$*%n";
+
+  # wallops - bright yellow
+  wallop = "%N%Y▸%n %N%W$*%n: ";
+  wallop_nick = "%N%W$*%n";
+  wallop_action = "%N%Y▸%n %N%W$*%n ";
+
+  # netsplits - red X, green check
+  netsplit = "%N%R✗%n %N%W$*%n";
+  netjoin = "%N%G✓%n %N%W$*%n";
+
+  # /names list - bright white with colored accents
+  names_prefix = "";
+  names_nick = "%N%W[%C$0%n$1-%N%W]%n ";
+  names_nick_op = "{names_nick $*}";
+  names_nick_halfop = "{names_nick $*}";
+  names_nick_voice = "{names_nick $*}";
+  names_users = "%N%W[%G$*%W]%n";
+  names_channel = "%N%B$*%n";
+
+  # DCC - bright colors
+  dcc = "%N%G$*%n";
+  dccfile = "%N%Y$*%n";
+
+  # DCC chat, own msg/action
+  dccownmsg = "%N%W[%W$0%W(%C$1-%W)%n%W]%n ";
+  dccownnick = "%N%M$*%n";
+  dccownquerynick = "%N%M$*%n";
+  dccownaction = "{action $*}";
+  dccownaction_target = "{action_core $0}%N%W:%C$1%n ";
+
+  # DCC chat, others
+  dccmsg = "%N%W[%G$1-%W(%C$0%W)%n%W]%n ";
+  dccquerynick = "%N%G$*%n";
+  dccaction = "%N%M•%n %N%W(*dcc*)%n %N%W$*%n ";
+
+  ##
+  ## statusbar
+  ##
+
+  # default background for all statusbars - ensure bright text
+  sb_background = "%N%W";
+
+  # background for prompt / input line
+  sb_prompt_bg = "%N";
+  # background for info statusbar
+  sb_info_bg = "%N";
+
+  # text at the beginning of statusbars
+  sbstart = "";
+  # text at the end of statusbars
+  sbend = " ";
+
+  topicsbstart = "{sbstart $*}";
+  topicsbend = "{sbend $*}";
+
+  prompt = "%N%W[%C$*%W]%N%W ";
+
+  sb = " %N%W[%C$*%W]%n";
+  sbmode = "%N%W(%C+%n$*%N%W)%n";
+  sbaway = " %N%W(%Yzz%W)%n";
+  sbservertag = "%N%W:%C$0%n %N%W(^X)%n";
+  sbnickmode = "$0";
+
+  # activity in statusbar - Tokyo Night colors with bright text
+  sb_act_sep = "%N%W,%n";
+  sb_act_text = "%N%C$*%n";
+  sb_act_msg = "%N%Y$*%n";
+  sb_act_hilight = "%N%M$*%n";
+  sb_act_hilight_color = "$0$1-%n";
+};
+
+formats = {
+  "fe-common/core" = {
+    line_start = "{line_start}";
+    line_start_irssi = "{line_start}";
+
+    join = "%N%G▸%n {channick_hilight $0} {chanhost_hilight $1} has joined {channel $2}";
+    part = "%N%W◂%n {channick $0} {chanhost $1} has left {channel $2} {reason $3}";
+    kick = "%N%R✗%n {channick $0} was kicked from {channel $1} by {nick $2} {reason $3}";
+    quit = "%N%W◂%n {channick $0} {chanhost $1} has quit {reason $2}";
+    quit_once = "%N%W◂%n {channel $3} {channick $0} {chanhost $1} has quit {reason $2}";
+
+    nick_changed = "%N%Y⟲%n {channick $0} is now known as {channick_hilight $1}";
+    your_nick_changed = "%N%Y⟲%n You're now known as {nick $1}";
+
+    pubmsg = "{pubmsgnick $2 {pubnick $0}}%N%W$1%n";
+
+    own_msg = "{ownmsgnick $2 {ownnick $0}}%N%W$1%n";
+    own_msg_channel = "{ownmsgnick $3 {ownnick $0}{msgchannel $1}}%N%W$2%n";
+    own_msg_private_query = "{ownprivmsgnick {ownprivnick $0}}%N%W$2%n";
+
+    pubmsg_me = "{pubmsgmenick $2 {menick $0}}%N%Y$1%n";
+    pubmsg_me_channel = "{pubmsgmenick $3 {menick $0}{msgchannel $1}}%N%Y$2%n";
+
+    pubmsg_hilight = "{pubmsghinick $0 $3 $1}%N%Y$2%n";
+    pubmsg_hilight_channel = "{pubmsghinick $0 $4 $1{msgchannel $2}}%N%Y$3%n";
+
+    pubmsg_channel = "{pubmsgnick $3 {pubnick $0}{msgchannel $1}}%N%W$2%n";
+    msg_private_query = "{privmsgnick $0}%N%W$2%n";
+  };
+  "fe-common/irc" = {
+    chanmode_change = "%N%Y⚙%n mode/{channelhilight $0} {mode $1} by {nick $2}";
+
+    whois = "{whois %N%C$0%n $1-}";
+
+    server_chanmode_change = "%N%Y⚙%n {netsplit ServerMode}/{channelhilight $0} {mode $1} by {nick $2}";
+
+    own_action = "{ownaction_target $0 $1} $2";
+    action_private = "{pvtaction_query $0} $2";
+    action_private_query = "{pvtaction_query $0} $2";
+    action_public = "{pubaction $0}$1";
+  };
+};
