@@ -30,7 +30,6 @@ brew "wget"
 # ============================================================================
 # Shell & Terminal Enhancement
 # ============================================================================
-brew "starship"
 brew "tmux"
 brew "zsh"
 brew "zsh-completions"
@@ -113,6 +112,8 @@ brew "docker-compose"
 brew "docker-credential-helper"
 brew "lazydocker"
 brew "podman"
+
+# Webserver
 brew "nginx"
 
 # Configuration Management
@@ -202,7 +203,7 @@ brew "supabase/tap/supabase"
 brew "charmbracelet/tap/crush"
 
 # Additional tools
-brew "jira-cli"
+# brew "jira-cli"
 
 # Network Engineering Tools
 brew "sipcalc" # IP calculator
@@ -238,13 +239,13 @@ cask "marta"
 cask "dropbox"
 
 # Communication
-cask "zoom"
+# cask "zoom"
 
 # Media & Graphics
 cask "drawio"
 
 # Hardware-specific
-cask "logitech-camera-settings"
+# cask "logitech-camera-settings"
 
 # Fonts
 cask "font-hack-nerd-font"

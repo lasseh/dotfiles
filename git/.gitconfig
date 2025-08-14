@@ -95,3 +95,6 @@
 
 [interactive]
 	diffFilter = delta --color-only
+
+[includeIf "gitdir:~/code/go/src/github.com/lasseh/svv/"]
+	path = ~/.config/git/work-config
