@@ -1,6 +1,9 @@
 # ~/.bash_profile
 # Executed for login shells
 
+# Set umask for better default permissions
+umask 022
+
 # Source the .bashrc file
 if [ -f "$HOME/.bashrc" ]; then
     source "$HOME/.bashrc"
@@ -59,5 +62,4 @@ shopt -s cdspell      # Correct minor spelling errorsin cd
 shopt -s dirspell     # Correct minor spelling errorsin directory names
 shopt -s autocd       # Change to directory by typingits name
 
-# Set umask for better default permissions
-umask 022
+

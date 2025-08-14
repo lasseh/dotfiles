@@ -119,6 +119,7 @@ if [ -f ~/.bash_completion ]; then
 fi
 
 # Run motd script if it exists
-if [ -x .dotfiles/bin/motd.sh ]; then
-    .dotfiles/bin/motd.sh
-fi
+# Moved this to real motd
+#if [ -x .dotfiles/bin/motd.sh ]; then
+#    .dotfiles/bin/motd.sh
+#fi

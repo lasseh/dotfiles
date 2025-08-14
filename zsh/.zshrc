@@ -4,6 +4,9 @@ export DOTFILES="$HOME/dotfiles"
 # Path to your zsh configuration.
 export ZSH=$HOME/.zsh
 
+# Set umask for better default permissions
+umask 022
+
 # Path to your oh-my-zsh installation (if used)
 # export ZSH="$HOME/.oh-my-zsh"
 
@@ -102,3 +105,4 @@ autoload -U compinit && compinit -d
 
 # opencode
 export PATH=/Users/lasse/.opencode/bin:$PATH
+
