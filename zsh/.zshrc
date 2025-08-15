@@ -102,4 +102,4 @@ compdef _ssh_hosts_completion sftp
 autoload -U compinit && compinit -d
 
 # opencode
-export PATH={HOME}/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
