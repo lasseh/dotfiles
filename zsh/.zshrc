@@ -42,6 +42,7 @@ function _zwarn() { echo -ne "\e[38;5;196mWARNING \e[38;5;208m~>\e[0m $1\n"; }
 source "${HOME}/.zsh/alias.zsh" || _zwarn "Could not source ~/.zsh/alias.zsh"
 source "${HOME}/.zsh/functions.zsh" || _zwarn "Could not source ~/.zsh/functions.zsh"
 source "${HOME}/.zsh/fzf.zsh" || _zwarn "Could not source ~/.zsh/fzf.zsh"
+source "${HOME}/.zsh/ssh-portforward.zsh" || _zwarn "Could not source ~/.zsh/ssh-portforward.zsh"
 source "${HOME}/.zsh/tokyo-night-colors.zsh" || _zwarn "Could not source ~/.zsh/tokyo-night-colors.zsh"
 source "${HOME}/.zsh/tokyo-night-theme.zsh" || _zwarn "Could not source ~/.zsh/tokyo-night-theme.zsh"
 
