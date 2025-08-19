@@ -8,8 +8,6 @@
 tap "andreybleme/lazycontainer", "https://github.com/andreybleme/lazycontainer"
 tap "charmbracelet/tap"
 tap "clintmod/formulas"
-tap "homebrew/bundle"
-tap "homebrew/services"
 tap "jesseduffield/lazygit"
 tap "openhue/cli"
 tap "supabase/tap"
@@ -226,11 +224,14 @@ brew "vite" # Vue.js testing framework
 
 # Development & Text Editors
 cask "zed"
+cask "goland"
+cask "datagrip"
 
 # System Utilities
 cask "betterdisplay"
 cask "raycast"
-cask "spectacle"
+cask "rectangle"
+cask "contexts"
 
 # File Management
 cask "marta"
