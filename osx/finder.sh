@@ -35,4 +35,7 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
+# Allow quitting finder
+defaults write com.apple.finder QuitMenuItem -bool YES
+
 echo "Finder configuration complete"
