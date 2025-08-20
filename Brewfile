@@ -226,6 +226,7 @@ brew "vite" # Vue.js testing framework
 cask "zed"
 cask "goland"
 cask "datagrip"
+cask "yaak"
 
 # System Utilities
 cask "betterdisplay"
