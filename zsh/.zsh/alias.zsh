@@ -29,6 +29,9 @@ alias irssi='TERM=screen-256color irssi'
 alias htop='TERM=screen-256color htop'
 alias weechat='TERM=screen-256color weechat-curses'
 
+# SSH to Juniper devices with compatible terminal
+alias jssh='TERM=xterm ssh'
+
 # Git shortcuts
 alias gs="gst"  # Use our pretty status function
 alias gc="git commit"
@@ -40,7 +43,7 @@ alias gco="git checkout"
 alias gb="git branch"
 # ==> Git
 alias ga='git add'
-alias gpush='git push origin master'
+alias gpush='git push origin main'
 alias gpull='git pull'
 alias gd='git diff --color --no-ext-diff'
 alias gdstat='git diff --color --stat'
