@@ -69,6 +69,9 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export GOPATH="$HOME/code/go"
 export PATH="$GOPATH/bin:$PATH"
 
+# Add local bin to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
 # SSH tab completion optimization - only show configured hosts
 _ssh_hosts_completion() {
     local -a ssh_hosts
