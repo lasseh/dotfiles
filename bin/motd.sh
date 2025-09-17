@@ -76,7 +76,7 @@ get_uptime() {
 kernel_version=$(uname -r || echo "unknown")
 
 # Header info
-hostname=$(hostname -f || echo "localhost")
+hostname=$(hostname -f 2>/dev/null || hostname 2>/dev/null || echo "localhost")
 current_date=$(date +"%a %b %d %Y %H:%M:%S")
 uptime=$(get_uptime)
 
