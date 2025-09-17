@@ -159,6 +159,12 @@ get_ip_info() {
     done
 }
 
+# Check if sudo is available without password for a command
+can_sudo_nopass() {
+    local cmd="$1"
+    sudo -n "$cmd" true 2>/dev/null
+}
+
 # Check for recent critical system errors
 check_system_errors() {
     local found_errors=false
@@ -171,6 +177,11 @@ check_system_errors() {
         if [[ ! "$test_journal" =~ "Permission denied" ]] && [[ ! "$test_journal" =~ "No journal files" ]]; then
             # Get critical errors from last 24 hours - use --output=cat to get just messages
             local errors=$(journalctl --since "24 hours ago" -p 0..3 --no-pager --output=cat 2>/dev/null | tail -$max_errors)
+            
+            # If permission denied and sudo is available without password, try with sudo
+            if [[ -z "$errors" ]] && [[ "$test_journal" =~ "Permission denied" ]] && can_sudo_nopass "journalctl"; then
+                errors=$(sudo journalctl --since "24 hours ago" -p 0..3 --no-pager --output=cat 2>/dev/null | tail -$max_errors)
+            fi
 
             if [[ -n "$errors" ]]; then
                 printf "\n${title}Recent System Errors${reset} ${fg}(last 24h)${reset}\n"
@@ -220,6 +231,11 @@ check_system_errors() {
     if ! $found_errors && command -v dmesg &>/dev/null; then
         # Check for kernel errors
         local dmesg_output=$(dmesg -l err,crit,alert,emerg 2>/dev/null | tail -$max_errors || true)
+        
+        # If permission denied and sudo is available without password, try with sudo
+        if [[ -z "$dmesg_output" ]] && can_sudo_nopass "dmesg"; then
+            dmesg_output=$(sudo dmesg -l err,crit,alert,emerg 2>/dev/null | tail -$max_errors || true)
+        fi
 
         if [[ -n "$dmesg_output" ]]; then
             printf "\n${title}Recent Kernel Errors${reset} ${fg}(from dmesg)${reset}\n"
@@ -238,10 +254,30 @@ check_system_errors() {
     fi
 
     if ! $found_errors; then
-        printf "\n${title}System Errors${reset}\n"
-        printf "${separator}%0.s─" $(seq 1 $box_width)
-        printf "${reset}\n"
-        printf "  ${value}✓ No critical errors found in recent logs${reset}\n"
+        # Check if we can access any logs at all
+        local can_access_logs=false
+        if command -v journalctl &>/dev/null; then
+            local test_journal=$(journalctl -n 1 2>&1)
+            if [[ ! "$test_journal" =~ "Permission denied" ]] || can_sudo_nopass "journalctl"; then
+                can_access_logs=true
+            fi
+        fi
+        
+        if [[ -r "/var/log/syslog" ]] || [[ -r "/var/log/messages" ]] || [[ -r "/var/log/kern.log" ]] || (command -v dmesg &>/dev/null && (dmesg -l err 2>/dev/null >/dev/null || can_sudo_nopass "dmesg")); then
+            can_access_logs=true
+        fi
+        
+        if $can_access_logs; then
+            printf "\n${title}System Errors${reset}\n"
+            printf "${separator}%0.s─" $(seq 1 $box_width)
+            printf "${reset}\n"
+            printf "  ${value}✓ No critical errors found in recent logs${reset}\n"
+        else
+            printf "\n${title}System Errors${reset}\n"
+            printf "${separator}%0.s─" $(seq 1 $box_width)
+            printf "${reset}\n"
+            printf "  ${fg}ℹ Log access requires elevated privileges${reset}\n"
+        fi
     fi
 }
 
