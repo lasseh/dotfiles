@@ -67,6 +67,9 @@ export EDITOR="vim"
 export VISUAL="vim"
 export PAGER="less"
 
+# Add local bin to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
 # ==> Grep colors
 GREP_OPTIONS='--color=auto'
 alias grep="grep $GREP_OPTIONS"
