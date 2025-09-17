@@ -313,4 +313,12 @@ get_ip_info
 # Check for recent critical system errors
 check_system_errors
 
+# Check for reboot requirement
+if [ -x /usr/share/unattended-upgrades/update-motd-unattended-upgrades ]; then
+    printf "\n${title}System Updates${reset}\n"
+    printf "${separator}%0.s─" $(seq 1 $box_width)
+    printf "${reset}\n"
+    /usr/share/unattended-upgrades/update-motd-unattended-upgrades
+fi
+
 printf "\n"
