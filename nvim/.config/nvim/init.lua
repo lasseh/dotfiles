@@ -108,6 +108,13 @@ require("lazy").setup({
 
   -- JSON support
   "elzr/vim-json",
+
+  -- Markdown rendering
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
+    opts = {},
+  },
 })
 
 -- Basic Neovim settings (ported from .vimrc)
