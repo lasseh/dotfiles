@@ -195,11 +195,11 @@ check_system_errors() {
             printf "${reset}\n"
             found_errors=true
 
-            while IFS= read -r line; do
-                if [[ -n "$line" ]]; then
-                    printf "  ${highlight}%s${reset}\n" "${line:0:100}..."
-                fi
-            done <<<"$errors"
+                while IFS= read -r line; do
+                    if [[ -n "$line" ]]; then
+                        printf "  ${highlight}%s${reset}\n" "$line"
+                    fi
+                done <<<"$errors"
         fi
     fi
 
@@ -223,7 +223,7 @@ check_system_errors() {
                             # Extract just the message part
                             # Format is typically: Month Day Time Hostname Process[PID]: Message
                             local msg=$(echo "$line" | sed -E 's/^[A-Za-z]+[[:space:]]+[0-9]+[[:space:]]+[0-9:]+[[:space:]]+[^[:space:]]+[[:space:]]+//')
-                            printf "  ${highlight}%s${reset}\n" "${msg:0:100}..."
+                            printf "  ${highlight}%s${reset}\n" "$msg"
                         fi
                     done <<<"$errors"
                 fi
@@ -252,7 +252,7 @@ check_system_errors() {
                 if [[ -n "$line" ]]; then
                     # Remove timestamp [xxx.xxxx] from dmesg output
                     local msg=$(echo "$line" | sed -E 's/^\[[[:space:]]*[0-9.]+\][[:space:]]*//')
-                    printf "  ${highlight}%s${reset}\n" "${msg:0:100}..."
+                    printf "  ${highlight}%s${reset}\n" "$msg"
                 fi
             done <<<"$dmesg_output"
         fi
