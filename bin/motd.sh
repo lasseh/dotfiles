@@ -159,42 +159,47 @@ get_ip_info() {
     done
 }
 
-# Check if sudo is available without password for a command
-can_sudo_nopass() {
-    local cmd="$1"
-    sudo -n "$cmd" true 2>/dev/null
+# Check if sudo is available without password
+can_sudo_nopasswd() {
+    sudo -n true 2>/dev/null
 }
 
 # Check for recent critical system errors
 check_system_errors() {
     local found_errors=false
     local max_errors=5
+    local use_sudo=false
+    
+    # Check if we can use sudo without password
+    if can_sudo_nopasswd; then
+        use_sudo=true
+    fi
 
     # Try journald first (systemd systems)
     if command -v journalctl &>/dev/null; then
-        # Check if we have permission to read journal
+        local errors=""
+        
+        # Try without sudo first
         local test_journal=$(journalctl -n 1 2>&1)
         if [[ ! "$test_journal" =~ "Permission denied" ]] && [[ ! "$test_journal" =~ "No journal files" ]]; then
             # Get critical errors from last 24 hours - use --output=cat to get just messages
-            local errors=$(journalctl --since "24 hours ago" -p 0..3 --no-pager --output=cat 2>/dev/null | tail -$max_errors)
-            
-            # If permission denied and sudo is available without password, try with sudo
-            if [[ -z "$errors" ]] && [[ "$test_journal" =~ "Permission denied" ]] && can_sudo_nopass "journalctl"; then
-                errors=$(sudo journalctl --since "24 hours ago" -p 0..3 --no-pager --output=cat 2>/dev/null | tail -$max_errors)
-            fi
+            errors=$(journalctl --since "24 hours ago" -p 0..3 --no-pager --output=cat 2>/dev/null | tail -$max_errors)
+        elif $use_sudo; then
+            # Try with sudo if regular access failed and sudo is available
+            errors=$(sudo journalctl --since "24 hours ago" -p 0..3 --no-pager --output=cat 2>/dev/null | tail -$max_errors)
+        fi
 
-            if [[ -n "$errors" ]]; then
-                printf "\n${title}Recent System Errors${reset} ${fg}(last 24h)${reset}\n"
-                printf "${separator}%0.s─" $(seq 1 $box_width)
-                printf "${reset}\n"
-                found_errors=true
+        if [[ -n "$errors" ]]; then
+            printf "\n${title}Recent System Errors${reset} ${fg}(last 24h)${reset}\n"
+            printf "${separator}%0.s─" $(seq 1 $box_width)
+            printf "${reset}\n"
+            found_errors=true
 
-                while IFS= read -r line; do
-                    if [[ -n "$line" ]]; then
-                        printf "  ${highlight}%s${reset}\n" "${line:0:100}..."
-                    fi
-                done <<<"$errors"
-            fi
+            while IFS= read -r line; do
+                if [[ -n "$line" ]]; then
+                    printf "  ${highlight}%s${reset}\n" "${line:0:100}..."
+                fi
+            done <<<"$errors"
         fi
     fi
 
@@ -232,8 +237,8 @@ check_system_errors() {
         # Check for kernel errors
         local dmesg_output=$(dmesg -l err,crit,alert,emerg 2>/dev/null | tail -$max_errors || true)
         
-        # If permission denied and sudo is available without password, try with sudo
-        if [[ -z "$dmesg_output" ]] && can_sudo_nopass "dmesg"; then
+        # If no output and sudo is available, try with sudo
+        if [[ -z "$dmesg_output" ]] && $use_sudo; then
             dmesg_output=$(sudo dmesg -l err,crit,alert,emerg 2>/dev/null | tail -$max_errors || true)
         fi
 
@@ -256,14 +261,22 @@ check_system_errors() {
     if ! $found_errors; then
         # Check if we can access any logs at all
         local can_access_logs=false
+        
+        # Check journalctl access
         if command -v journalctl &>/dev/null; then
             local test_journal=$(journalctl -n 1 2>&1)
-            if [[ ! "$test_journal" =~ "Permission denied" ]] || can_sudo_nopass "journalctl"; then
+            if [[ ! "$test_journal" =~ "Permission denied" ]] && [[ ! "$test_journal" =~ "No journal files" ]]; then
                 can_access_logs=true
             fi
         fi
         
-        if [[ -r "/var/log/syslog" ]] || [[ -r "/var/log/messages" ]] || [[ -r "/var/log/kern.log" ]] || (command -v dmesg &>/dev/null && (dmesg -l err 2>/dev/null >/dev/null || can_sudo_nopass "dmesg")); then
+        # Check traditional log files
+        if [[ -r "/var/log/syslog" ]] || [[ -r "/var/log/messages" ]] || [[ -r "/var/log/kern.log" ]]; then
+            can_access_logs=true
+        fi
+        
+        # Check dmesg access
+        if command -v dmesg &>/dev/null && dmesg -l err 2>/dev/null >/dev/null; then
             can_access_logs=true
         fi
         
