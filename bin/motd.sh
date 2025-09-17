@@ -153,7 +153,7 @@ get_ip_info() {
 
             printf "  ${secondary}%-10s${reset} ${state_color}%-8s${reset}" "$intf" "$state"
             [[ -n "$ipv4" ]] && printf " ${value}%-15s${reset}" "$ipv4"
-            [[ -n "$ipv6" ]] && printf " ${fg}%s${reset}" "$ipv6"
+            [[ -n "$ipv6" ]] && printf " ${value}%s${reset}" "$ipv6"
             printf "\n"
         fi
     done
@@ -251,13 +251,7 @@ check_system_errors() {
 # Calculate proper spacing for the header
 header_text="System Information for $hostname"
 header_length=${#header_text}
-box_width=65
-
-# If header is too long, truncate hostname or increase box width
-if ((header_length > box_width - 4)); then
-    # Option 1: Use a wider box
-    box_width=$((header_length + 6))
-fi
+box_width=$((header_length + 4))
 
 # Create the box with proper width
 printf "\n${title}"
@@ -266,7 +260,7 @@ printf "%0.s═" $(seq 1 $box_width)
 printf "╗"
 printf "${reset}\n"
 
-printf "${title}║${reset} ${title}%-*s${reset} ${title}║${reset}\n" "$box_width" "$header_text"
+printf "${title}║${reset} ${title}%-*s${reset} ${title}║${reset}\n" "$((box_width - 2))" "$header_text"
 
 printf "${title}╚"
 printf "%0.s═" $(seq 1 $box_width)
