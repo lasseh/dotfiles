@@ -54,10 +54,28 @@ repo_information() {
 
 # Update terminal title with current directory
 update_title() {
-    # Get just the current directory name
-    local dir_name="${PWD##*/}"
-    # Set terminal title
-    print -Pn "\e]0;${dir_name}\a"
+    # Check if in SSH session
+    local prefix=""
+    [[ -n "$SSH_CLIENT" ]] && prefix="[SSH] "
+    
+    # Get git repo name if in a git repository
+    local repo_name=$(git rev-parse --show-toplevel 2>/dev/null)
+    repo_name=${repo_name##*/}
+    
+    # Build the title
+    if [[ -n "$repo_name" ]]; then
+        # In git repo: show repo name with path relative to repo root
+        local rel_path=$(git rev-parse --show-prefix 2>/dev/null)
+        rel_path=${rel_path%/}  # Remove trailing slash
+        if [[ -n "$rel_path" ]]; then
+            print -Pn "\e]0;${prefix}${USER}@%m: ${repo_name}/${rel_path}\a"
+        else
+            print -Pn "\e]0;${prefix}${USER}@%m: ${repo_name}\a"
+        fi
+    else
+        # Not in git repo: show shortened path with ~
+        print -Pn "\e]0;${prefix}${USER}@%m: %~\a"
+    fi
 }
 
 # Precmd function for info line with Tokyo Night colors
