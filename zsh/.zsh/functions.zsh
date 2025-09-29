@@ -13,8 +13,64 @@ function mcom() {
 }
 
 function cssh() {
-    echo -n -e "\033]0;$@\007"
-    /usr/bin/ssh "$@" | ct
+    # Extract the hostname from SSH arguments
+    local ssh_host=""
+    local args=("$@")
+    local skip_next=false
+
+    for arg in "${args[@]}"; do
+        if [[ "$skip_next" == true ]]; then
+            skip_next=false
+            continue
+        fi
+
+        # Skip SSH options that take arguments
+        if [[ "$arg" =~ ^-(i|F|o|p|l|b|c|D|L|R|W)$ ]]; then
+            skip_next=true
+            continue
+        fi
+
+        # Skip other single-letter options
+        if [[ "$arg" =~ ^-[a-zA-Z]$ ]]; then
+            continue
+        fi
+
+        # Skip combined options like -vvv
+        if [[ "$arg" =~ ^-[a-zA-Z]+$ ]]; then
+            continue
+        fi
+
+        # Found the hostname/destination
+        if [[ ! "$arg" =~ ^- ]]; then
+            # Extract just the hostname part (remove user@ if present)
+            ssh_host="${arg##*@}"
+            # Remove port if specified with :port
+            ssh_host="${ssh_host%%:*}"
+            break
+        fi
+    done
+
+    # Default to showing all args if we couldn't extract hostname
+    local display_name="${ssh_host:-$@}"
+
+    # Set terminal title (for non-tmux or as fallback)
+    echo -n -e "\033]0;${display_name}\007"
+
+    if [[ -n "$TMUX" ]] && [[ -n "$ssh_host" ]]; then
+        # Save current automatic-rename setting
+        local auto_rename=$(tmux show-window-option -v automatic-rename 2>/dev/null)
+        # Temporarily rename window to SSH destination
+        tmux rename-window "${ssh_host}" 2>/dev/null
+        # Run SSH with ct pipe, using xterm for better compatibility with network devices
+        TERM=xterm /usr/bin/ssh "$@" | ct
+        local ssh_exit=$?
+        # Restore automatic-rename
+        tmux set-window-option automatic-rename "${auto_rename:-on}" 2>/dev/null
+        return $ssh_exit
+    else
+        # If not in tmux or couldn't extract hostname, just run SSH with ct
+        TERM=xterm /usr/bin/ssh "$@" | ct
+    fi
 }
 
 function rs232() {

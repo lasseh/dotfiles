@@ -29,8 +29,6 @@ alias irssi='TERM=screen-256color irssi'
 alias htop='TERM=screen-256color htop'
 alias weechat='TERM=screen-256color weechat-curses'
 
-# SSH to Juniper devices with compatible terminal
-alias jssh='TERM=xterm ssh'
 
 # Git shortcuts
 alias gs="gst"  # Use our pretty status function

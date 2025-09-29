@@ -43,6 +43,7 @@ source "${HOME}/.zsh/alias.zsh" || _zwarn "Could not source ~/.zsh/alias.zsh"
 source "${HOME}/.zsh/functions.zsh" || _zwarn "Could not source ~/.zsh/functions.zsh"
 source "${HOME}/.zsh/fzf.zsh" || _zwarn "Could not source ~/.zsh/fzf.zsh"
 source "${HOME}/.zsh/ssh-portforward.zsh" || _zwarn "Could not source ~/.zsh/ssh-portforward.zsh"
+source "${HOME}/.zsh/ssh-fzf-fixed.zsh" || _zwarn "Could not source ~/.zsh/ssh-fzf-fixed.zsh"
 source "${HOME}/.zsh/tokyo-night-colors.zsh" || _zwarn "Could not source ~/.zsh/tokyo-night-colors.zsh"
 source "${HOME}/.zsh/tokyo-night-theme.zsh" || _zwarn "Could not source ~/.zsh/tokyo-night-theme.zsh"
 
@@ -72,12 +73,15 @@ export PATH="$GOPATH/bin:$PATH"
 # Add local bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
 
+# Force reload of completion system FIRST
+autoload -U compinit && compinit
+
 # SSH tab completion optimization - only show configured hosts
 _ssh_hosts_completion() {
     local -a ssh_hosts
     # Extract Host entries from SSH config files, excluding wildcards and comments
     ssh_hosts=($(awk '
-        /^Host / { 
+        /^Host / {
             for(i=2; i<=NF; i++) {
                 if($i !~ /[*?]/ && $i !~ /^#/) {
                     print $i
@@ -101,9 +105,6 @@ zstyle ':completion:*:sftp:*' users-hosts off
 compdef _ssh_hosts_completion ssh
 compdef _ssh_hosts_completion scp
 compdef _ssh_hosts_completion sftp
-
-# Force reload of completion system
-autoload -U compinit && compinit -d
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
