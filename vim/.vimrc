@@ -147,6 +147,7 @@ colorscheme tokyonight-night
 set number 			" Enable line numbering
 set ruler			" Enable ruler
 set cmdheight=1			" Height of the command bar
+set notitle			" Don't set terminal title (handled by zsh)
 " set cursorline			\" Disabled for performance
 "set showmode			" Shows the current mode in the modeline
 set t_Co=256 			" Enable 256-color mode
