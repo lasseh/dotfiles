@@ -10,7 +10,7 @@ if command -v ssh-agent >/dev/null 2>&1; then
     if [[ -z "$SSH_AUTH_SOCK" ]]; then
 
         # Path to store ssh-agent environment variables
-        local agent_env="$HOME/.agent.env"
+        agent_env="$HOME/.agent.env"
 
         if [[ -f "$agent_env" ]]; then
             # Load existing agent environment
