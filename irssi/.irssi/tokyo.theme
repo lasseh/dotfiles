@@ -215,9 +215,9 @@ abstracts = {
 
   # activity in statusbar - Tokyo Night colors with bright text
   sb_act_sep = "%N%W,%n";
-  sb_act_text = "%N%C$*%n";
-  sb_act_msg = "%N%Y$*%n";
-  sb_act_hilight = "%N%M$*%n";
+  sb_act_text = "%K$*%n";
+  sb_act_msg = "%N%W$*%n";
+  sb_act_hilight = "%N%R$*%n";
   sb_act_hilight_color = "$0$1-%n";
 };
 
