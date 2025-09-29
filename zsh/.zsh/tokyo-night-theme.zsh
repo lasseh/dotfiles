@@ -54,38 +54,43 @@ repo_information() {
 
 # Update terminal title with current directory
 update_title() {
-    # If in tmux AND connected via SSH, just use the tmux window name
-    if [[ -n "$TMUX" ]] && [[ -n "$SSH_CONNECTION" ]]; then
-        local tmux_window=$(tmux display-message -p '#W' 2>/dev/null)
-        if [[ -n "$tmux_window" ]]; then
-            # Use tmux window name in the title
-            local title_string="${USER}@%m: ${tmux_window}"
-            print -Pn "\e]2;${title_string}\a"
-            return
-        fi
-    fi
-
     # Get git repo name if in a git repository
     local repo_name=$(git rev-parse --show-toplevel 2>/dev/null)
     repo_name=${repo_name##*/}
 
-    # Build the title - works in both terminal and tmux
-    local title_string
+    # Build the base title
+    local base_title
     if [[ -n "$repo_name" ]]; then
         # In git repo: show repo name with path relative to repo root
         local rel_path=$(git rev-parse --show-prefix 2>/dev/null)
         rel_path=${rel_path%/}  # Remove trailing slash
         if [[ -n "$rel_path" ]]; then
-            title_string="${USER}@%m: ${repo_name}/${rel_path}"
+            base_title="${USER}@%m: ${repo_name}/${rel_path}"
         else
-            title_string="${USER}@%m: ${repo_name}"
+            base_title="${USER}@%m: ${repo_name}"
         fi
     else
         # Not in git repo: show shortened path with ~
-        title_string="${USER}@%m: %~"
+        base_title="${USER}@%m: %~"
     fi
 
-    # Set title using both standard escape sequence and tmux if available
+    # If in tmux, intelligently append the window name
+    local title_string="$base_title"
+    if [[ -n "$TMUX" ]]; then
+        local tmux_window=$(tmux display-message -p '#W' 2>/dev/null)
+        local pane_command=$(tmux display-message -p '#{pane_current_command}' 2>/dev/null)
+
+        # Only show window name if it's different from the pane command
+        # This indicates a manually-set window name
+        if [[ -n "$tmux_window" ]] && [[ "$tmux_window" != "$pane_command" ]]; then
+            title_string="$base_title [$tmux_window]"
+        elif [[ -n "$pane_command" ]]; then
+            # Show the actual running command (more reliable than window name)
+            title_string="$base_title [$pane_command]"
+        fi
+    fi
+
+    # Set terminal title
     if [[ -n "$TMUX" ]]; then
         # Inside tmux - only set the terminal title, not the window name
         print -Pn "\e]2;${title_string}\a"
@@ -97,28 +102,36 @@ update_title() {
 
 # Update terminal title with running command
 update_title_preexec() {
-    # If in tmux AND connected via SSH, just use the tmux window name (tmux manages it)
-    if [[ -n "$TMUX" ]] && [[ -n "$SSH_CONNECTION" ]]; then
-        local tmux_window=$(tmux display-message -p '#W' 2>/dev/null)
-        if [[ -n "$tmux_window" ]]; then
-            local title_string="${USER}@%m: ${tmux_window}"
-            print -Pn "\e]2;${title_string}\a"
-            return
-        fi
-    fi
-
-    # Show the running command
+    # Get the command being run
     local cmd=${1%% *}
     # Remove any leading path
     cmd=${cmd##*/}
-    local title_string="${USER}@%m: [${cmd}]"
 
-    # Set title using both standard escape sequence and tmux if available
     if [[ -n "$TMUX" ]]; then
-        # Inside tmux - only set the terminal title, not the window name
+        # In tmux, show the path context with the command
+        # Get git repo name if in a git repository
+        local repo_name=$(git rev-parse --show-toplevel 2>/dev/null)
+        repo_name=${repo_name##*/}
+
+        local context
+        if [[ -n "$repo_name" ]]; then
+            local rel_path=$(git rev-parse --show-prefix 2>/dev/null)
+            rel_path=${rel_path%/}
+            if [[ -n "$rel_path" ]]; then
+                context="${repo_name}/${rel_path}"
+            else
+                context="${repo_name}"
+            fi
+        else
+            context=$(print -Pn "%~")
+        fi
+
+        # Show context with command
+        local title_string="${USER}@%m: ${context} [${cmd}]"
         print -Pn "\e]2;${title_string}\a"
     else
-        # Regular terminal
+        # Outside tmux, show the running command
+        local title_string="${USER}@%m: [${cmd}]"
         print -Pn "\e]0;${title_string}\a"
     fi
 }
