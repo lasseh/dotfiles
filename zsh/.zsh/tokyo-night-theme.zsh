@@ -54,27 +54,53 @@ repo_information() {
 
 # Update terminal title with current directory
 update_title() {
-    # Check if in SSH session
-    local prefix=""
-    [[ -n "$SSH_CLIENT" ]] && prefix="[SSH] "
-    
     # Get git repo name if in a git repository
     local repo_name=$(git rev-parse --show-toplevel 2>/dev/null)
     repo_name=${repo_name##*/}
-    
-    # Build the title
+
+    # Build the title - works in both terminal and tmux
+    local title_string
     if [[ -n "$repo_name" ]]; then
         # In git repo: show repo name with path relative to repo root
         local rel_path=$(git rev-parse --show-prefix 2>/dev/null)
         rel_path=${rel_path%/}  # Remove trailing slash
         if [[ -n "$rel_path" ]]; then
-            print -Pn "\e]0;${prefix}${USER}@%m: ${repo_name}/${rel_path}\a"
+            title_string="${USER}@%m: ${repo_name}/${rel_path}"
         else
-            print -Pn "\e]0;${prefix}${USER}@%m: ${repo_name}\a"
+            title_string="${USER}@%m: ${repo_name}"
         fi
     else
         # Not in git repo: show shortened path with ~
-        print -Pn "\e]0;${prefix}${USER}@%m: %~\a"
+        title_string="${USER}@%m: %~"
+    fi
+
+    # Set title using both standard escape sequence and tmux if available
+    if [[ -n "$TMUX" ]]; then
+        # Inside tmux - only set the terminal title, not the window name
+        print -Pn "\e]2;${title_string}\a"
+    else
+        # Regular terminal
+        print -Pn "\e]0;${title_string}\a"
+    fi
+}
+
+# Update terminal title with running command
+update_title_preexec() {
+    # Get the command being run (first word for simplicity)
+    local cmd=${1%% *}
+    # Remove any leading path
+    cmd=${cmd##*/}
+
+    # Build title with running command
+    local title_string="${USER}@%m: [${cmd}]"
+
+    # Set title using both standard escape sequence and tmux if available
+    if [[ -n "$TMUX" ]]; then
+        # Inside tmux - only set the terminal title, not the window name
+        print -Pn "\e]2;${title_string}\a"
+    else
+        # Regular terminal
+        print -Pn "\e]0;${title_string}\a"
     fi
 }
 
@@ -83,6 +109,11 @@ precmd() {
     vcs_info
     update_title
     print -P "\\n%F{32}%n%F{163}@%F{35}%M%F{163}:%f $(repo_information)"
+}
+
+# Preexec function to update title with running command
+preexec() {
+    update_title_preexec "$1"
 }
 
 # Final prompt definition with Tokyo Night colors
