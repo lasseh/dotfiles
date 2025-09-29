@@ -63,16 +63,8 @@ if which fzf &>/dev/null; then
         --color=spinner:#ff007c \
     "
 
-    # Manual key bindings for ctrl-r (history search)
-    __fzf_history__() {
-        local output
-        output=$(fc -rl 1 | awk '{$1=""; print substr($0,2)}' |
-            fzf --query="$LBUFFER" --no-sort --exact) &&
-            LBUFFER=$output
-        zle reset-prompt
-    }
-    zle -N __fzf_history__
-    bindkey '^R' __fzf_history__
+    # History search is now handled by history-config.zsh with advanced features
+    # Including: deduplication, timestamps, and CTRL-Y to copy
 
     # ctrl-t for file search
     __fzf_file__() {

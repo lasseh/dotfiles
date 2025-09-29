@@ -14,15 +14,7 @@ umask 022
 export EDITOR="vim"
 export VISUAL="vim"
 
-# History configuration
-HISTFILE="$HOME/.zsh_history" # Path to history file
-HISTSIZE=10000                #  Number of history entries to keep in memory
-SAVEHIST=10000                # Number of history entries to save
-setopt HIST_IGNORE_ALL_DUPS   # Ignore duplicate commands
-setopt HIST_REDUCE_BLANKS     # Remove extra blanks
-setopt HIST_VERIFY            # Verify history expansion
-setopt APPEND_HISTORY         # Append to history file on exit
-unsetopt SHARE_HISTORY        # Don't share history across sessions
+# History configuration is now in ~/.zsh/history-config.zsh
 
 # Basic auto/tab completion
 autoload -Uz compinit
@@ -39,6 +31,7 @@ zstyle ':completion:*:(ssh|scp|sftp):*:hosts' ignored-patterns '*'
 function _zwarn() { echo -ne "\e[38;5;196mWARNING \e[38;5;208m~>\e[0m $1\n"; }
 
 #  Load custom zsh configuration files
+source "${HOME}/.zsh/history-config.zsh" || _zwarn "Could not source ~/.zsh/history-config.zsh"
 source "${HOME}/.zsh/alias.zsh" || _zwarn "Could not source ~/.zsh/alias.zsh"
 source "${HOME}/.zsh/functions.zsh" || _zwarn "Could not source ~/.zsh/functions.zsh"
 source "${HOME}/.zsh/fzf.zsh" || _zwarn "Could not source ~/.zsh/fzf.zsh"
