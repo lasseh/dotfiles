@@ -54,6 +54,17 @@ repo_information() {
 
 # Update terminal title with current directory
 update_title() {
+    # If in tmux AND connected via SSH, just use the tmux window name
+    if [[ -n "$TMUX" ]] && [[ -n "$SSH_CONNECTION" ]]; then
+        local tmux_window=$(tmux display-message -p '#W' 2>/dev/null)
+        if [[ -n "$tmux_window" ]]; then
+            # Use tmux window name in the title
+            local title_string="${USER}@%m: ${tmux_window}"
+            print -Pn "\e]2;${title_string}\a"
+            return
+        fi
+    fi
+
     # Get git repo name if in a git repository
     local repo_name=$(git rev-parse --show-toplevel 2>/dev/null)
     repo_name=${repo_name##*/}
@@ -86,12 +97,20 @@ update_title() {
 
 # Update terminal title with running command
 update_title_preexec() {
-    # Get the command being run (first word for simplicity)
+    # If in tmux AND connected via SSH, just use the tmux window name (tmux manages it)
+    if [[ -n "$TMUX" ]] && [[ -n "$SSH_CONNECTION" ]]; then
+        local tmux_window=$(tmux display-message -p '#W' 2>/dev/null)
+        if [[ -n "$tmux_window" ]]; then
+            local title_string="${USER}@%m: ${tmux_window}"
+            print -Pn "\e]2;${title_string}\a"
+            return
+        fi
+    fi
+
+    # Show the running command
     local cmd=${1%% *}
     # Remove any leading path
     cmd=${cmd##*/}
-
-    # Build title with running command
     local title_string="${USER}@%m: [${cmd}]"
 
     # Set title using both standard escape sequence and tmux if available
