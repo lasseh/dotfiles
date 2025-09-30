@@ -65,14 +65,4 @@ if which fzf &>/dev/null; then
 
     # History search is now handled by history-config.zsh with advanced features
     # Including: deduplication, timestamps, and CTRL-Y to copy
-
-    # ctrl-t for file search
-    __fzf_file__() {
-        local output
-        output=$(eval "$FZF_DEFAULT_COMMAND" | fzf --query="$LBUFFER") &&
-            LBUFFER="${LBUFFER}$output"
-        zle reset-prompt
-    }
-    zle -N __fzf_file__
-    bindkey '^T' __fzf_file__
 fi

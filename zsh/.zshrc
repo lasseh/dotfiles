@@ -7,41 +7,32 @@ export ZSH=$HOME/.zsh
 # Set umask for better default permissions
 umask 022
 
-# Path to your oh-my-zsh installation (if used)
-# export ZSH="$HOME/.oh-my-zsh"
-
 # Set default editor
 export EDITOR="vim"
 export VISUAL="vim"
 
-# History configuration is now in ~/.zsh/history-config.zsh
-
 # Basic auto/tab completion
-autoload -Uz compinit
-compinit
-zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+autoload -Uz compinit  # Load the completion system function
+compinit               # Initialize completions
+zstyle ':completion:*' menu select           # Enable arrow-key navigation in completion menu
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'  # Case-insensitive completion
 
-# Disable all default SSH completion sources
-zstyle ':completion:*:(ssh|scp|sftp):*' tag-order '! hosts'
-zstyle ':completion:*:(ssh|scp|sftp):*:hosts' ignored-patterns '*'
-
-# Load zsh plugins
 # Pretty warnings
 function _zwarn() { echo -ne "\e[38;5;196mWARNING \e[38;5;208m~>\e[0m $1\n"; }
 
 #  Load custom zsh configuration files
-source "${HOME}/.zsh/history-config.zsh" || _zwarn "Could not source ~/.zsh/history-config.zsh"
+source "${HOME}/.zsh/history.zsh" || _zwarn "Could not source ~/.zsh/history-config.zsh"
 source "${HOME}/.zsh/alias.zsh" || _zwarn "Could not source ~/.zsh/alias.zsh"
 source "${HOME}/.zsh/functions.zsh" || _zwarn "Could not source ~/.zsh/functions.zsh"
 source "${HOME}/.zsh/fzf.zsh" || _zwarn "Could not source ~/.zsh/fzf.zsh"
 source "${HOME}/.zsh/ssh-portforward.zsh" || _zwarn "Could not source ~/.zsh/ssh-portforward.zsh"
-source "${HOME}/.zsh/ssh-fzf-fixed.zsh" || _zwarn "Could not source ~/.zsh/ssh-fzf-fixed.zsh"
-source "${HOME}/.zsh/tokyo-night-colors.zsh" || _zwarn "Could not source ~/.zsh/tokyo-night-colors.zsh"
+source "${HOME}/.zsh/ssh-fzf.zsh" || _zwarn "Could not source ~/.zsh/ssh-fzf-fixed.zsh"
 source "${HOME}/.zsh/tokyo-night-theme.zsh" || _zwarn "Could not source ~/.zsh/tokyo-night-theme.zsh"
 
-# Add bin to path
-[[ -d "$DOTFILES/bin" ]] && export PATH="$DOTFILES/bin:$PATH"
+# TODO: Check if carapace is installed, otherwise skip
+# TODO: Add vivid theme for carapace
+# TODO: replace vivid with LS_COLORS config
+source "${HOME}/.zsh/carapace.zsh" || _zwarn "Could not source ~/.zsh/carapace.zsh"
 
 # Load dircolors
 if [ -x "$(command -v dircolors)" ]; then
@@ -56,48 +47,12 @@ if [ -f /opt/homebrew/bin/brew ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Add libpq to PATH
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-
 # Go configuration
 export GOPATH="$HOME/code/go"
 export PATH="$GOPATH/bin:$PATH"
 
-# Add local bin to PATH
-export PATH="$HOME/.local/bin:$PATH"
-
-# Force reload of completion system FIRST
-autoload -U compinit && compinit
-
-# SSH tab completion optimization - only show configured hosts
-_ssh_hosts_completion() {
-    local -a ssh_hosts
-    # Extract Host entries from SSH config files, excluding wildcards and comments
-    ssh_hosts=($(awk '
-        /^Host / {
-            for(i=2; i<=NF; i++) {
-                if($i !~ /[*?]/ && $i !~ /^#/) {
-                    print $i
-                }
-            }
-        }
-    ' ~/.ssh/config ~/.ssh/work.d/*.conf ~/.ssh/private.d/*.conf 2>/dev/null | sort -u))
-
-    _describe 'ssh hosts' ssh_hosts
-}
-
-# Disable default SSH host completion sources
-zstyle ':completion:*:ssh:*' hosts off
-zstyle ':completion:*:scp:*' hosts off
-zstyle ':completion:*:sftp:*' hosts off
-zstyle ':completion:*:ssh:*' users-hosts off
-zstyle ':completion:*:scp:*' users-hosts off
-zstyle ':completion:*:sftp:*' users-hosts off
-
-# Override default SSH completion to use only configured hosts
-compdef _ssh_hosts_completion ssh
-compdef _ssh_hosts_completion scp
-compdef _ssh_hosts_completion sftp
-
-# opencode
-export PATH="$HOME/.opencode/bin:$PATH"
+# Extra paths
+[[ -d "$DOTFILES/bin" ]] && export PATH="$DOTFILES/bin:$PATH" # For custom scripts
+export PATH="$HOME/.local/bin:$PATH" # For user-specific binaries
+export PATH="$HOME/.opencode/bin:$PATH" # For opencode CLI tool
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH" # For libpq tools like psql

@@ -1,41 +1,129 @@
-# Pretty SSH Autocompletion using fzf
-# This script provides a way to use fzf for SSH host completion in Zsh.
-my_fzf_ssh() {
-    local host query
-    if [[ $LBUFFER == "ssh "* ]]; then
-        query="${LBUFFER#ssh }"
+# Intelligent SSH Host Completion with fzf
+# This provides smart SSH host completion that integrates cleanly with zsh
+
+# Function to extract SSH hosts from config files
+_get_ssh_hosts() {
+    local hosts=()
+    local config_files
+
+    # Find all SSH config files (main config and any includes)
+    config_files=(~/.ssh/config)
+
+    # Check for additional config directories if they exist
+    [[ -d ~/.ssh/config.d ]] && config_files+=(~/.ssh/config.d/*.conf)
+    [[ -d ~/.ssh/work.d ]] && config_files+=(~/.ssh/work.d/*.conf)
+    [[ -d ~/.ssh/private.d ]] && config_files+=(~/.ssh/private.d/*.conf)
+
+    # Extract hosts from all config files that exist
+    for file in $config_files; do
+        if [[ -f "$file" ]]; then
+            # Extract Host entries (excluding wildcards and patterns)
+            grep -E "^Host\s+" "$file" 2>/dev/null | \
+                awk '{for(i=2;i<=NF;i++) print $i}' | \
+                grep -v '[*?!]'
+        fi
+    done | sort -u
+}
+
+# FZF-based SSH completion
+_fzf_ssh_complete() {
+    local selected
+    local hosts
+    local query=""
+    local prefix=""
+
+    # Extract the partial hostname already typed (if any)
+    if [[ "$LBUFFER" =~ (ssh|cssh|scp|sftp|rsync.*ssh)[[:space:]]+([^[:space:]]*)$ ]]; then
+        query="${match[2]}"
+        # Store everything except the partial hostname
+        prefix="${LBUFFER%$query}"
     else
-        query=""
+        prefix="$LBUFFER"
     fi
-    host=$(grep -E "^Host " ~/.ssh/{work.d,private.d}/*.conf |
-        awk '{print $2}' |
-        fzf --height=40% --extended --layout=reverse --border --info=hidden \
-            --prompt="SSH> " --query="$query" --select-1 --exact)
+
+    # Get available hosts
+    hosts=$(_get_ssh_hosts)
+
+    if [[ -z "$hosts" ]]; then
+        # No hosts found, fall back to default completion
+        return 1
+    fi
+
+    # Use fzf to select a host, with the partial hostname as initial query
+    selected=$(echo "$hosts" | fzf \
+        --height=40% \
+        --layout=reverse \
+        --border \
+        --prompt="SSH Host> " \
+        --query="$query" \
+        --select-1 \
+        --exit-0)
+
+    if [[ -n "$selected" ]]; then
+        # Replace the buffer with prefix + selected host
+        LBUFFER="${prefix}${selected}"
+    fi
+
+    zle reset-prompt
+    return 0
+}
+
+# Smart SSH completion widget
+ssh_smart_complete() {
+    # Only trigger for ssh commands (including cssh)
+    if [[ "$LBUFFER" =~ ^(ssh|cssh|scp|sftp|rsync.*ssh)[[:space:]]+$ ]] || \
+       [[ "$LBUFFER" =~ ^(ssh|cssh|scp|sftp)[[:space:]]+[^[:space:]]*$ ]]; then
+        # Try fzf completion
+        if ! _fzf_ssh_complete; then
+            # Fall back to standard completion if fzf fails
+            zle expand-or-complete
+        fi
+    else
+        # Use normal completion for everything else
+        zle expand-or-complete
+    fi
+}
+
+# Register the widget
+zle -N ssh_smart_complete
+
+# Override Tab only when typing SSH commands
+# This uses a more intelligent binding that checks context
+bindkey '^I' ssh_smart_complete
+
+# Optional: Add a dedicated hotkey for SSH host selection
+# This can be used anywhere in the command line
+ssh_host_picker() {
+    local host
+    host=$(_get_ssh_hosts | fzf \
+        --height=40% \
+        --layout=reverse \
+        --border \
+        --prompt="Pick SSH Host> ")
+
     if [[ -n "$host" ]]; then
-        BUFFER="cssh $host"
-        CURSOR=${#BUFFER} # Move cursor to the end
+        LBUFFER="${LBUFFER}${host}"
         zle reset-prompt
     fi
 }
 
-zle -N my_fzf_ssh
-# bindkey '^S' my_fzf_ssh
-# stty -ixon # Ensure Ctrl-S isn't blocked by the terminal
+zle -N ssh_host_picker
+# Uncomment to enable Ctrl+S for SSH host picker
+# bindkey '^S' ssh_host_picker
 
-_fzf_complete_ssh() {
-    # If the current buffer looks like "ssh" or "ssh " (or is empty), call my_fzf_ssh.
-    if [[ $LBUFFER == 'ssh '* || $LBUFFER == 'ssh' || -z $LBUFFER ]]; then
-        my_fzf_ssh
-    else
-        # Otherwise, fall back to the default completion behavior.
-        eval "zle ${fzf_default_completion:-expand-or-complete}"
-    fi
-}
-
-# Enable fzf completion for ssh
-if [[ -n $ZSH_VERSION ]]; then
+# Standard zsh SSH completion as fallback
+# This ensures we still have basic completion if fzf isn't available
+if (( $+commands[ssh] )); then
+    # Load SSH completion if not already loaded
     autoload -U +X compinit && compinit
-    fzf_default_completion='expand-or-complete'
-    [[ -n $fzf_default_completion ]] && zle -N _fzf_complete_ssh
-    bindkey '^I' _fzf_complete_ssh # Bind Tab only for SSH
+
+    # Configure ssh completion to use known_hosts and config
+    zstyle ':completion:*:ssh:*' hosts $(
+        {
+            [[ -r ~/.ssh/known_hosts ]] && \
+                awk '{print $1}' ~/.ssh/known_hosts | \
+                cut -d, -f1 | cut -d: -f1
+            _get_ssh_hosts
+        } 2>/dev/null | sort -u
+    )
 fi
