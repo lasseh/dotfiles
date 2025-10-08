@@ -84,6 +84,23 @@ require("lazy").setup({
           end
         end
       })
+
+      -- Auto-refresh NERDTree on file changes
+      vim.api.nvim_create_autocmd({"BufEnter", "BufWritePost"}, {
+        callback = function()
+          if vim.fn.exists(':NERDTreeRefreshRoot') == 2 then
+            vim.cmd('NERDTreeRefreshRoot')
+          end
+        end
+      })
+
+      vim.api.nvim_create_autocmd("FocusGained", {
+        callback = function()
+          if vim.fn.exists(':NERDTreeRefreshRoot') == 2 then
+            vim.cmd('NERDTreeRefreshRoot')
+          end
+        end
+      })
     end,
   },
 
