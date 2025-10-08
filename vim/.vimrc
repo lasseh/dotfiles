@@ -266,6 +266,10 @@ let NERDTreeShowHidden=1        " Show hidden files
 let NERDTreeMinimalUI=1         " Minimal UI
 let NERDTreeDirArrows=1         " Use arrows for directories
 
+" Auto-refresh NERDTree on file changes
+autocmd BufEnter,BufWritePost * if exists(':NERDTreeRefreshRoot') | NERDTreeRefreshRoot | endif
+autocmd FocusGained * if exists(':NERDTreeRefreshRoot') | NERDTreeRefreshRoot | endif
+
 
 " ====================================================================
 " Open file at last edited position
