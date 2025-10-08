@@ -70,16 +70,22 @@ _fzf_ssh_complete() {
 
 # Smart SSH completion widget
 ssh_smart_complete() {
-    # Only trigger for ssh commands (including cssh)
-    if [[ "$LBUFFER" =~ ^(ssh|cssh|scp|sftp|rsync.*ssh)[[:space:]]+$ ]] || \
-       [[ "$LBUFFER" =~ ^(ssh|cssh|scp|sftp)[[:space:]]+[^[:space:]]*$ ]]; then
+    # For scp/sftp, only use host completion if typing a remote path (contains @ or :)
+    if [[ "$LBUFFER" =~ ^(scp|sftp)[[:space:]]+.*[@:].*$ ]] || \
+       [[ "$LBUFFER" =~ ^(scp|sftp)[[:space:]]+[^[:space:]/]*$ ]]; then
+        # Try fzf completion for host
+        if ! _fzf_ssh_complete; then
+            zle expand-or-complete
+        fi
+    # For ssh/cssh, always use host completion
+    elif [[ "$LBUFFER" =~ ^(ssh|cssh|rsync.*ssh)[[:space:]]+$ ]] || \
+         [[ "$LBUFFER" =~ ^(ssh|cssh)[[:space:]]+[^[:space:]]*$ ]]; then
         # Try fzf completion
         if ! _fzf_ssh_complete; then
-            # Fall back to standard completion if fzf fails
             zle expand-or-complete
         fi
     else
-        # Use normal completion for everything else
+        # Use normal completion for everything else (files, options, etc.)
         zle expand-or-complete
     fi
 }
