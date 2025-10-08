@@ -6,8 +6,9 @@
 
 # SSH Agent setup - only run if ssh-agent is available
 if command -v ssh-agent >/dev/null 2>&1; then
-    # Check if SSH_AUTH_SOCK is already set (agent already running)
-    if [[ -z "$SSH_AUTH_SOCK" ]]; then
+    # Check if SSH_AUTH_SOCK is already set (agent already running or forwarded)
+    # Skip starting local agent if we're in an SSH session (forwarding might be active)
+    if [[ -z "$SSH_AUTH_SOCK" && -z "$SSH_CONNECTION" ]]; then
 
         # Path to store ssh-agent environment variables
         agent_env="$HOME/.agent.env"

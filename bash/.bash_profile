@@ -35,6 +35,34 @@ if [ -f /opt/homebrew/bin/brew ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# SSH Agent setup - only run if ssh-agent is available
+if command -v ssh-agent >/dev/null 2>&1; then
+    # Check if SSH_AUTH_SOCK is already set (agent already running or forwarded)
+    # Skip starting local agent if we're in an SSH session (forwarding might be active)
+    if [[ -z "$SSH_AUTH_SOCK" && -z "$SSH_CONNECTION" ]]; then
+
+        # Path to store ssh-agent environment variables
+        agent_env="$HOME/.agent.env"
+
+        if [[ -f "$agent_env" ]]; then
+            # Load existing agent environment
+            source "$agent_env" >/dev/null 2>&1
+
+            # Check if the loaded agent is still running
+            # kill -0 sends no signal but checks if process exists
+            if ! kill -0 "$SSH_AGENT_PID" >/dev/null 2>&1; then
+                # Agent is dead, start a new one
+                ssh-agent -s >"$agent_env"
+                source "$agent_env" >/dev/null 2>&1
+            fi
+        else
+            # No existing agent file, start fresh
+            ssh-agent -s >"$agent_env"
+            source "$agent_env" >/dev/null 2>&1
+        fi
+    fi
+fi
+
 # Add bin to path
 [ -d "$DOTFILES/bin" ] && export PATH="$DOTFILES/bin:$PATH"
 
