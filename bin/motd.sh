@@ -141,11 +141,11 @@ fi
 
 # Network interfaces
 get_ip_info() {
-    for intf in $(ip -o link show | awk -F': ' '{print $2}' | grep -v lo || true); do
+    for intf in $(ip -o link show | awk -F': ' '{print $2}' | grep -v lo | grep -v '^veth' || true); do
         local state ipv4 ipv6
         state=$(cat "/sys/class/net/$intf/operstate" 2>/dev/null || echo "unknown")
-        ipv4=$(ip -4 -o addr show "$intf" | awk '{print $4}' | cut -d/ -f1 || true)
-        ipv6=$(ip -6 -o addr show "$intf" | awk '{print $4}' | grep -v '^fe80' | cut -d/ -f1 | head -1 || true)
+        ipv4=$(ip -4 -o addr show "$intf" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 || true)
+        ipv6=$(ip -6 -o addr show "$intf" 2>/dev/null | awk '{print $4}' | grep -v '^fe80' | cut -d/ -f1 | head -1 || true)
 
         if [[ -n "$ipv4" || -n "$ipv6" ]]; then
             local state_color="$highlight"
