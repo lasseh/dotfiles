@@ -20,7 +20,10 @@ window-height = 50
 window-width = 200
 window-padding-x = 10
 window-padding-y = 10
-unfocused-split-opacity = 0.9
+unfocused-split-opacity = 0.7
+unfocused-split-fill = #1a1b26
+# Default: auto-determined based on background (darkens bg by 0.08 if dark theme, 0.4 if light)
+split-divider-color = #8b008b
 #background-opacity = 0.95
 #background-blur-radius = 20
 
@@ -34,31 +37,20 @@ shell-integration = detect
 
 # macOS Specific Settings
 macos-option-as-alt = true
-macos-titlebar-style = transparent
+macos-titlebar-style = tabs
 window-decoration = true
 
 # Key Bindings (Common iTerm2 equivalents)
 keybind = cmd+t=new_tab
 keybind = cmd+w=close_surface
-keybind = cmd+shift+d=new_split:down
 keybind = cmd+d=new_split:right
-keybind = cmd+shift+bracket_left=previous_tab
-keybind = cmd+shift+bracket_right=next_tab
-keybind = cmd+left_bracket=previous_tab
-keybind = cmd+right_bracket=next_tab
+keybind = cmd+shift+d=new_split:down
+keybind = cmd+shift+left=goto_split:previous
+keybind = cmd+shift+right=goto_split:next
 keybind = cmd+left=previous_tab
 keybind = cmd+right=next_tab
 keybind = cmd+k=clear_screen
 keybind = cmd+shift+enter=toggle_fullscreen
-keybind = cmd+1=goto_tab:1
-keybind = cmd+2=goto_tab:2
-keybind = cmd+3=goto_tab:3
-keybind = cmd+4=goto_tab:4
-keybind = cmd+5=goto_tab:5
-keybind = cmd+6=goto_tab:6
-keybind = cmd+7=goto_tab:7
-keybind = cmd+8=goto_tab:8
-keybind = cmd+9=goto_tab:9
 
 # Terminal Behavior
 window-inherit-working-directory = true
