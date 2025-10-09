@@ -22,3 +22,4 @@ secrets.json
 Brewfile.lock.json
 
 .ssh/
+.claude/
