@@ -14,6 +14,7 @@ dotfiles:
 	@stow --no-folding --override=.* -R -t ~/ eza
 	@stow --no-folding --override=.* -R -t ~/ gh
 	@stow --no-folding --override=.* -R -t ~/ gh-dash
+	@stow --no-folding --override=.* -R -t ~/ ghostty
 	@stow --no-folding --override=.* -R -t ~/ git
 	@stow --no-folding --override=.* -R -t ~/ htop
 	@stow --no-folding --override=.* -R -t ~/ lazygit
