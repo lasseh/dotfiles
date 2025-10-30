@@ -1,18 +1,19 @@
-# Tokyo Night Theme for Irssi
-# Designed for Tokyo Night Dark theme in iTerm2
+#############################################################################
+#
+# Tokyo Night theme for irssi
+# Modified from base16 theme to match Tokyo Night colorscheme
+#
+#############################################################################
 
-# Tokyo Night Color Palette:
-# Background: #1a1b26 (dark navy)
-# Foreground: #c0caf5 (light blue-white)
-# Blue: #7aa2f7, Cyan: #7dcfff, Green: #9ece6a
-# Magenta: #bb9af7, Red: #f7768e, Yellow: #e0af68
-# Orange: #ff9e64, Purple: #9d7cd8
+# default foreground color (%N) - -1 is the "default terminal color"
+default_color = "-1";
 
-# Set default to bright white - this is crucial for visibility
-default_color = "%N%W";
+# print timestamp/servertag at the end of line, not at beginning
 info_eol = "false";
 
-replaces = { "[]=" = "%N%W$*%n"; };
+# these characters are automatically replaced with specified color
+# Tokyo Night style brackets in subtle blue-gray
+replaces = { "[]=" = "%K$*%n"; };
 
 abstracts = {
   ##
@@ -20,182 +21,189 @@ abstracts = {
   ##
 
   # text to insert at the beginning of each non-message line
-  line_start = "%c▸%N ";
+  # Using Tokyo Night blue accent
+  line_start = "%b-%n!%b-%n ";
 
-  # timestamp styling - bright white, always visible
-  timestamp = "%N%W$*%n";
+  # timestamp styling - Tokyo Night comment gray
+  timestamp = "%K$*%n";
 
-  # any kind of text that needs hilighting - bright yellow
-  hilight = "%N%Y$*%n";
+  # any kind of text that needs hilighting - Tokyo Night cyan
+  hilight = "%c$*%n";
 
-  # any kind of error message - bright red
-  error = "%N%R$*%n";
+  # any kind of error message - Tokyo Night red
+  error = "%r$*%n";
 
-  # channel name is printed - bright blue
-  channel = "%N%B$*%n";
+  # channel name is printed - Tokyo Night green
+  channel = "%g$*%n";
 
-  # nick is printed - bright magenta
-  nick = "%N%M$*%n";
+  # nick is printed - Tokyo Night foreground
+  nick = "%n$*%n";
 
-  # nick host is printed - bright white with cyan accents
-  nickhost = "%N%W[%c$*%W]%n";
+  # nick host is printed - Tokyo Night comment style
+  nickhost = "%K[%n$*%K]%n";
 
-  # server name is printed - bright blue
-  server = "%N%B$*%n";
+  # server name is printed - Tokyo Night purple
+  server = "%m$*%n";
 
-  # some kind of comment is printed - bright white with cyan
-  comment = "%N%W(%c$*%W)%n";
+  # some kind of comment is printed - Tokyo Night comment gray
+  comment = "%K[$*]%n";
 
   # reason for something is printed (part, quit, kick, ..)
   reason = "{comment $*}";
 
-  # mode change is printed ([+o nick])
-  mode = "{comment $*}";
+  # mode change is printed ([+o nick]) - Tokyo Night yellow
+  mode = "%y{comment $*}%n";
 
   ##
   ## channel specific messages
   ##
 
-  # highlighted nick/host is printed (joins) - bright green
-  channick_hilight = "%N%G$*%n";
-  chanhost_hilight = "{nickhost %N%G$*%n}";
+  # highlighted nick/host is printed (joins) - Tokyo Night cyan
+  channick_hilight = "%c$*%n";
+  chanhost_hilight = "{nickhost %K$*%n}";
 
-  # nick/host is printed (parts, quits, etc.) - bright white
-  channick = "%N%W$*%n";
-  chanhost = "{nickhost %N%W$*%n}";
+  # nick/host is printed (parts, quits, etc.) - Tokyo Night blue
+  channick = "%b$*%n";
+  chanhost = "{nickhost $*}";
 
-  # highlighted channel name is printed - bright blue
-  channelhilight = "%N%B$*%n";
+  # highlighted channel name is printed - Tokyo Night green
+  channelhilight = "%g$*%n";
 
-  # ban/ban exception/invite list mask is printed - bright red
-  ban = "%N%R$*%n";
+  # ban/ban exception/invite list mask is printed - Tokyo Night orange
+  ban = "%y$*%n";
 
   ##
   ## messages
   ##
 
-  # message nick formatting - bright white brackets
-  msgnickhilight = "%N%W<%n$0$1-%N%W>%n %|";
-  msgnick = "%N%W<%n$0$1-%N%W>%n %|";
+  # the basic styling of how to print message - Tokyo Night style brackets
+  msgnick = "%K<%n$0$1-%K>%n %|";
 
   # $0 = nick mode, $1 = nick
   ownmsgnick = "{msgnick $0 $1-}";
-  ownnick = "%N%M$*%n";
+  ownnick = "%c$*%n";
+  # Tokyo Night cyan for own nick
 
   # public message in channel, $0 = nick mode, $1 = nick
   pubmsgnick = "{msgnick $0 $1-}";
-  pubnick = "%N%C$*%n";
+  pubnick = "%b$*%n";
+  # Tokyo Night blue for other nicks
 
   # public message in channel meant for me, $0 = nick mode, $1 = nick
-  pubmsgmenick = "{msgnick $0 $1-}";
-  menick = "%N%Y$*%n";
+  pubmsgmenick = "{msgnick $0 $1-}%y%U";
+  # Tokyo Night yellow highlight
+  menick = "%y$*%n";
+  # Tokyo Night yellow for mentions
 
   # public highlighted message in channel
   # $0 = highlight color, $1 = nick mode, $2 = nick
-  pubmsghinick = "{msgnick $1 $0$2-%n}";
+  pubmsghinick = "{msgnick $1 $0$2-%n}%y%U";
 
-  # channel name is printed with message
-  msgchannel = "%N%W:%B$*%n";
+  # channel name is printed with message - Tokyo Night style
+  msgchannel = "%K:%g$*%n";
 
-  # private message, $0 = nick, $1 = host
-  privmsg = "%N%W[%M$0%W(%C$1-%W)%n%W]%n ";
+  # private message, $0 = nick, $1 = host - Tokyo Night magenta/purple
+  privmsg = "[%m$0%K(%K$1-%K)%n] ";
 
   # private message from you, $0 = "msg", $1 = target nick
-  ownprivmsg = "%N%W[%W$0%W(%C$1-%W)%n%W]%n ";
+  ownprivmsg = "[%c$0%K(%m$1-%K)%n] ";
 
   # own private message in query
   ownprivmsgnick = "{msgnick  $*}";
-  ownprivnick = "%N%M$*%n";
+  ownprivnick = "%c$*%n";
 
-  # private message in query
-  privmsgnick = "{msgnick  %N%C$*%n}";
+  # private message in query - Tokyo Night magenta
+  privmsgnick = "{msgnick  %m$*%n}";
 
   ##
   ## Actions (/ME stuff)
   ##
 
-  # used internally by this theme - bright magenta bullet
-  action_core = "%N%M•%n $*";
+  # used internally by this theme - Tokyo Night style
+  action_core = "%K * %n$*%n";
 
   # generic one that's used by most actions
   action = "{action_core $*} ";
 
-  # own action, both private/public - bright white text
-  ownaction = "%N%M•%n %N%W$*%n ";
+  # own action, both private/public - Tokyo Night cyan
+  ownaction = "%c{action $*}%n";
 
   # own action with target, both private/public
-  ownaction_target = "{action_core $0}%N%W:%C$1%n ";
+  ownaction_target = "{action_core $0}%K:%g$1%n ";
 
-  # private action sent by others
-  pvtaction = "%N%M•%n %N%W$*%n ";
+  # private action sent by others - Tokyo Night purple
+  pvtaction = "%K (*) %m$*%n ";
   pvtaction_query = "{action $*}";
 
-  # public action sent by others
-  pubaction = "{action $*}";
+  # public action sent by others - Tokyo Night blue
+  pubaction = "%b{action $*}%n";
 
   ##
   ## other IRC events
   ##
 
-  # whois - bright white with cyan accents
-  whois = "%N%W│%n %C$[8]0%n %N%W│%n %N%W$1-%n";
+  # whois - Tokyo Night style
+  whois = "%K#%n $[8]0 %K:%n $1-";
 
-  # notices - bright and visible
-  ownnotice = "%N%W[%W$0%W(%C$1-%W)]%n ";
-  notice = "%N%W─%M$*%W─%n ";
-  pubnotice_channel = "%N%W:%M$*%n";
-  pvtnotice_host = "%N%W(%M$*%W)%n";
-  servernotice = "%N%G▸%n %N%W$*%n ";
+  # notices - Tokyo Night yellow/orange
+  ownnotice = "[%y$0%K(%y$1-%K)]%n ";
+  notice = "%K-%y$*%K-%n ";
+  pubnotice_channel = "%K:%y$*%n";
+  pvtnotice_host = "%K(%y$*%K)%n";
+  servernotice = "%g!$*%n ";
 
-  # CTCPs - bright green
-  ownctcp = "%N%W[%W$0%W(%C$1-%W)]%n ";
-  ctcp = "%N%G$*%n";
+  # CTCPs - Tokyo Night green
+  ownctcp = "[%g$0%K(%g$1-%K)]%n ";
+  ctcp = "%g$*%n";
 
-  # wallops - bright yellow
-  wallop = "%N%Y▸%n %N%W$*%n: ";
-  wallop_nick = "%N%W$*%n";
-  wallop_action = "%N%Y▸%n %N%W$*%n ";
+  # wallops - Tokyo Night magenta
+  wallop = "%m$*%n: ";
+  wallop_nick = "%m$*%n";
+  wallop_action = "%K * %m$*%n ";
 
-  # netsplits - red X, green check
-  netsplit = "%N%R✗%n %N%W$*%n";
-  netjoin = "%N%G✓%n %N%W$*%n";
+  # netsplits - Tokyo Night red/green
+  netsplit = "%r$*%n";
+  netjoin = "%g$*%n";
 
-  # /names list - bright white with colored accents
+  # /names list - Tokyo Night style
   names_prefix = "";
-  names_nick = "%N%W[%C$0%n$1-%N%W]%n ";
-  names_nick_op = "{names_nick $*}";
-  names_nick_halfop = "{names_nick $*}";
-  names_nick_voice = "{names_nick $*}";
-  names_users = "%N%W[%G$*%W]%n";
-  names_channel = "%N%B$*%n";
+  names_nick = "[%b$0%n$1-] ";
+  names_nick_op = "{names_nick %y$*%n}";
+  # ops in yellow
+  names_nick_halfop = "{names_nick %g$*%n}";
+  # halfops in green
+  names_nick_voice = "{names_nick %c$*%n}";
+  # voice in cyan
+  names_users = "[%g$*%n]";
+  names_channel = "%g$*%n";
 
-  # DCC - bright colors
-  dcc = "%N%G$*%n";
-  dccfile = "%N%Y$*%n";
+  # DCC - Tokyo Night green
+  dcc = "%g$*%n";
+  dccfile = "%g$*%n";
 
   # DCC chat, own msg/action
-  dccownmsg = "%N%W[%W$0%W(%C$1-%W)%n%W]%n ";
-  dccownnick = "%N%M$*%n";
-  dccownquerynick = "%N%M$*%n";
+  dccownmsg = "[%c$0%K($1-%K)%n] ";
+  dccownnick = "%c$*%n";
+  dccownquerynick = "%c$*%n";
   dccownaction = "{action $*}";
-  dccownaction_target = "{action_core $0}%N%W:%C$1%n ";
+  dccownaction_target = "{action_core $0}%K:%g$1%n ";
 
-  # DCC chat, others
-  dccmsg = "%N%W[%G$1-%W(%C$0%W)%n%W]%n ";
-  dccquerynick = "%N%G$*%n";
-  dccaction = "%N%M•%n %N%W(*dcc*)%n %N%W$*%n ";
+  # DCC chat, others - Tokyo Night purple
+  dccmsg = "[%m$1-%K(%K$0%K)%n] ";
+  dccquerynick = "%m$*%n";
+  dccaction = "%K (*dcc*) %m$*%n %|";
 
   ##
-  ## statusbar
+  ## statusbar - Tokyo Night dark theme
   ##
 
-  # default background for all statusbars - ensure bright text
-  sb_background = "%N%W";
+  # default background for all statusbars - Tokyo Night dark background
+  sb_background = "%0%K";
 
-  # background for prompt / input line
-  sb_prompt_bg = "%N";
-  # background for info statusbar
-  sb_info_bg = "%N";
+  # background for prompt / input line - Tokyo Night background
+  sb_prompt_bg = "%0";
+  # background for info statusbar - Tokyo Night darker
+  sb_info_bg = "%K";
 
   # text at the beginning of statusbars
   sbstart = "";
@@ -205,61 +213,35 @@ abstracts = {
   topicsbstart = "{sbstart $*}";
   topicsbend = "{sbend $*}";
 
-  prompt = "%N%W[%C$*%W]%N%W ";
+  # Tokyo Night style prompt
+  prompt = "%b[%n$*%b]%n ";
 
-  sb = " %N%W[%C$*%W]%n";
-  sbmode = "%N%W(%C+%n$*%N%W)%n";
-  sbaway = " %N%W(%Yzz%W)%n";
-  sbservertag = "%N%W:%C$0%n %N%W(^X)%n";
+  # statusbar items - Tokyo Night colors
+  sb = " %K[%b$*%K]%n";
+  sbmode = "%K(%g+%n$*%K)%n";
+  sbaway = " %K(%raway%K)%n";
+  sbservertag = "%K:%b$0%n %K(change with ^X)%n";
   sbnickmode = "$0";
 
-  # activity in statusbar - Tokyo Night colors with bright text
-  sb_act_sep = "%N%W,%n";
-  sb_act_text = "%K$*%n";
-  sb_act_msg = "%N%W$*%n";
-  sb_act_hilight = "%N%R$*%n";
+  # activity in statusbar - Tokyo Night accent colors
+
+  # ',' separator
+  sb_act_sep = "%K$*%n";
+  # normal text - Tokyo Night blue
+  sb_act_text = "%b$*%n";
+  # public message - Tokyo Night green
+  sb_act_msg = "%g$*%n";
+  # hilight - Tokyo Night yellow
+  sb_act_hilight = "%y$*%n";
+  # hilight with specified color, $0 = color, $1 = text
   sb_act_hilight_color = "$0$1-%n";
 };
 
 formats = {
   "fe-common/core" = {
-    line_start = "{line_start}";
-    line_start_irssi = "{line_start}";
-
-    join = "%N%G▸%n {channick_hilight $0} {chanhost_hilight $1} has joined {channel $2}";
-    part = "%N%W◂%n {channick $0} {chanhost $1} has left {channel $2} {reason $3}";
-    kick = "%N%R✗%n {channick $0} was kicked from {channel $1} by {nick $2} {reason $3}";
-    quit = "%N%W◂%n {channick $0} {chanhost $1} has quit {reason $2}";
-    quit_once = "%N%W◂%n {channel $3} {channick $0} {chanhost $1} has quit {reason $2}";
-
-    nick_changed = "%N%Y⟲%n {channick $0} is now known as {channick_hilight $1}";
-    your_nick_changed = "%N%Y⟲%n You're now known as {nick $1}";
-
-    pubmsg = "{pubmsgnick $2 {pubnick $0}}%N%W$1%n";
-
-    own_msg = "{ownmsgnick $2 {ownnick $0}}%N%W$1%n";
-    own_msg_channel = "{ownmsgnick $3 {ownnick $0}{msgchannel $1}}%N%W$2%n";
-    own_msg_private_query = "{ownprivmsgnick {ownprivnick $0}}%N%W$2%n";
-
-    pubmsg_me = "{pubmsgmenick $2 {menick $0}}%N%Y$1%n";
-    pubmsg_me_channel = "{pubmsgmenick $3 {menick $0}{msgchannel $1}}%N%Y$2%n";
-
-    pubmsg_hilight = "{pubmsghinick $0 $3 $1}%N%Y$2%n";
-    pubmsg_hilight_channel = "{pubmsghinick $0 $4 $1{msgchannel $2}}%N%Y$3%n";
-
-    pubmsg_channel = "{pubmsgnick $3 {pubnick $0}{msgchannel $1}}%N%W$2%n";
-    msg_private_query = "{privmsgnick $0}%N%W$2%n";
-  };
-  "fe-common/irc" = {
-    chanmode_change = "%N%Y⚙%n mode/{channelhilight $0} {mode $1} by {nick $2}";
-
-    whois = "{whois %N%C$0%n $1-}";
-
-    server_chanmode_change = "%N%Y⚙%n {netsplit ServerMode}/{channelhilight $0} {mode $1} by {nick $2}";
-
-    own_action = "{ownaction_target $0 $1} $2";
-    action_private = "{pvtaction_query $0} $2";
-    action_private_query = "{pvtaction_query $0} $2";
-    action_public = "{pubaction $0}$1";
+    # Public messages with Tokyo Night blue nicks
+    pubmsg = "{pubmsgnick $2 {pubnick \00302$[0]0}}$1";
+    # Own messages with Tokyo Night cyan
+    own_msg = "{ownmsgnick $2 {ownnick $[0]0}}$1";
   };
 };
