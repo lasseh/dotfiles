@@ -72,8 +72,8 @@ brew "tig"
 
 # Programming Languages & Runtimes
 brew "go"
-brew "python@3.12"
-brew "python-tabulate"
+#brew "python@3.12"
+#brew "python-tabulate"
 brew "node"
 brew "python"
 
@@ -108,7 +108,7 @@ brew "golines"
 # Containerization
 brew "docker-compose"
 brew "docker-credential-helper"
-brew "lazydocker"
+#brew "lazydocker"
 brew "podman"
 
 # Webserver
@@ -129,7 +129,7 @@ brew "gping"
 brew "grepcidr"
 brew "httpie"
 brew "ipcalc"
-brew "iperf"
+#brew "iperf"
 brew "iperf3"
 brew "iproute2mac"
 brew "masscan"
@@ -150,9 +150,9 @@ brew "whois"
 # Security & Privacy
 # ============================================================================
 brew "gnupg"
-brew "gopass"
-brew "pinentry-mac"
-brew "step"
+#brew "gopass"
+#brew "pinentry-mac"
+#brew "step"
 
 # ============================================================================
 # Media & Content
@@ -192,13 +192,13 @@ brew "pkgconf"
 # ============================================================================
 # Third-party Formula Packages
 # ============================================================================
-brew "andreybleme/lazycontainer/lazycontainer"
+#brew "andreybleme/lazycontainer/lazycontainer"
 brew "charmbracelet/tap/mods"
 brew "clintmod/formulas/macprefs"
 brew "jesseduffield/lazygit/lazygit"
 brew "openhue/cli/openhue-cli"
 brew "supabase/tap/supabase"
-brew "charmbracelet/tap/crush"
+#brew "charmbracelet/tap/crush"
 
 # Additional tools
 # brew "jira-cli"
@@ -223,13 +223,13 @@ brew "vite" # Vue.js testing framework
 # ============================================================================
 
 # Development & Text Editors
-cask "zed"
+#cask "zed"
 cask "goland"
 cask "datagrip"
 cask "yaak"
 
 # System Utilities
-cask "betterdisplay"
+#cask "betterdisplay"
 cask "raycast"
 cask "rectangle"
 cask "contexts"
@@ -255,6 +255,6 @@ cask "font-hack-nerd-font"
 # ============================================================================
 # Mac App Store Applications
 # ============================================================================
-mas "Amphetamine", id: 937984704
-mas "Tailscale", id: 1475387142
-mas "WireGuard", id: 1451685025
+#mas "Amphetamine", id: 937984704
+#mas "Tailscale", id: 1475387142
+#mas "WireGuard", id: 1451685025
