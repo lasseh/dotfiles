@@ -160,3 +160,47 @@ function gst() {
         echo "${green}Working tree clean${reset}"
     fi
 }
+
+function glog() {
+    # Check if we're in a git repository
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "Not a git repository"
+        return 1
+    fi
+
+    # Colors matching your prompt theme (same as gst)
+    local blue="\033[38;2;122;162;247m"
+    local cyan="\033[38;2;125;207;255m"
+    local green="\033[38;2;158;206;106m"
+    local red="\033[38;2;247;118;142m"
+    local orange="\033[38;2;255;158;100m"
+    local fg="\033[38;2;192;202;245m"
+    local comment="\033[38;2;86;95;137m"
+    local reset="\033[0m"
+    local bold="\033[1m"
+
+    # Colors matching your prompt (%F{128} = branch, %F{162} = folder)
+    local branch_color="\033[38;5;128m"
+    local folder_color="\033[38;5;162m"
+
+    local count=${1:-15}
+
+    echo "${branch_color}${bold}Commit History${reset}"
+    echo "${comment}────────────────────${reset}"
+    echo ""
+
+    git log --pretty=format:"%H|%h|%s|%an|%ar|%D" -n $count | while IFS='|' read -r hash short subject author date refs; do
+        # Show refs (branches/tags) if present
+        if [[ -n "$refs" ]]; then
+            # Format refs nicely
+            local formatted_refs=$(echo "$refs" | sed 's/HEAD -> //' | sed 's/, / /g')
+            echo "${folder_color}${short}${reset} ${fg}${subject}${reset}"
+            echo "         ${branch_color}${formatted_refs}${reset}"
+            echo "         ${comment}${author} · ${date}${reset}"
+        else
+            echo "${folder_color}${short}${reset} ${fg}${subject}${reset}"
+            echo "         ${comment}${author} · ${date}${reset}"
+        fi
+        echo ""
+    done
+}
