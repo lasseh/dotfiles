@@ -62,14 +62,14 @@ function cssh() {
         # Temporarily rename window to SSH destination
         tmux rename-window "${ssh_host}" 2>/dev/null
         # Run SSH with ct pipe, using xterm for better compatibility with network devices
-        TERM=xterm /usr/bin/ssh "$@" | ct
+        TERM=xterm /Users/lasse/code/go/bin/jink /usr/bin/ssh "$@"
         local ssh_exit=$?
         # Restore automatic-rename
         tmux set-window-option automatic-rename "${auto_rename:-on}" 2>/dev/null
         return $ssh_exit
     else
         # If not in tmux or couldn't extract hostname, just run SSH with ct
-        TERM=xterm /usr/bin/ssh "$@" | ct
+        TERM=xterm /Users/lasse/code/go/bin/jink /usr/bin/ssh "$@"
     fi
 }
 
