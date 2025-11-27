@@ -1,5 +1,7 @@
 # LazyGit configuration file
 gui:
+  pagers:
+    - pager: diff-so-fancy
   nerdFontsVersion: "3"
   theme:
     activeBorderColor:
