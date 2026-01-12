@@ -70,24 +70,27 @@ _fzf_ssh_complete() {
 
 # Smart SSH completion widget
 ssh_smart_complete() {
-    # For scp/sftp, only use host completion if typing a remote path (contains @ or :)
-    if [[ "$LBUFFER" =~ ^(scp|sftp)[[:space:]]+.*[@:].*$ ]] || \
-       [[ "$LBUFFER" =~ ^(scp|sftp)[[:space:]]+[^[:space:]/]*$ ]]; then
-        # Try fzf completion for host
-        if ! _fzf_ssh_complete; then
-            zle expand-or-complete
-        fi
-    # For ssh/cssh, always use host completion
-    elif [[ "$LBUFFER" =~ ^(ssh|cssh|rsync.*ssh)[[:space:]]+$ ]] || \
-         [[ "$LBUFFER" =~ ^(ssh|cssh)[[:space:]]+[^[:space:]]*$ ]]; then
-        # Try fzf completion
-        if ! _fzf_ssh_complete; then
-            zle expand-or-complete
-        fi
-    else
-        # Use normal completion for everything else (files, options, etc.)
-        zle expand-or-complete
+    # Extract the current word being typed
+    local current_word=""
+    if [[ "$LBUFFER" =~ [^[:space:]]+$ ]]; then
+        current_word="${MATCH}"
     fi
+
+    # For ssh/cssh, use fzf host completion (these always need a host)
+    if [[ "$LBUFFER" =~ ^(ssh|cssh)[[:space:]]+ ]]; then
+        # Skip if typing an option (starts with -)
+        if [[ "$current_word" =~ ^- ]]; then
+            zle expand-or-complete
+            return
+        fi
+        if ! _fzf_ssh_complete; then
+            zle expand-or-complete
+        fi
+        return
+    fi
+
+    # For scp/sftp/rsync, use normal zsh completion (handles both files and hosts)
+    zle expand-or-complete
 }
 
 # Register the widget

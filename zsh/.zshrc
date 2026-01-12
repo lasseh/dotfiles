@@ -32,7 +32,7 @@ source "${HOME}/.zsh/tokyo-night-theme.zsh" || _zwarn "Could not source ~/.zsh/t
 # TODO: Check if carapace is installed, otherwise skip
 # TODO: Add vivid theme for carapace
 # TODO: replace vivid with LS_COLORS config
-source "${HOME}/.zsh/carapace.zsh" || _zwarn "Could not source ~/.zsh/carapace.zsh"
+#source "${HOME}/.zsh/carapace.zsh" || _zwarn "Could not source ~/.zsh/carapace.zsh"
 
 # Load dircolors
 if [ -x "$(command -v dircolors)" ]; then
@@ -56,3 +56,9 @@ export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH" # For user-specific binaries
 export PATH="$HOME/.opencode/bin:$PATH" # For opencode CLI tool
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH" # For libpq tools like psql
+
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "/Users/lasse/.bun/_bun" ] && source "/Users/lasse/.bun/_bun"
+

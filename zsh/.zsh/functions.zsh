@@ -204,3 +204,20 @@ function glog() {
         echo ""
     done
 }
+
+alias ta='(){
+if [[ -z "$1" ]]; then
+  echo "Use: ta <session_name>"
+  return 1
+fi
+tmux attach -t "$1" 2>/dev/null || tmux new -s "$1"
+}'
+
+# Autocomplete for 'ta'
+_ta_complete() {
+  local -a sessions
+  sessions=("${(@f)$(tmux list-sessions -F '#{session_name}' 2>/dev/null)}")
+  _describe 'sessions' sessions
+}
+
+compdef _ta_complete ta
