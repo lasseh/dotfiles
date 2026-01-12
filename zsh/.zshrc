@@ -49,7 +49,7 @@ fi
 
 # Go on servers
 if [ -f /etc/profile.d/golang.sh ]; then
-    eval "$(/etc/profile.d/golang.sh)"
+    source "(/etc/profile.d/golang.sh)"
 fi
 
 # Go configuration
