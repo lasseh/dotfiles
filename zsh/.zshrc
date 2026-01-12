@@ -47,13 +47,29 @@ if [ -f /opt/homebrew/bin/brew ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Go on servers
-if [ -f /etc/profile.d/golang.sh ]; then
-    source "(/etc/profile.d/golang.sh)"
-fi
-
 # Go configuration
 export GOPATH="$HOME/code/go"
+export GOPROXY="https://proxy.golang.org,direct"
+
+# Detect GOROOT based on platform/installation method
+if command -v go >/dev/null 2>&1; then
+    # Go already in PATH (e.g., via Homebrew), get GOROOT from go command
+    export GOROOT="$(go env GOROOT)"
+elif [[ -d "/usr/local/go" ]]; then
+    # Linux standard manual installation
+    export GOROOT="/usr/local/go"
+    export PATH="$GOROOT/bin:$PATH"
+elif [[ -d "/opt/homebrew/opt/go/libexec" ]]; then
+    # macOS Apple Silicon Homebrew
+    export GOROOT="/opt/homebrew/opt/go/libexec"
+    export PATH="$GOROOT/bin:$PATH"
+elif [[ -d "/usr/local/opt/go/libexec" ]]; then
+    # macOS Intel Homebrew
+    export GOROOT="/usr/local/opt/go/libexec"
+    export PATH="$GOROOT/bin:$PATH"
+fi
+
+# Add Go workspace bin to PATH
 export PATH="$GOPATH/bin:$PATH"
 
 # Extra paths
