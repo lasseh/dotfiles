@@ -47,6 +47,11 @@ if [ -f /opt/homebrew/bin/brew ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# Go on servers
+if [ -f /etc/profile.d/golang.sh ]; then
+    eval "$(/etc/profile.d/golang.sh)"
+fi
+
 # Go configuration
 export GOPATH="$HOME/code/go"
 export PATH="$GOPATH/bin:$PATH"
