@@ -17,12 +17,13 @@ alias sloc="find . -name '*.go' | xargs wc -l"
 
 # ==> Folder shortcuts
 alias c='cd $HOME/code/go/src/github.com/lasseh'
-alias svv='cd $HOME/code/go/src/github.com/lasseh/svv'
+alias s='cd $HOME/code/go/src/github.com/lasseh/svv'
 
-# ==> Tmux shortcuts
-# to create dev/tech session: tmux new-session -s dev
+# ==> Tmux
 alias tmuxa='tmux attach -t 0'
 alias tmuxad='tmux attach -d -t 0'
+alias tmuxx='tmux attach -d -t main 2>/dev/null || tmux new -s main'
+alias tmuxs='tmux attach -d -t svv 2>/dev/null || tmux new -s svv'
 
 # ncurses fix
 alias irssi='TERM=screen-256color irssi'
