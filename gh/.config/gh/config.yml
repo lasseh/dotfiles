@@ -48,9 +48,9 @@ pr:
     base: main
     # Default title template for pull requests
     # title: ""
+# Default body template for pull requests  
+# body: ""
 
-    # Default body template for pull requests  
-    # body: ""
 # Configure default behavior for gh issue create
 issue:
 # Default title template for issues
