@@ -112,17 +112,20 @@ else
     alias ldot="\\ls -ldG .*"
 fi
 
-# replace `cat` with `bat` if installed
-if which bat &>/dev/null; then
-    alias cat="bat"
-    alias batdiff="bat --diff"
-    alias batgrep="bat --grep"
-    alias batless="bat --less='-R'"
-fi
-# replace `cat` with `batcat` if installed
-if which batcat &>/dev/null; then
-    alias cat="batcat"
-    alias batdiff="batcat --diff"
-    alias batgrep="batcat --grep"
-    alias batless="batcat --less='-R'"
+# replace `cat` with `bat` if installed (only in interactive shells)
+# This prevents Claude Code and other scripts from getting bat's formatted output
+if [[ $- == *i* ]]; then
+    if which bat &>/dev/null; then
+        alias cat="bat"
+        alias batdiff="bat --diff"
+        alias batgrep="bat --grep"
+        alias batless="bat --less='-R'"
+    fi
+    # replace `cat` with `batcat` if installed
+    if which batcat &>/dev/null; then
+        alias cat="batcat"
+        alias batdiff="batcat --diff"
+        alias batgrep="batcat --grep"
+        alias batless="batcat --less='-R'"
+    fi
 fi
