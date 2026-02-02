@@ -158,6 +158,8 @@ update_title_preexec() {
 
 # Precmd function for info line with Tokyo Night colors
 precmd() {
+    # Report working directory to terminal/tmux via OSC 7
+    printf '\e]7;file://%s%s\e\\' "${HOST}" "${PWD}"
     vcs_info
     update_title
     print -P "\\n%F{32}%n%F{163}@%F{35}%M%F{163}:%f $(repo_information)"
