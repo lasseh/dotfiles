@@ -1,0 +1,118 @@
+# pgcli configuration - Tokyo Night Theme
+# Matches the Tokyo Night Night color scheme used across dotfiles
+
+[main]
+# Use smart completion (context-sensitive)
+smart_completion = True
+
+# Display completions in multiple columns
+wider_completion_menu = False
+
+# Multi-line mode for complex queries
+multi_line = True
+multi_line_mode = psql
+
+# Warn before destructive operations
+destructive_warning = all
+
+# Keyword casing (matches SQL convention)
+keyword_casing = upper
+
+# Vi mode (consistent with other tools)
+vi = True
+
+# Table output format
+table_format = psql
+
+# Row limit warning threshold
+row_limit = 1000
+
+# Syntax style - native is dark base, we override colors below
+syntax_style = native
+
+# Custom prompt with Tokyo Night feel
+prompt = '\u@\h:\d> '
+prompt_continuation = '-> '
+
+# Less pager for output
+pager = less -SRXF
+
+# Enable history
+history_file = ~/.config/pgcli/history
+
+# Log level
+log_file = ~/.config/pgcli/log
+log_level = WARNING
+
+# Auto-expand tables
+auto_expand = False
+expand = False
+
+# Timing info
+timing = True
+
+[colors]
+# Tokyo Night color palette:
+# Background:  #1a1b26    Selection:  #283457
+# Foreground:  #c0caf5    Secondary:  #a9b1d6
+# Blue:        #7aa2f7    Cyan:       #7dcfff
+# Green:       #9ece6a    Magenta:    #bb9af7
+# Red:         #f7768e    Yellow:     #e0af68
+# Orange:      #ff9e64    Purple:     #9d7cd8
+# Comment:     #565f89    Dark Blue:  #414868
+
+# Completion menu - current selection
+completion-menu.completion.current = 'bg:#283457 #c0caf5 bold'
+completion-menu.completion = 'bg:#1a1b26 #a9b1d6'
+completion-menu.meta.completion.current = 'bg:#283457 #7aa2f7'
+completion-menu.meta.completion = 'bg:#1a1b26 #565f89'
+completion-menu.multi-column-meta = 'bg:#1a1b26 #565f89'
+
+# Scrollbar
+scrollbar.arrow = 'bg:#414868 #c0caf5 bold'
+scrollbar = 'bg:#414868'
+
+# Selection and search
+selected = 'bg:#283457 #c0caf5'
+search = 'bg:#e0af68 #1a1b26'
+search.current = 'bg:#ff9e64 #1a1b26'
+
+# Bottom toolbar
+bottom-toolbar = 'bg:#1a1b26 #565f89'
+bottom-toolbar.off = 'bg:#1a1b26 #414868'
+bottom-toolbar.on = 'bg:#1a1b26 #9ece6a'
+bottom-toolbar.transaction.valid = 'bg:#1a1b26 #9ece6a'
+bottom-toolbar.transaction.failed = 'bg:#1a1b26 #f7768e'
+
+# Search toolbar
+search-toolbar = 'bg:#1a1b26 #c0caf5'
+search-toolbar.text = 'bg:#1a1b26 #c0caf5'
+
+# System and arg toolbars
+system-toolbar = 'bg:#1a1b26 #c0caf5'
+arg-toolbar = 'bg:#1a1b26 #e0af68'
+arg-toolbar.text = 'bg:#1a1b26 #e0af68'
+
+# SQL syntax highlighting overrides (Tokyo Night colors)
+keyword = 'bold #7dcfff'
+literal.string = '#9ece6a'
+literal.number = '#ff9e64'
+
+# Table output styling
+output.header = '#7aa2f7 bold'
+output.odd-row = ''
+output.even-row = ''
+output.null = '#565f89'
+
+[named queries]
+# Add your frequently used queries here
+# Example: show_tables = SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'
+
+[alias_dsn]
+# Add database connection aliases here
+# Example: mydb = postgresql://user:pass@localhost/dbname
+
+[data_formats]
+# Number formatting
+decimal = d
+float = g
