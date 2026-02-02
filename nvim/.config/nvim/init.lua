@@ -39,66 +39,56 @@ require("lazy").setup({
           sidebars = "dark",
           floats = "dark",
         },
+        sidebars = { "neo-tree", "terminal", "help" },
       })
       vim.cmd([[colorscheme tokyonight]])
     end,
   },
 
-  -- NERDTree
+  -- Neo-tree (file explorer with git integration)
   {
-    "preservim/nerdtree",
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
     config = function()
-      -- NERDTree settings
-      vim.g.NERDTreeShowHidden = 1
-      vim.g.NERDTreeMinimalUI = 1
-      vim.g.NERDTreeDirArrows = 1
-      
-      -- Auto-open NERDTree when starting Neovim
+      require("neo-tree").setup({
+        close_if_last_window = true,
+        filesystem = {
+          filtered_items = {
+            visible = true,
+            hide_dotfiles = false,
+            hide_gitignored = false,
+          },
+          follow_current_file = { enabled = true },
+          use_libuv_file_watcher = true,
+        },
+        window = {
+          width = 30,
+        },
+        default_component_configs = {
+          git_status = {
+            symbols = {
+              added     = "∙",
+              modified  = "∙",
+              deleted   = "∙",
+              renamed   = "∙",
+              untracked = "∙",
+              ignored   = "",
+              unstaged  = "∙",
+              staged    = "∙",
+              conflict  = "∙",
+            },
+          },
+        },
+      })
+      -- Auto-open neo-tree on startup
       vim.api.nvim_create_autocmd("VimEnter", {
         callback = function()
-          vim.cmd("NERDTree")
-          vim.cmd("wincmd p")
-        end
-      })
-      
-      -- Close NERDTree if it's the only window left
-      vim.api.nvim_create_autocmd("BufEnter", {
-        callback = function()
-          if vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 then
-            local ok, result = pcall(vim.fn.eval, 'b:NERDTree.isTabTree()')
-            if ok and result == 1 then
-              vim.cmd("quit")
-            end
-          end
-        end
-      })
-      
-      -- Close Vim if NERDTree is the only window left after closing all other windows
-      vim.api.nvim_create_autocmd("BufEnter", {
-        callback = function()
-          if vim.fn.tabpagenr('$') == 1 and vim.fn.winnr('$') == 1 and vim.fn.exists('b:NERDTree') == 1 then
-            local ok, result = pcall(vim.fn.eval, 'b:NERDTree.isTabTree()')
-            if ok and result == 1 then
-              vim.cmd("quit")
-            end
-          end
-        end
-      })
-
-      -- Auto-refresh NERDTree on file changes
-      vim.api.nvim_create_autocmd({"BufEnter", "BufWritePost"}, {
-        callback = function()
-          if vim.fn.exists(':NERDTreeRefreshRoot') == 2 then
-            vim.cmd('NERDTreeRefreshRoot')
-          end
-        end
-      })
-
-      vim.api.nvim_create_autocmd("FocusGained", {
-        callback = function()
-          if vim.fn.exists(':NERDTreeRefreshRoot') == 2 then
-            vim.cmd('NERDTreeRefreshRoot')
-          end
+          vim.cmd("Neotree show")
         end
       })
     end,
@@ -118,6 +108,26 @@ require("lazy").setup({
       vim.g.gitgutter_max_signs = 500
       vim.opt.signcolumn = "yes"
     end,
+  },
+
+  -- NeoGit
+  {
+    "NeogitOrg/neogit",
+    lazy = true,
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+
+      -- Only one of these is needed.
+      "nvim-telescope/telescope.nvim", -- optional
+      -- "ibhagwan/fzf-lua",              -- optional
+      -- "nvim-mini/mini.pick",           -- optional
+      -- "folke/snacks.nvim",             -- optional
+    },
+    cmd = "Neogit",
+    keys = {
+      { "<leader>gg", "<cmd>Neogit kind=floating<cr>", desc = "Show Neogit UI" }
+    }
   },
 
   -- Language pack
@@ -195,8 +205,8 @@ opt.textwidth = 0
 -- Key mappings (ported from .vimrc)
 local keymap = vim.keymap.set
 
--- NERDTree toggle
-keymap("n", "<C-n>", ":NERDTreeToggle<CR>", { desc = "Toggle NERDTree" })
+-- Neo-tree toggle (was NERDTree)
+keymap("n", "<C-n>", ":Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
 
 -- Function keys
 keymap("n", "<F5>", ":set paste<CR>", { desc = "Set paste mode" })
