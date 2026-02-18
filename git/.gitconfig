@@ -90,7 +90,11 @@
 	line-numbers-plus-style = "#7aa2f7"
 	line-numbers-minus-style = "#f7768e"
 	line-numbers-zero-style = "#565f89"
-	file-style = "#c0caf5"
+	file-style = bold "#7dcfff"
+	file-modified-label = "› "
+	file-added-label = "› "
+	file-removed-label = "› "
+	file-renamed-label = "› "
 	hunk-header-style = "#bb9af7"
 
 [interactive]
