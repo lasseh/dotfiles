@@ -29,6 +29,13 @@ if command -v ssh-agent >/dev/null 2>&1; then
             ssh-agent -s >"$agent_env"
             source "$agent_env" >/dev/null 2>&1
         fi
+    elif [[ -n "$SSH_AUTH_SOCK" && -n "$SSH_CONNECTION" ]]; then
+        # Remote SSH with forwarded agent — create stable symlink so
+        # tmux panes survive reconnects without losing the agent
+        if [[ "$SSH_AUTH_SOCK" != "$HOME/.ssh/auth_sock" ]]; then
+            ln -sf "$SSH_AUTH_SOCK" "$HOME/.ssh/auth_sock"
+            export SSH_AUTH_SOCK="$HOME/.ssh/auth_sock"
+        fi
     fi
 fi
 
