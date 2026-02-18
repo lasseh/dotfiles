@@ -11,6 +11,9 @@ umask 022
 export EDITOR="vim"
 export VISUAL="vim"
 
+# XDG base directories (macOS doesn't set this by default)
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # Basic auto/tab completion
 autoload -Uz compinit  # Load the completion system function
 compinit               # Initialize completions
@@ -83,3 +86,6 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "/Users/lasse/.bun/_bun" ] && source "/Users/lasse/.bun/_bun"
 
+
+# onWatch
+export PATH="$HOME/.onwatch:$PATH"

@@ -67,6 +67,9 @@ export EDITOR="vim"
 export VISUAL="vim"
 export PAGER="less"
 
+# XDG base directories (macOS doesn't set this by default)
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # Add local bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
 

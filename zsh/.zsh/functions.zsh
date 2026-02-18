@@ -1,6 +1,6 @@
 cd() {
-    builtin cd $@
-    ls
+    builtin cd "$@"
+    ls .
 }
 
 function jcurl() {
