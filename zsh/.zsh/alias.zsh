@@ -54,6 +54,9 @@ alias gcpush='git commit -a -m && git push origin'
 alias gundo='git reset --soft HEAD~1'
 alias gupdatesubm='git pull --recurse-submodules && git submodule update --recursive --remote'
 
+# ==> Lazygit
+alias lg='lazygit log'
+
 # # ==> Utilities
 alias randpasswd="LANG=c < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-64};echo;"
 
