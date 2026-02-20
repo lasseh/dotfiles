@@ -1,47 +1,90 @@
 return {
-  "nvim-neo-tree/neo-tree.nvim",
-  branch = "v3.x",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons",
-    "MunifTanjim/nui.nvim",
-  },
-  config = function()
-    require("neo-tree").setup({
-      close_if_last_window = true,
-      filesystem = {
-        filtered_items = {
-          visible = true,
-          hide_dotfiles = false,
-          hide_gitignored = false,
+  -- Neo-tree (file explorer)
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      require("neo-tree").setup({
+        close_if_last_window = true,
+        filesystem = {
+          filtered_items = {
+            visible = true,
+            hide_dotfiles = false,
+            hide_gitignored = false,
+          },
+          follow_current_file = { enabled = true },
+          use_libuv_file_watcher = true,
         },
-        follow_current_file = { enabled = true },
-        use_libuv_file_watcher = true,
-      },
-      window = {
-        width = 30,
-      },
-      default_component_configs = {
-        git_status = {
-          symbols = {
-            added     = "",
-            modified  = "",
-            deleted   = "",
-            renamed   = "",
-            untracked = "",
-            ignored   = "",
-            unstaged  = "",
-            staged    = "",
-            conflict  = "",
+        window = {
+          width = 30,
+        },
+        default_component_configs = {
+          git_status = {
+            symbols = {
+              added     = "",
+              modified  = "",
+              deleted   = "",
+              renamed   = "",
+              untracked = "",
+              ignored   = "",
+              unstaged  = "",
+              staged    = "",
+              conflict  = "",
+            },
           },
         },
-      },
-    })
-    -- Auto-open neo-tree on startup
-    vim.api.nvim_create_autocmd("VimEnter", {
-      callback = function()
-        vim.cmd("Neotree show")
-      end,
-    })
-  end,
+      })
+      -- Auto-open neo-tree on startup
+      vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function()
+          vim.cmd("Neotree show")
+        end,
+      })
+    end,
+  },
+
+  -- Comment.nvim — gcc to toggle comment, gc in visual mode
+  {
+    "numToStr/Comment.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+  },
+
+  -- nvim-surround — cs"' to change surrounding, ys to add, ds to delete
+  {
+    "kylechui/nvim-surround",
+    version = "*",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+  },
+
+  -- Auto-close brackets/quotes, integrates with nvim-cmp
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      local autopairs = require("nvim-autopairs")
+      autopairs.setup({})
+
+      -- Integrate with nvim-cmp
+      local cmp_ok, cmp = pcall(require, "cmp")
+      if cmp_ok then
+        local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+        cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+      end
+    end,
+  },
+
+  -- Indent guides
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+  },
 }
