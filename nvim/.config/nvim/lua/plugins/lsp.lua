@@ -1,5 +1,5 @@
 return {
-  -- LSP configuration
+  -- LSP configuration (vim.lsp.config API, nvim 0.11+)
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
@@ -7,7 +7,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-      local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       -- LSP keybindings (set per-buffer when LSP attaches)
@@ -26,7 +25,7 @@ return {
       })
 
       -- gopls
-      lspconfig.gopls.setup({
+      vim.lsp.config("gopls", {
         capabilities = capabilities,
         settings = {
           gopls = {
@@ -38,7 +37,7 @@ return {
       })
 
       -- lua_ls (for editing nvim config)
-      lspconfig.lua_ls.setup({
+      vim.lsp.config("lua_ls", {
         capabilities = capabilities,
         settings = {
           Lua = {
@@ -50,6 +49,8 @@ return {
           },
         },
       })
+
+      vim.lsp.enable({ "gopls", "lua_ls" })
     end,
   },
 
