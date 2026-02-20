@@ -5,7 +5,7 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      require("nvim-treesitter.configs").setup({
+      require("nvim-treesitter").setup({
         ensure_installed = {
           "go", "gomod", "gosum", "gowork",
           "markdown", "markdown_inline",
@@ -13,18 +13,18 @@ return {
           "bash", "python", "toml",
           "diff", "gitcommit", "git_rebase",
         },
-        highlight = { enable = true },
-        indent = { enable = true },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-          },
-        },
       })
+
+      -- Incremental selection keymaps
+      vim.keymap.set("n", "<C-space>", function()
+        require("nvim-treesitter.incremental_selection").init_selection()
+      end, { desc = "Init treesitter selection" })
+      vim.keymap.set("v", "<C-space>", function()
+        require("nvim-treesitter.incremental_selection").node_incremental()
+      end, { desc = "Increment treesitter selection" })
+      vim.keymap.set("v", "<bs>", function()
+        require("nvim-treesitter.incremental_selection").node_decremental()
+      end, { desc = "Decrement treesitter selection" })
     end,
   },
 
