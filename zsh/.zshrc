@@ -8,8 +8,8 @@ export ZSH=$HOME/.zsh
 umask 022
 
 # Set default editor
-export EDITOR="vim"
-export VISUAL="vim"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # XDG base directories (macOS doesn't set this by default)
 export XDG_CONFIG_HOME="$HOME/.config"

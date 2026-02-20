@@ -19,7 +19,7 @@ export TOKYO_NIGHT_DARK_BLUE="#414868"
 export LS_COLORS="di=1;34:ln=1;36:so=1;35:pi=1;33:ex=1;32:bd=1;33:cd=1;33:su=1;31:sg=1;31:tw=1;34:ow=1;34"
 
 # Set terminal colors if supported
-if [[ $TERM == *"256color"* ]] || [[ $TERM == "xterm-kitty" ]]; then
+if [[ $TERM == *"256color"* ]] || [[ $TERM == "xterm-kitty" ]] || [[ $TERM == "xterm-ghostty" ]]; then
     # Set cursor color
     echo -ne "\e]12;#c0caf5\a"
 fi

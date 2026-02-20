@@ -25,10 +25,6 @@ alias tmuxad='tmux attach -d -t 0'
 alias tmuxx='tmux attach -d -t main 2>/dev/null || tmux new -s main'
 alias tmuxs='tmux attach -d -t svv 2>/dev/null || tmux new -s svv'
 
-# ncurses fix
-alias irssi='TERM=screen-256color irssi'
-alias htop='TERM=screen-256color htop'
-alias weechat='TERM=screen-256color weechat-curses'
 
 
 # Git shortcuts
