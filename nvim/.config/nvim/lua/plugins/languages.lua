@@ -8,6 +8,7 @@ return {
       require("nvim-treesitter").setup({
         ensure_installed = {
           "go", "gomod", "gosum", "gowork",
+          "typescript", "tsx", "javascript",
           "markdown", "markdown_inline",
           "lua", "json", "yaml", "dockerfile",
           "bash", "python", "toml",
