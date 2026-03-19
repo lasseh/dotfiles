@@ -21,9 +21,10 @@ alias s='cd $HOME/code/go/src/github.com/lasseh/svv'
 
 # ==> Tmux
 alias tmuxa='tmux attach -t 0'
-alias tmuxad='tmux attach -d -t 0'
+alias tmuxad='tmux attach -d -t main'
 alias tmuxx='tmux attach -d -t main 2>/dev/null || tmux new -s main'
 alias tmuxs='tmux attach -d -t svv 2>/dev/null || tmux new -s svv'
+tmuxf() { tmux list-sessions -F '#{session_name}' | fzf | xargs -I{} tmux attach -d -t {} }
 
 
 

@@ -9,7 +9,7 @@ theme = TokyoNight
 # Cursor Configuration
 cursor-color = #c0caf5
 cursor-style = block
-cursor-style-blink = true
+cursor-style-blink = false
 cursor-opacity = 0.8
 cursor-invert-fg-bg = true
 
@@ -35,6 +35,7 @@ split-divider-color = #8b008b
 mouse-hide-while-typing = true
 mouse-shift-capture = true
 copy-on-select = true
+link-url = true
 
 # Advertise xterm-256color instead of xterm-ghostty so remote servers
 # (which lack the ghostty terminfo) handle arrow keys, Home, End, etc.
@@ -67,7 +68,7 @@ keybind = cmd+shift+s=open_config
 # Terminal Behavior
 window-inherit-working-directory = true
 confirm-close-surface = false
-scrollback-limit = 100000
+scrollback-limit = 10000000
 clipboard-read = allow
 clipboard-write = allow
 clipboard-paste-protection = true

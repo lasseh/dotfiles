@@ -5,7 +5,7 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      require("nvim-treesitter").setup({
+      require("nvim-treesitter.configs").setup({
         ensure_installed = {
           "go", "gomod", "gosum", "gowork",
           "typescript", "tsx", "javascript",
@@ -14,6 +14,8 @@ return {
           "bash", "python", "toml",
           "diff", "gitcommit", "git_rebase",
         },
+        highlight = { enable = true },
+        indent = { enable = true },
       })
 
       -- Incremental selection keymaps
