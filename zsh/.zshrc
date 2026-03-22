@@ -89,3 +89,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # onWatch
 export PATH="$HOME/.onwatch:$PATH"
+
+# Pass tmux env vars to Claude Code for teammate split-pane support
+alias claude='TMUX="$TMUX" TMUX_PANE="$TMUX_PANE" claude'
