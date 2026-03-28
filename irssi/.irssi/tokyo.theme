@@ -81,13 +81,13 @@ abstracts = {
 
   # $0 = nick mode, $1 = nick
   ownmsgnick = "{msgnick $0 $1-}";
-  ownnick = "%c$*%n";
-  # Tokyo Night cyan for own nick
+  ownnick = "%M$*%n";
+  # Tokyo Night fuchsia/bright magenta for own nick
 
   # public message in channel, $0 = nick mode, $1 = nick
   pubmsgnick = "{msgnick $0 $1-}";
-  pubnick = "%b$*%n";
-  # Tokyo Night blue for other nicks
+  pubnick = "$*%n";
+  # color provided by $nickcolor expando from nickcolor_expando.pl
 
   # public message in channel meant for me, $0 = nick mode, $1 = nick
   pubmsgmenick = "{msgnick $0 $1-}%y%U";
@@ -240,7 +240,7 @@ abstracts = {
 formats = {
   "fe-common/core" = {
     # Public messages with Tokyo Night blue nicks
-    pubmsg = "{pubmsgnick $2 {pubnick \00302$[0]0}}$1";
+    pubmsg = "{pubmsgnick $2 {pubnick $nickcolor$0}}$1";
     # Own messages with Tokyo Night cyan
     own_msg = "{ownmsgnick $2 {ownnick $[0]0}}$1";
   };
