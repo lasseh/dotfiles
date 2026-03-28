@@ -81,8 +81,8 @@ abstracts = {
 
   # $0 = nick mode, $1 = nick
   ownmsgnick = "{msgnick $0 $1-}";
-  ownnick = "%M$*%n";
-  # Tokyo Night fuchsia/bright magenta for own nick
+  ownnick = "%X42$*%n";
+  # Deep fuchsia (xterm 126, #af0087) for own nick
 
   # public message in channel, $0 = nick mode, $1 = nick
   pubmsgnick = "{msgnick $0 $1-}";

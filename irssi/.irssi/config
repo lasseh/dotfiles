@@ -198,7 +198,7 @@ settings = {
     term_charset = "utf-8";
   };
   "perl/core" = {
-    neat_colors = "rRgGybBcCX42X3AX5EX4NX3HX3CX32";
+    neat_colors = "rRgGybBmMcCX3AX5EX4NX3HX3CX32";
   };
 };
 
