@@ -1,4 +1,4 @@
-fore
+# fore
 #   calculating the hash function
 #   #
 #   # /set neat_color_reassign_time <time>
@@ -25,7 +25,9 @@ fore
 #   # * query the current or set colour of nick
 #   #
 #   # /neatcolor re [<network>/<#channel>] <nick>
-#   # * force change the colouse strict;
+#   # * force change the colour of nick
+
+use strict;
 use warnings;
 
 our $VERSION = '0.4.0'; # c274f630aff9967
