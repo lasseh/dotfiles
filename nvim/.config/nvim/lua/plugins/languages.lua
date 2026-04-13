@@ -1,33 +1,42 @@
 return {
-  -- Treesitter — syntax highlighting, indentation, incremental selection
+  -- Treesitter — parser installation (highlighting/indent are Neovim 0.12 built-ins)
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     build = ":TSUpdate",
-    event = { "BufReadPre", "BufNewFile" },
+    lazy = false,
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = {
+      local ts = require("nvim-treesitter")
+      if ts.install then
+        ts.install({
           "go", "gomod", "gosum", "gowork",
           "typescript", "tsx", "javascript",
           "markdown", "markdown_inline",
           "lua", "json", "yaml", "dockerfile",
           "bash", "python", "toml",
           "diff", "gitcommit", "git_rebase",
-        },
-        highlight = { enable = true },
-        indent = { enable = true },
+        })
+      end
+
+      -- Enable treesitter highlighting and indentation for all installed parsers
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          if pcall(vim.treesitter.start) then
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
+        end,
       })
 
-      -- Incremental selection keymaps
+      -- Incremental selection keymaps (Neovim 0.12 built-in)
       vim.keymap.set("n", "<C-space>", function()
-        require("nvim-treesitter.incremental_selection").init_selection()
+        vim.treesitter.select_parent(1)
       end, { desc = "Init treesitter selection" })
       vim.keymap.set("v", "<C-space>", function()
-        require("nvim-treesitter.incremental_selection").node_incremental()
-      end, { desc = "Increment treesitter selection" })
+        vim.treesitter.select_parent(1)
+      end, { desc = "Expand treesitter selection" })
       vim.keymap.set("v", "<bs>", function()
-        require("nvim-treesitter.incremental_selection").node_decremental()
-      end, { desc = "Decrement treesitter selection" })
+        vim.treesitter.select_child(1)
+      end, { desc = "Shrink treesitter selection" })
     end,
   },
 
