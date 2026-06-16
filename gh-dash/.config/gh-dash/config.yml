@@ -1,217 +1,47 @@
 prSections:
   - title: My Pull Requests
-    filters: is:open author:lasseh
-    layout:
-      author:
-        hidden: true
-      updatedAt:
-        width: 12
-      repo:
-        width: 20
-      title:
-        width: 50
-      reviewStatus:
-        width: 12
-      ci:
-        width: 8
-
+    filters: is:open author:@me
   - title: Needs My Review
-    filters: is:open review-requested:lasseh
-    layout:
-      author:
-        width: 15
-      updatedAt:
-        width: 12
-      repo:
-        width: 20
-      title:
-        width: 50
-      reviewStatus:
-        width: 12
-      ci:
-        width: 8
-
+    filters: is:open review-requested:@me
   - title: Involved
-    filters: is:open involves:lasseh -author:lasseh
-    layout:
-      author:
-        width: 15
-      updatedAt:
-        width: 12
-      repo:
-        width: 20
-      title:
-        width: 50
-      reviewStatus:
-        width: 12
-      ci:
-        width: 8
-
-  - title: whynoipv6 PRs
-    filters: is:open repo:lasseh/whynoipv6
-    layout:
-      author:
-        width: 15
-      updatedAt:
-        width: 12
-      repo:
-        hidden: true
-      title:
-        width: 80
-      reviewStatus:
-        width: 12
-      ci:
-        width: 8
-
-  - title: whynoipv6-web PRs
-    filters: is:open repo:lasseh/whynoipv6-web
-    layout:
-      author:
-        width: 15
-      updatedAt:
-        width: 12
-      title:
-        width: 80
-      reviewStatus:
-        width: 12
-      ci:
-        width: 8
-  
-  - title: junos_exporter
-    filters: is:open repo:czerwonk/junos_exporter
-    layout:
-      author:
-        width: 15
-      updatedAt:
-        width: 12
-      title:
-        width: 80
-      reviewStatus:
-        width: 12
-      ci:
-        width: 8
+    filters: is:open involves:@me -author:@me
 
 issuesSections:
   - title: My Issues
-    filters: is:open author:lasseh
-    layout:
-      updatedAt:
-        width: 12
-      repo:
-        width: 20
-      title:
-        width: 80
-      assignees:
-        width: 15
-      creator:
-        hidden: true
-
+    filters: is:open author:@me
   - title: Assigned
-    filters: is:open assignee:lasseh
-    layout:
-      updatedAt:
-        width: 12
-      repo:
-        width: 20
-      title:
-        width: 80
-      assignees:
-        hidden: true
-      creator:
-        width: 15
+    filters: is:open assignee:@me
+  - title: Involved
+    filters: is:open involves:@me -author:@me
 
+notificationsSections:
+  - title: All
+    filters: ""
+  - title: Participating
+    filters: reason:participating
   - title: Mentioned
-    filters: is:open mentions:lasseh
-    layout:
-      updatedAt:
-        width: 12
-      repo:
-        width: 20
-      title:
-        width: 80
-      assignees:
-        width: 15
-      creator:
-        width: 15
+    filters: reason:mention
+  - title: Review Requested
+    filters: reason:review-requested
 
-  - title: whynoipv6 Issues
-    filters: is:open repo:lasseh/whynoipv6
-    layout:
-      updatedAt:
-        width: 12
-      repo:
-        hidden: true
-      title:
-        width: 90
-      assignees:
-        width: 15
-      creator:
-        width: 15
-
-  - title: whynoipv6-web Issues
-    filters: is:open repo:lasseh/whynoipv6-web
-    layout:
-      updatedAt:
-        width: 12
-      repo:
-        hidden: true
-      title:
-        width: 90
-      assignees:
-        width: 15
-      creator:
-        width: 15
-  
-  - title:  junos_exporter Issues
-    filters: is:open repo:czerwonk/junos_exporter
-    layout:
-      updatedAt:
-        width: 12
-      repo:
-        hidden: true
-      title:
-        width: 90
-      assignees:
-        width: 15
-      creator:
-        width: 15
+repoPaths:
+  lasseh/*: ~/code/go/src/github.com/lasseh/*
+  yolo-as/network-config: ~/code/go/src/github.com/lasseh/yolo/network-config
 
 defaults:
-  layout:
-    prs:
-      repo:
-        width: 20
-      title:
-        width: 50
-      author:
-        width: 15
-      assignees:
-        width: 15
-      reviewStatus:
-        width: 12
-      ci:
-        width: 8
-      updatedAt:
-        width: 12
-    issues:
-      repo:
-        width: 20
-      title:
-        width: 80
-      creator:
-        width: 15
-      assignees:
-        width: 15
-      updatedAt:
-        width: 12
-
+  view: prs
   preview:
     open: true
-    width: 120
-
+    width: 100
   refetchIntervalMinutes: 30
+  prsLimit: 20
+  issuesLimit: 20
 
 theme:
+  ui:
+    sectionsShowCount: true
+    table:
+      compact: false
   colors:
     text:
       primary: "#c0caf5"
@@ -228,12 +58,6 @@ theme:
       faint: "#414868"
 
 keybindings:
-  issues:
-    - key: c
-      command: >
-        tmux new-window -c {{.RepoPath}} '
-        gh issue create --web --repo {{.RepoName}}
-        '
   prs:
     - key: c
       command: >
@@ -241,12 +65,13 @@ keybindings:
         gh pr create --web --repo {{.RepoName}}
         '
     - key: O
+      builtin: checkout
+  issues:
+    - key: c
       command: >
         tmux new-window -c {{.RepoPath}} '
-        gh pr checkout {{.PrNumber}} --repo {{.RepoName}} &&
-        gh pr diff {{.PrNumber}} --repo {{.RepoName}}
+        gh issue create --web --repo {{.RepoName}}
         '
 
 pager:
   diff: delta
-
