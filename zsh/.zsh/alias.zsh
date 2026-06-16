@@ -106,8 +106,12 @@ if which eza &>/dev/null; then
     alias lst="eza --group-directories-first --git --tree -mghs Name --long --ignore-glob .git -a"
     alias xa="eza"
     alias le="eza -lrhgHBimUa --git --group-directories-first"
-else
-    alias ls="\\ls -hovAG"
+elif \ls --group-directories-first . >/dev/null 2>&1; then   # GNU coreutils (Linux)
+    alias ls="\\ls --color=auto --group-directories-first -lhA"
+    alias lst="tree -C --du --si -L 5 --dirsfirst --prune"
+    alias ldot="\\ls --color=auto -ld .*"
+else                                            # BSD ls (macOS)
+    alias ls="\\ls -lhAG"
     alias lst="tree -C --du --si -L 5 --dirsfirst --prune"
     alias ldot="\\ls -ldG .*"
 fi
