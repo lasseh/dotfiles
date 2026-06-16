@@ -56,8 +56,10 @@ export GOPROXY="https://proxy.golang.org,direct"
 
 # Detect GOROOT based on platform/installation method
 if command -v go >/dev/null 2>&1; then
-    # Go already in PATH (e.g., via Homebrew), get GOROOT from go command
-    export GOROOT="$(go env GOROOT)"
+    # Go already in PATH (e.g., via Homebrew). Clear any inherited GOROOT first
+    # so `go env` re-detects from the binary location instead of echoing a stale
+    # value (e.g. a Cellar path deleted by a Homebrew version bump).
+    export GOROOT="$(env -u GOROOT go env GOROOT)"
 elif [[ -d "/usr/local/go" ]]; then
     # Linux standard manual installation
     export GOROOT="/usr/local/go"
