@@ -24,7 +24,11 @@ alias tmuxa='tmux attach -t 0'
 alias tmuxad='tmux attach -d -t main'
 alias tmuxx='tmux attach -d -t main 2>/dev/null || tmux new -s main'
 alias tmuxs='tmux attach -d -t svv 2>/dev/null || tmux new -s svv'
-tmuxf() { tmux list-sessions -F '#{session_name}' | fzf | xargs -I{} tmux attach -d -t {} }
+tmuxf() {
+  local s
+  s=$(tmux list-sessions -F '#{session_name}' | fzf) || return
+  tmux attach -d -t "$s"
+}
 
 
 
@@ -40,7 +44,7 @@ alias gb="git branch"
 # ==> Git
 alias ga='git add'
 alias gpush='git push origin main'
-alias gpull='git pull'
+alias gpull='git pull origin main'
 alias gd='git diff --color --no-ext-diff'
 alias gdstat='git diff --color --stat'
 alias gits='git status -sb'

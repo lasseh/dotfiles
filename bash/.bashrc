@@ -31,7 +31,11 @@ alias du="du -h --max-depth=1" # Human-readable sizes
 alias .='pwd'
 alias ..='cd ..'
 alias tmuxad='tmux attach -d -t main'
-tmuxf() { tmux list-sessions -F '#{session_name}' | fzf | xargs -I{} tmux attach -d -t {}; }
+tmuxf() {
+  local s
+  s=$(tmux list-sessions -F '#{session_name}' | fzf) || return
+  tmux attach -d -t "$s"
+}
 
 # Git shortcuts
 alias gs="git status"
