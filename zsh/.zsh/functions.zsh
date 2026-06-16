@@ -9,7 +9,7 @@ function jcurl() {
 
 function mcom() {
     echo -n -e "\033]0;minicom\007"
-    minicom -D $(ls -1 /dev/tty.usbserial-*) | ct
+    minicom -D $(ls -1 /dev/tty.usbserial-*) | jink
 }
 
 function cssh() {
