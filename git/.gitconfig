@@ -45,10 +45,10 @@
 	followTags = true
 
 [diff]
- tool = vimdiff
- context = 3
- renames = true
- wordRegex = '[^[:space:]]+'
+	tool = vimdiff
+	context = 3
+	renames = true
+	wordRegex = '[^[:space:]]+'
 
 [alias]
 	st = status
