@@ -1,4 +1,4 @@
-.PHONY: mac-install clean brew brew-bundle brew-dump dotfiles fzf iterm2 osx-defaults help
+.PHONY: mac-install clean brew brew-bundle brew-dump dotfiles fzf iterm2 osx-defaults tmux-plugins help
 
 # Stow related targets
 dotfiles:
@@ -26,8 +26,22 @@ dotfiles:
 	@stow --no-folding --override=.* -R -t ~/ zsh
 	@echo "All configurations stowed!"
 
+tmux-plugins: ## Clone/update the tmux plugins declared in tmux/.tmux.conf
+	@mkdir -p ~/.tmux/plugins
+	@grep -oE "^set -g @plugin '[^']+'" tmux/.tmux.conf | sed "s/.*'\(.*\)'/\1/" | while read -r repo; do \
+		name=$${repo##*/}; \
+		if [ -d ~/.tmux/plugins/$$name ]; then \
+			printf '  updating %s\n' "$$name"; \
+			git -C ~/.tmux/plugins/$$name pull -q --ff-only || true; \
+		else \
+			printf '  cloning  %s\n' "$$name"; \
+			git clone -q --depth 1 https://github.com/$$repo.git ~/.tmux/plugins/$$name; \
+		fi; \
+	done
+	@echo "tmux plugins ready - reload with: tmux source ~/.tmux.conf"
+
 # Install everything
-mac-install: brew brew-bundle dotfiles osx-defaults iterm2
+mac-install: brew brew-bundle dotfiles tmux-plugins osx-defaults iterm2
 	@echo "All installations completed successfully!"
 
 # Brew related targets
