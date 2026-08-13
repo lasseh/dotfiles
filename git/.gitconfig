@@ -102,3 +102,9 @@
 
 [includeIf "gitdir:~/code/go/src/github.com/lasseh/svv/"]
 	path = ~/.config/git/work-config
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
