@@ -11,7 +11,6 @@ cursor-color = #c0caf5
 cursor-style = block
 cursor-style-blink = false
 cursor-opacity = 0.8
-cursor-invert-fg-bg = true
 
 # Selection Colors
 selection-background = #283457
@@ -33,19 +32,30 @@ split-divider-color = #8b008b
 
 # Mouse and Interaction
 mouse-hide-while-typing = true
-mouse-shift-capture = true
+# tmux (`set -g mouse on`) grabs mouse events, and ghostty skips link
+# detection entirely while a program holds the mouse — plain cmd+click can
+# never open a link there. Shift is the only bypass; `never` makes that
+# bypass unconditional (a program can't re-grab it via XTSHIFTESCAPE), so
+# cmd+shift+click opens links inside tmux. Outside tmux, cmd+click works.
+mouse-shift-capture = never
 copy-on-select = true
 link-url = true
 
-# Advertise xterm-256color instead of xterm-ghostty so remote servers
-# (which lack the ghostty terminfo) handle arrow keys, Home, End, etc.
-term = xterm-256color
-
 # Shell Integration
 shell-integration = detect
+# Handle remote servers lacking ghostty terminfo: install it over ssh,
+# fall back to TERM=xterm-256color if that fails. Replaces the old
+# global `term = xterm-256color` override, which broke local keyboard
+# handling (Claude Code shift+enter, kitty keyboard protocol).
+# no-title: ghostty's title hook runs after our precmd() (tokyo-night-
+# theme.zsh) and clobbers the custom "user@host: repo/path" title that
+# iTerm2 shows — let the zsh theme own the window title instead.
+shell-integration-features = no-title,ssh-env,ssh-terminfo
 
 # macOS Specific Settings
-macos-option-as-alt = true
+# Match iTerm2: left option = Esc+ (word nav, meta keys), right option
+# stays normal for typing special characters ([ ] { } @ \ etc.)
+macos-option-as-alt = left
 macos-titlebar-style = tabs
 window-theme = dark
 window-decoration = true
@@ -62,19 +72,31 @@ keybind = cmd+shift+right=goto_split:next
 keybind = cmd+left=previous_tab
 keybind = cmd+right=next_tab
 keybind = cmd+k=clear_screen
-keybind = cmd+shift+enter=toggle_fullscreen
+# iTerm2 parity: cmd+enter = fullscreen, cmd+shift+enter = maximize pane
+keybind = cmd+enter=toggle_fullscreen
+keybind = cmd+shift+enter=toggle_split_zoom
 keybind = cmd+shift+s=open_config
+# Shift+Enter = newline in Claude Code (same as iTerm2 /terminal-setup)
+keybind = shift+enter=text:\n
+# Font size presets: dock (external monitor) vs laptop screen
+keybind = ctrl+cmd+1=set_font_size:16
+keybind = ctrl+cmd+2=set_font_size:24
 
 # Terminal Behavior
 window-inherit-working-directory = true
 confirm-close-surface = false
-scrollback-limit = 10000000
+# Bytes; iTerm2 was set to unlimited scrollback, 100MB is close enough
+scrollback-limit = 100000000
 clipboard-read = allow
 clipboard-write = allow
 clipboard-paste-protection = true
 clipboard-trim-trailing-spaces = true
 
-# Performance
-gtk-single-instance = true
+# Bell: 1.3.1 regression — the 🔔 tab indicator doesn't appear on unfocused
+# tabs until clicked and doesn't clear cleanly (ghostty discussion #10692).
+# Disable it until a fixed release ships; `attention` (dock-icon bounce when
+# Ghostty is unfocused) still works and remains enabled by default.
+bell-features = no-title
+
 auto-update = check
 
