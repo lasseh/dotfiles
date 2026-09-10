@@ -43,14 +43,17 @@ link-url = true
 
 # Shell Integration
 shell-integration = detect
-# Handle remote servers lacking ghostty terminfo: install it over ssh,
-# fall back to TERM=xterm-256color if that fails. Replaces the old
-# global `term = xterm-256color` override, which broke local keyboard
+# ssh-env: remotes get TERM=xterm-256color + COLORTERM=truecolor. Replaces
+# the old global `term = xterm-256color` override, which broke local keyboard
 # handling (Claude Code shift+enter, kitty keyboard protocol).
+# ssh-terminfo is deliberately off: it opens a probe connection to every
+# uncached host to run `tic`, which doubles the wait on unreachable hosts
+# (ConnectTimeout x ConnectionAttempts, twice) and prints a warning on every
+# ssh to hosts without tic (Junos, appliances) since failures are not cached.
 # no-title: ghostty's title hook runs after our precmd() (tokyo-night-
 # theme.zsh) and clobbers the custom "user@host: repo/path" title that
 # iTerm2 shows — let the zsh theme own the window title instead.
-shell-integration-features = no-title,ssh-env,ssh-terminfo
+shell-integration-features = no-title,ssh-env
 
 # macOS Specific Settings
 # Match iTerm2: left option = Esc+ (word nav, meta keys), right option
