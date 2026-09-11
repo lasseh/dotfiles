@@ -87,7 +87,9 @@ keybind = ctrl+cmd+2=set_font_size:24
 
 # Terminal Behavior
 window-inherit-working-directory = true
-confirm-close-surface = false
+# true (not `always`): prompt on cmd+q / cmd+w only when a process is running.
+# The quit prompt is the point; the cmd+w prompt on tmux/ssh tabs comes with it.
+confirm-close-surface = true
 # Bytes; iTerm2 was set to unlimited scrollback, 100MB is close enough
 scrollback-limit = 100000000
 clipboard-read = allow
