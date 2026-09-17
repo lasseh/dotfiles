@@ -197,11 +197,11 @@ abstracts = {
   ## statusbar - Tokyo Night dark theme
   ##
 
-  # default background for all statusbars - Tokyo Night dark background
-  sb_background = "%0%K";
+  # default background for all statusbars - terminal background
+  sb_background = "%K";
 
-  # background for prompt / input line - Tokyo Night background
-  sb_prompt_bg = "%0";
+  # background for prompt / input line - terminal background
+  sb_prompt_bg = "%n";
   # background for info statusbar - Tokyo Night darker
   sb_info_bg = "%K";
 
