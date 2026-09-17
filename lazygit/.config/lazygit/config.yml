@@ -67,18 +67,16 @@ git:
     showGraph: always
     showWholeGraph: false
   branchLogCmd: >-
-    git log --color=always --graph --date=relative
-    --pretty=format:'%C(dim yellow)%h %C(reset)%<|(70,trunc)%s %C(dim white)@%an%C(reset) %C(dim white)(%cd)%C(reset)%C(auto)'
+    git log --color=always --graph --date=relative --pretty=format:'%C(dim yellow)%h %C(reset)%<|(70,trunc)%s %C(dim white)@%an%C(reset) %C(dim white)(%cd)%C(reset)%C(auto)'
   allBranchesLogCmds:
     - >-
-      git log --color=always --graph --all --date=relative
-      --pretty=format:'%C(auto)%h %C(reset)%<|(50,trunc)%s %C(bold blue)<%an>%C(reset) %C(green)(%cd)%C(reset)%C(auto)%d'
+      git log --color=always --graph --all --date=relative --pretty=format:'%C(auto)%h %C(reset)%<|(50,trunc)%s %C(bold blue)<%an>%C(reset) %C(green)(%cd)%C(reset)%C(auto)%d'
   overrideGpg: true
   autoFetch: true
   autoRefresh: true
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --dark --paging=never
+      command: delta --dark --paging=never
   skipHookPrefix: WIP
   mainBranches:
     - master
@@ -101,9 +99,7 @@ customCommands:
     loadingText: "opening GitHub..."
   - key: "O"
     command: >-
-      gh pr create
-      -t "{{index .PromptResponses 0}}"
-      {{ if eq (index .PromptResponses 1) "yes"}}--draft{{ end }}
+      gh pr create -t "{{index .PromptResponses 0}}" {{ if eq (index .PromptResponses 1) "yes"}}--draft{{ end }}
     description: "create PR via GitHub CLI"
     context: "localBranches"
     prompts:
