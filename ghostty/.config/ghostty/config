@@ -82,8 +82,11 @@ keybind = cmd+shift+s=open_config
 # Shift+Enter = newline in Claude Code (same as iTerm2 /terminal-setup)
 keybind = shift+enter=text:\n
 # Font size presets: dock (external monitor) vs laptop screen
-keybind = ctrl+cmd+1=set_font_size:16
-keybind = ctrl+cmd+2=set_font_size:24
+# `digit_N` (physical key) not `N` — a bare digit parses as a *translated*
+# trigger, which stops matching under some macOS modifier combos; the physical
+# key doesn't depend on translation (ghostty discussion #8707).
+keybind = ctrl+cmd+digit_1=set_font_size:16
+keybind = ctrl+cmd+digit_2=set_font_size:22
 
 # Terminal Behavior
 window-inherit-working-directory = true
